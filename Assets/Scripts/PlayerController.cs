@@ -109,13 +109,13 @@ public class PlayerController : MonoBehaviour
         
     }
 
-    Rigidbody2D rigidbody;
+    Rigidbody2D rb;
     Animator animator;
 
 
     private void Awake() // activated when the script instance is being loaded to initialize variables and references, set up configs,  and prepare the object for use like set persistent values such as singleton object instance
     {
-        rigidbody = GetComponent<Rigidbody2D>();
+        rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
         animator.SetBool(AnimationStrings.canMove, true);
         touchingDirections = GetComponent<TouchingDirections>();
@@ -123,9 +123,9 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        rigidbody.linearVelocity = new Vector2(moveInput.x * CurrentMoveSpeed, rigidbody.linearVelocity.y);
-        animator.SetFloat(AnimationStrings.yVelocity, rigidbody.linearVelocity.y);
-        animator.SetFloat(AnimationStrings.yVelocity, rigidbody.linearVelocity.y);
+        rb.linearVelocity = new Vector2(moveInput.x * CurrentMoveSpeed, rb.linearVelocity.y);
+        animator.SetFloat(AnimationStrings.yVelocity, rb.linearVelocity.y);
+        animator.SetFloat(AnimationStrings.yVelocity, rb.linearVelocity.y);
     }
 
     public void OnMove(InputAction.CallbackContext context)
@@ -170,7 +170,7 @@ public class PlayerController : MonoBehaviour
         if (context.started && touchingDirections.IsGrounded && CanMove )
         {
             animator.SetTrigger(AnimationStrings.jumpTrigger);
-            rigidbody.linearVelocity = new Vector2(rigidbody.linearVelocity.x, jumpImpulse); // Set a vertical velocity for the jump, adjust the value as needed
+            rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpImpulse); // Set a vertical velocity for the jump, adjust the value as needed
         }
         
     }
