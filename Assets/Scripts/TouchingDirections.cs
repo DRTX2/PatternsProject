@@ -68,6 +68,9 @@ public class TouchingDirections : MonoBehaviour
         touchingCol = GetComponent<CapsuleCollider2D>();
         animator = GetComponent<Animator>();
 
+        // Asegura que se usa LayerMask
+        //castFilter.useLayerMask = true;
+        //castFilter.useTriggers = false;
     }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
