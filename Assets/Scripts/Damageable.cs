@@ -20,12 +20,16 @@ public class Damageable : MonoBehaviour
     public float MaxHealth
     {
         get { return _maxHealth; }
-        set { _maxHealth = value; }
+        set { 
+            _maxHealth = value; 
+            
+        }
     }
 
     /// <summary>
     /// Salud actual del objeto. Inicialmente 100.
     /// </summary>
+    [SerializeField]
     private float _health = 100;
 
     /// <summary>
@@ -48,7 +52,14 @@ public class Damageable : MonoBehaviour
     /// <summary>
     /// Indica si el objeto está vivo.
     /// </summary>
+    
+    [SerializeField]
     private bool _isAlive = true;
+
+    [SerializeField]
+    private bool isInvencible = false;
+    private float timeSinceHit=0f;
+    public float invincibilityTimer=0.25f;
 
     /// <summary>
     /// Propiedad pública para acceder o modificar el estado de vida.
@@ -60,11 +71,12 @@ public class Damageable : MonoBehaviour
         set
         {
             _isAlive = value;
-            if (!_isAlive)
-            {
+            //if (!_isAlive)
+            //{
                 // Cambia el parámetro del Animator para reflejar la muerte.
-                animator.SetBool(AnimationStrings.isAlive, false);
-            }
+                animator.SetBool(AnimationStrings.isAlive, value);
+                Debug.Log("IsAlive: " + value + " on " + gameObject.name);
+            //}
         }
     }
 
@@ -80,21 +92,30 @@ public class Damageable : MonoBehaviour
         }
     }
 
-    // Métodos Start y Update están presentes pero vacíos, por si se necesitan en el futuro.
-
-    /// <summary>
-    /// Llamado una vez antes del primer frame. (Actualmente vacío)
-    /// </summary>
-    void Start()
+    private void Update()
     {
-        
+        if(isInvencible)
+        {
+            if (timeSinceHit > invincibilityTimer)
+            {
+                isInvencible = false;
+                timeSinceHit= 0f;
+            }
+
+            timeSinceHit+= Time.deltaTime;// tiempo entre frames  
+        }
+        Hit(10f);
     }
 
-    /// <summary>
-    /// Llamado una vez por frame. (Actualmente vacío)
-    /// </summary>
-    void Update()
-    {
-        
+    public void Hit(float damage){
+        if(IsAlive && !isInvencible)
+        {
+            Health -= damage;
+            isInvencible = true;
+            if (Health <= 0)
+            {
+                IsAlive = false;
+            }
+        }
     }
 }
