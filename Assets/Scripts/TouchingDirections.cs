@@ -46,7 +46,8 @@ public class TouchingDirections : MonoBehaviour
     [SerializeField]
     private bool _isOnCeiling;
 
-    private Vector2 wallCheckDirection=>gameObject.transform.localScale.x >0?Vector2.right:Vector2.left;
+    private Vector2 wallCheckDirection => transform.localScale.x > 0 ? Vector2.right : Vector2.left;
+
 
 
 

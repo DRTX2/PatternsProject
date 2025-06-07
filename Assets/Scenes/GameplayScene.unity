@@ -649,15 +649,15 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2778756768824511147, guid: 6ff374c1d2efc654ca6eef1950f340a8, type: 3}
       propertyPath: walkSpeed
-      value: 10
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 6385430641658625451, guid: 6ff374c1d2efc654ca6eef1950f340a8, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -4.96
+      value: -6.24
       objectReference: {fileID: 0}
     - target: {fileID: 6385430641658625451, guid: 6ff374c1d2efc654ca6eef1950f340a8, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -2.69
+      value: -2.83
       objectReference: {fileID: 0}
     - target: {fileID: 6385430641658625451, guid: 6ff374c1d2efc654ca6eef1950f340a8, type: 3}
       propertyPath: m_LocalPosition.z
