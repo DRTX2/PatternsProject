@@ -4,7 +4,11 @@ using UnityEngine;
 /// Controla el comportamiento del enemigo Knight, incluyendo movimiento, detección de objetivos y animaciones.
 /// Requiere los componentes Rigidbody2D y TouchingDirections.
 /// </summary>
-[RequireComponent(typeof(Rigidbody2D), typeof(TouchingDirections))]
+[RequireComponent(
+    typeof(Rigidbody2D),
+    typeof(TouchingDirections),
+    typeof(Damageable)
+    )]
 public class Knight : MonoBehaviour
 {
     /// <summary>
@@ -39,10 +43,15 @@ public class Knight : MonoBehaviour
     // Vector que representa la dirección de movimiento en el eje X.
     private Vector2 walkDirectionVector = Vector2.right;
 
+    Damageable damageable;
+
+
     /// <summary>
     /// Propiedad para obtener o establecer la dirección de movimiento.
     /// Al cambiar, invierte el sprite y actualiza el vector de dirección.
     /// </summary>
+    /// 
+
     public WalkableDirection walkDirection
     {
         get { return _walkDirection; }
@@ -93,6 +102,8 @@ public class Knight : MonoBehaviour
         animator = GetComponent<Animator>();
         // Inicializa el parámetro de dirección al inicio (opcional, si usas un parámetro de dirección en el Animator)
         animator.SetFloat("moveX", walkDirectionVector.x);
+        damageable = GetComponent<Damageable>();
+
     }
 
     /// <summary>
@@ -103,6 +114,10 @@ public class Knight : MonoBehaviour
         HasTarget = attackZone.detectedColliders.Count > 0;
     }
 
+
+    private float flipCooldown = 0.5f;
+    private float lastFlipTime = -999f;
+
     /// <summary>
     /// Controla el movimiento físico y el cambio de dirección al tocar paredes.
     /// </summary>
@@ -110,13 +125,22 @@ public class Knight : MonoBehaviour
     {
         if (touchingDirections.IsGrounded && touchingDirections.IsOnWall)
         {
-            FlipDirection();
+            if (Time.time > lastFlipTime + flipCooldown)
+            {
+                FlipDirection();
+                lastFlipTime = Time.time;
+            }
         }
 
-        if (CanMove)
-            rb.linearVelocity = new Vector2(walkSpeed * walkDirectionVector.x, rb.linearVelocity.y);
-        else
-            rb.linearVelocity = new Vector2(Mathf.Lerp(rb.linearVelocity.x, 0, walkStopRate), rb.linearVelocity.y);
+        if (!damageable.LockVelocity)
+        {
+            if (CanMove)
+                rb.linearVelocity = new Vector2(walkSpeed * walkDirectionVector.x, rb.linearVelocity.y);
+            else
+                rb.linearVelocity = new Vector2(Mathf.Lerp(rb.linearVelocity.x, 0, walkStopRate), rb.linearVelocity.y);
+        }
+
+
     }
 
     /// <summary>
@@ -124,6 +148,8 @@ public class Knight : MonoBehaviour
     /// </summary>
     private void FlipDirection()
     {
+        Debug.Log($"Flipping. Dirección actual: {walkDirection}");
+
         if (walkDirection == WalkableDirection.Right)
         {
             walkDirection = WalkableDirection.Left;
@@ -138,15 +164,21 @@ public class Knight : MonoBehaviour
         }
     }
 
+    public void OnHit(int damage, Vector2 knockback)
+    {
+        rb.linearVelocity = new Vector2(knockback.x, rb.linearVelocity.y + knockback.y);
+    }
+
+
     public void DisableMovement()
     {
-        Debug.Log("🔥 DisableMovement() llamado");
+        //Debug.Log("🔥 DisableMovement() llamado");
         animator.SetBool(AnimationStrings.canMove, false);
     }
 
     public void EnableMovement()
     {
-        Debug.Log("✅ EnableMovement() llamado");
+        //Debug.Log("✅ EnableMovement() llamado");
         animator.SetBool(AnimationStrings.canMove, true);
     }
 }

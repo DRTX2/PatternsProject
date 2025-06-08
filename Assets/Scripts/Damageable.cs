@@ -67,6 +67,21 @@ public class Damageable : MonoBehaviour
     private float timeSinceHit = 0f;
     public float invincibilityTimer = 0.25f;
 
+    // The velocity should not be changed while this is true but needs to be respectfed by other components like the PlayerController
+    public bool LockVelocity
+    {
+        get
+        {
+            return animator.GetBool(AnimationStrings.lockVelocity);
+        }
+        set
+        {
+            animator.SetBool(AnimationStrings.lockVelocity, value);
+        }
+    }
+
+
+
     /// <summary>
     /// Propiedad pública para acceder o modificar el estado de vida.
     /// Si el objeto muere, actualiza el parámetro correspondiente en el Animator.
@@ -130,6 +145,8 @@ public class Damageable : MonoBehaviour
             }
             // Notify other subscriber components that the damageable was hit  to handle the knockback and such
             animator.SetTrigger(AnimationStrings.hitTrigger);
+            LockVelocity = true;
+
             damageableHit?.Invoke((int)damage, knockback);
 
             return true;
@@ -138,8 +155,4 @@ public class Damageable : MonoBehaviour
         return false;
     }
 
-    internal void Hit(object attackDamage)
-    {
-        throw new NotImplementedException();
-    }
 }

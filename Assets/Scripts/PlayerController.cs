@@ -4,8 +4,8 @@ using UnityEngine.InputSystem;
 
 [RequireComponent(
     typeof(Rigidbody2D),
-    typeof(TouchingDirections)
-
+    typeof(TouchingDirections),
+    typeof(Damageable) // Ensure the player has a Damageable component to handle health and damage logic
     )]
 public class PlayerController : MonoBehaviour
 {
@@ -16,6 +16,7 @@ public class PlayerController : MonoBehaviour
 
     Vector2 moveInput;
     TouchingDirections touchingDirections;
+    Damageable damageable;
 
     public float CurrentMoveSpeed
     {
@@ -121,14 +122,6 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    public bool LockVelocity
-    {
-        get
-        {
-            return animator.GetBool(AnimationStrings.lockVelocity);
-        }
-    }
-
     Rigidbody2D rb;
     Animator animator;
 
@@ -139,11 +132,12 @@ public class PlayerController : MonoBehaviour
         animator = GetComponent<Animator>();
         animator.SetBool(AnimationStrings.canMove, true);
         touchingDirections = GetComponent<TouchingDirections>();
+        damageable = GetComponent<Damageable>();
     }
 
     private void FixedUpdate()
     {
-        if (!LockVelocity)
+        if (!damageable.LockVelocity)
         {
             rb.linearVelocity = new Vector2(moveInput.x * CurrentMoveSpeed, rb.linearVelocity.y);
         }
