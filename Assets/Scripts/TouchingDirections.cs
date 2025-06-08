@@ -83,13 +83,13 @@ public class TouchingDirections : MonoBehaviour
     private void FixedUpdate()
     {
         int numHits = touchingCol.Cast(Vector2.down, castFilter, groundHits, groundDistance);
-        Debug.Log($"Ground hits: {numHits}");
+        //Debug.Log($"Ground hits: {numHits}");
 
         foreach (var hit in groundHits)
         {
             if (hit.collider != null)
             {
-                Debug.Log($"Touching: {hit.collider.gameObject.name}");
+                //Debug.Log($"Touching: {hit.collider.gameObject.name}");
             }
         }
 

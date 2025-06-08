@@ -1,10 +1,15 @@
+using System;
 using UnityEngine;
+using UnityEngine.Events;
 
 /// <summary>
 /// Permite que un objeto tenga salud, pueda recibir daño y notifique al Animator cuando muere.
 /// </summary>
 public class Damageable : MonoBehaviour
 {
+
+    public UnityEvent<int, Vector2> damageableHit;
+
     // Referencia al componente Animator para controlar animaciones relacionadas con la vida/muerte.
     Animator animator;
 
@@ -12,7 +17,7 @@ public class Damageable : MonoBehaviour
     /// Salud máxima del objeto. Puede ser configurada desde el Inspector.
     /// </summary>
     [SerializeField]
-    private float _maxHealth;
+    private float _maxHealth = 100;
 
     /// <summary>
     /// Propiedad pública para acceder o modificar la salud máxima.
@@ -20,9 +25,10 @@ public class Damageable : MonoBehaviour
     public float MaxHealth
     {
         get { return _maxHealth; }
-        set { 
-            _maxHealth = value; 
-            
+        set
+        {
+            _maxHealth = value;
+
         }
     }
 
@@ -52,14 +58,14 @@ public class Damageable : MonoBehaviour
     /// <summary>
     /// Indica si el objeto está vivo.
     /// </summary>
-    
+
     [SerializeField]
     private bool _isAlive = true;
 
     [SerializeField]
     private bool isInvencible = false;
-    private float timeSinceHit=0f;
-    public float invincibilityTimer=0.25f;
+    private float timeSinceHit = 0f;
+    public float invincibilityTimer = 0.25f;
 
     /// <summary>
     /// Propiedad pública para acceder o modificar el estado de vida.
@@ -73,9 +79,9 @@ public class Damageable : MonoBehaviour
             _isAlive = value;
             //if (!_isAlive)
             //{
-                // Cambia el parámetro del Animator para reflejar la muerte.
-                animator.SetBool(AnimationStrings.isAlive, value);
-                Debug.Log("IsAlive: " + value + " on " + gameObject.name);
+            // Cambia el parámetro del Animator para reflejar la muerte.
+            animator.SetBool(AnimationStrings.isAlive, value);
+            Debug.Log("IsAlive: " + value + " on " + gameObject.name);
             //}
         }
     }
@@ -94,21 +100,27 @@ public class Damageable : MonoBehaviour
 
     private void Update()
     {
-        if(isInvencible)
+        if (isInvencible)
         {
             if (timeSinceHit > invincibilityTimer)
             {
                 isInvencible = false;
-                timeSinceHit= 0f;
+                timeSinceHit = 0f;
             }
 
-            timeSinceHit+= Time.deltaTime;// tiempo entre frames  
+            timeSinceHit += Time.deltaTime;// tiempo entre frames  
         }
-        Hit(10f);
+        //Hit(10f);
     }
 
-    public void Hit(float damage){
-        if(IsAlive && !isInvencible)
+    /// <summary>
+    /// Returns wheter the damageable took damge or not
+    /// </summary>
+    /// <param name="damage"></param>
+    /// <returns></returns>
+    public bool Hit(float damage, Vector2 knockback)
+    {
+        if (IsAlive && !isInvencible)
         {
             Health -= damage;
             isInvencible = true;
@@ -116,6 +128,18 @@ public class Damageable : MonoBehaviour
             {
                 IsAlive = false;
             }
+            // Notify other subscriber components that the damageable was hit  to handle the knockback and such
+            animator.SetTrigger(AnimationStrings.hitTrigger);
+            damageableHit?.Invoke((int)damage, knockback);
+
+            return true;
         }
+        // unable to be hit
+        return false;
+    }
+
+    internal void Hit(object attackDamage)
+    {
+        throw new NotImplementedException();
     }
 }

@@ -2,7 +2,11 @@ using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-[RequireComponent(typeof(Rigidbody2D), typeof(TouchingDirections))]
+[RequireComponent(
+    typeof(Rigidbody2D),
+    typeof(TouchingDirections)
+
+    )]
 public class PlayerController : MonoBehaviour
 {
     public float walkSpeed = 5f;
@@ -106,21 +110,30 @@ public class PlayerController : MonoBehaviour
         {
             return animator.GetBool(AnimationStrings.canMove);
         }
-        
+
     }
 
-    public bool IsAlive {
+    public bool IsAlive
+    {
         get
         {
-            return animator.GetBool(AnimationStrings.isAlive); 
+            return animator.GetBool(AnimationStrings.isAlive);
+        }
+    }
+
+    public bool LockVelocity
+    {
+        get
+        {
+            return animator.GetBool(AnimationStrings.lockVelocity);
         }
     }
 
     Rigidbody2D rb;
     Animator animator;
 
-
-    private void Awake() // activated when the script instance is being loaded to initialize variables and references, set up configs,  and prepare the object for use like set persistent values such as singleton object instance
+    // activated when the script instance is being loaded to initialize variables and references, set up configs,  and prepare the object for use like set persistent values such as singleton object instance
+    private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
@@ -130,8 +143,10 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        rb.linearVelocity = new Vector2(moveInput.x * CurrentMoveSpeed, rb.linearVelocity.y);
-        animator.SetFloat(AnimationStrings.yVelocity, rb.linearVelocity.y);
+        if (!LockVelocity)
+        {
+            rb.linearVelocity = new Vector2(moveInput.x * CurrentMoveSpeed, rb.linearVelocity.y);
+        }
         animator.SetFloat(AnimationStrings.yVelocity, rb.linearVelocity.y);
     }
 
@@ -139,7 +154,7 @@ public class PlayerController : MonoBehaviour
     {
         moveInput = context.ReadValue<Vector2>();
 
-        if(IsAlive)
+        if (IsAlive)
         {
             IsMoving = moveInput != Vector2.zero;
             SetFacingDirection(moveInput);
@@ -149,7 +164,7 @@ public class PlayerController : MonoBehaviour
             IsMoving = false;
         }
 
-       
+
     }
 
     private void SetFacingDirection(Vector2 moveInput)
@@ -184,12 +199,12 @@ public class PlayerController : MonoBehaviour
         Debug.Log("Jump input received. IsGrounded: " + touchingDirections.IsGrounded);
 
         // todo: check if alive as well
-        if (context.started && touchingDirections.IsGrounded && CanMove )
+        if (context.started && touchingDirections.IsGrounded && CanMove)
         {
             animator.SetTrigger(AnimationStrings.jumpTrigger);
             rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpImpulse); // Set a vertical velocity for the jump, adjust the value as needed
         }
-        
+
     }
 
     public void OnAttack(InputAction.CallbackContext context)
@@ -198,6 +213,11 @@ public class PlayerController : MonoBehaviour
         {
             animator.SetTrigger(AnimationStrings.attackTrigger);
         }
+    }
+
+    public void OnHit(int damage, Vector2 knockback)
+    {
+        rb.linearVelocity = new Vector2(knockback.x, rb.linearVelocity.y + knockback.y);
     }
 }
 

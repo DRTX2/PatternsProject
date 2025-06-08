@@ -137,4 +137,16 @@ public class Knight : MonoBehaviour
             Debug.LogError("Invalid walk direction set. Cannot flip direction.");
         }
     }
+
+    public void DisableMovement()
+    {
+        Debug.Log("🔥 DisableMovement() llamado");
+        animator.SetBool(AnimationStrings.canMove, false);
+    }
+
+    public void EnableMovement()
+    {
+        Debug.Log("✅ EnableMovement() llamado");
+        animator.SetBool(AnimationStrings.canMove, true);
+    }
 }
