@@ -105,13 +105,24 @@ public class Knight : MonoBehaviour
         damageable = GetComponent<Damageable>();
 
     }
-
+    public float AttackCooldown
+    {
+        get
+        {
+            return animator.GetFloat(AnimationStrings.attackCooldown);
+        }
+        set
+        {
+            animator.SetFloat(AnimationStrings.attackCooldown, Mathf.Max(value, 0));
+        }
+    }
     /// <summary>
     /// Actualiza el estado de HasTarget cada frame.
     /// </summary>
     void Update()
     {
         HasTarget = attackZone.detectedColliders.Count > 0;
+        AttackCooldown -= Time.deltaTime;
     }
 
 
