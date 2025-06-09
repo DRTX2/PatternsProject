@@ -25,6 +25,7 @@ public class Knight : MonoBehaviour
     /// Zona de detección para identificar objetivos cercanos (por ejemplo, el jugador).
     /// </summary>
     public DetectionZone attackZone;
+    public DetectionZone cliffDetectionZone;
 
     // Referencia al Rigidbody2D para controlar el movimiento físico.
     Rigidbody2D rb;
@@ -122,7 +123,10 @@ public class Knight : MonoBehaviour
     void Update()
     {
         HasTarget = attackZone.detectedColliders.Count > 0;
-        AttackCooldown -= Time.deltaTime;
+        if (AttackCooldown > 0)
+        {
+            AttackCooldown -= Time.deltaTime;
+        }
     }
 
 
@@ -134,7 +138,8 @@ public class Knight : MonoBehaviour
     /// </summary>
     private void FixedUpdate()
     {
-        if (touchingDirections.IsGrounded && touchingDirections.IsOnWall)
+        if (touchingDirections.IsGrounded &&
+    touchingDirections.IsOnWall )
         {
             if (Time.time > lastFlipTime + flipCooldown)
             {
@@ -150,8 +155,6 @@ public class Knight : MonoBehaviour
             else
                 rb.linearVelocity = new Vector2(Mathf.Lerp(rb.linearVelocity.x, 0, walkStopRate), rb.linearVelocity.y);
         }
-
-
     }
 
     /// <summary>
@@ -180,7 +183,13 @@ public class Knight : MonoBehaviour
         rb.linearVelocity = new Vector2(knockback.x, rb.linearVelocity.y + knockback.y);
     }
 
-
+    public void OnCliffDetected()
+    {
+        if(touchingDirections.IsGrounded)
+        {
+            FlipDirection();
+        }
+    }
     public void DisableMovement()
     {
         //Debug.Log("🔥 DisableMovement() llamado");
