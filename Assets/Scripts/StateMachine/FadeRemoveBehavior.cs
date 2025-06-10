@@ -24,9 +24,9 @@ public class FadeRemoveBehavior : StateMachineBehaviour
     {
         timeElapsed+=Time.deltaTime;
 
-        float newAlpha = startColor.a * (1 - (timeElapsed / fadeTime));
+        float fadeAlpha = startColor.a * (1 - (timeElapsed / fadeTime));
 
-        spriteRenderer.color=new Color(startColor.r,startColor.g,startColor.b, newAlpha);
+        spriteRenderer.color=new Color(startColor.r,startColor.g,startColor.b, fadeAlpha);
 
         if(timeElapsed >fadeTime)
         {

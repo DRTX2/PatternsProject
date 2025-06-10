@@ -149,6 +149,9 @@ public class Damageable : MonoBehaviour
 
             damageableHit?.Invoke((int)damage, knockback);
 
+            CharacterEvents.characterDamaged?.Invoke(gameObject, (int)damage);
+
+
             return true;
         }
         // unable to be hit
