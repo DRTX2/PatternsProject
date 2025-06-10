@@ -158,4 +158,20 @@ public class Damageable : MonoBehaviour
         return false;
     }
 
+    /// <summary>
+    /// Returns whether the character was healed or not
+    /// </summary>
+    /// <param name="healthToRestore"></param>
+    public bool Heal(float healthToRestore)
+    {
+        if (IsAlive)
+        {
+            int maxHeal = (int)Mathf.Max(MaxHealth - Health, 0);
+            int actualHeal= (int)Mathf.Min(maxHeal,healthToRestore);
+            CharacterEvents.characterHealed?.Invoke(gameObject, actualHeal);
+            return true;
+        }
+        return false;
+    }
+
 }

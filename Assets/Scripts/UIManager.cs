@@ -32,6 +32,7 @@ public class UIManager : MonoBehaviour
         // create text at character hit
 
         Vector3 spawnPosition=Camera.main.WorldToScreenPoint(character.transform.position);
+        
         TMP_Text tmpText=Instantiate(damageTextPrefab, spawnPosition, Quaternion.identity,gameCanvas.transform).GetComponent<TMP_Text>();
 
         tmpText.text = damageReceived.ToString();
