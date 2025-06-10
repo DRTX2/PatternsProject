@@ -169,6 +169,7 @@ public class Damageable : MonoBehaviour
             int maxHeal = (int)Mathf.Max(MaxHealth - Health, 0);
             int actualHeal= (int)Mathf.Min(maxHeal,healthToRestore);
             CharacterEvents.characterHealed?.Invoke(gameObject, actualHeal);
+            Health += actualHeal;
             return true;
         }
         return false;

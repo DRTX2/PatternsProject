@@ -214,5 +214,3 @@ public class PlayerController : MonoBehaviour
         rb.linearVelocity = new Vector2(knockback.x, rb.linearVelocity.y + knockback.y);
     }
 }
-
-
