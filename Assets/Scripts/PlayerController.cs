@@ -213,4 +213,17 @@ public class PlayerController : MonoBehaviour
     {
         rb.linearVelocity = new Vector2(knockback.x, rb.linearVelocity.y + knockback.y);
     }
+
+
+    public bool IsAttacking { get; private set; }
+
+    public void AttackStart()
+    {
+        IsAttacking = true;
+    }
+
+    public void AttackEnd()
+    {
+        IsAttacking = false;
+    }
 }
