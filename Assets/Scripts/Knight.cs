@@ -14,8 +14,9 @@ public class Knight : MonoBehaviour
     /// <summary>
     /// Velocidad de movimiento horizontal del Knight.
     /// </summary>
-    public float walkSpeed = 3f;
+    public float walkAceleration = 3f;
 
+    public float maxSpeed = 30f;
     /// <summary>
     /// Factor de desaceleración cuando el Knight debe detenerse.
     /// </summary>
@@ -139,7 +140,7 @@ public class Knight : MonoBehaviour
     private void FixedUpdate()
     {
         if (touchingDirections.IsGrounded &&
-    touchingDirections.IsOnWall )
+    touchingDirections.IsOnWall)
         {
             if (Time.time > lastFlipTime + flipCooldown)
             {
@@ -151,9 +152,19 @@ public class Knight : MonoBehaviour
         if (!damageable.LockVelocity)
         {
             if (CanMove)
-                rb.linearVelocity = new Vector2(walkSpeed * walkDirectionVector.x, rb.linearVelocity.y);
+            {
+                // accelerate towards max speed
+                float xVelocity = Mathf.Clamp(rb.linearVelocity.x + (walkAceleration * walkDirectionVector.x * Time.fixedDeltaTime),
+                    -maxSpeed,
+                    maxSpeed
+                );
+                rb.linearVelocity = new Vector2(xVelocity, rb.linearVelocity.y);
+            }
             else
+            {
                 rb.linearVelocity = new Vector2(Mathf.Lerp(rb.linearVelocity.x, 0, walkStopRate), rb.linearVelocity.y);
+
+            }
         }
     }
 
@@ -185,7 +196,7 @@ public class Knight : MonoBehaviour
 
     public void OnCliffDetected()
     {
-        if(touchingDirections.IsGrounded)
+        if (touchingDirections.IsGrounded)
         {
             FlipDirection();
         }
