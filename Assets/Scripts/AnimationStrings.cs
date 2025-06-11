@@ -22,4 +22,5 @@ internal class AnimationStrings
     internal static string lockVelocity= "lockVelocity";
 
     public static string attackCooldown ="attackCooldown";
+    internal static string rangedAttackTrigger="rangedAttack";
 }
