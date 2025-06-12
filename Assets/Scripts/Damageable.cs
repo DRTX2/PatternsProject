@@ -10,6 +10,7 @@ public class Damageable : MonoBehaviour
 
     public UnityEvent<int, Vector2> damageableHit;
     public UnityEvent damageableDeath;
+    public UnityEvent<float, float> healthChanged;
 
     // Referencia al componente Animator para controlar animaciones relacionadas con la vida/muerte.
     Animator animator;
@@ -49,6 +50,7 @@ public class Damageable : MonoBehaviour
         set
         {
             _health = value;
+            healthChanged?.Invoke(_health, MaxHealth);
             if (_health <= 0)
             {
                 IsAlive = false;

@@ -25,7 +25,7 @@ public class HealthPickup : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision) { 
         Damageable damageable = collision.GetComponent<Damageable>();
 
-        if (damageable)
+        if (damageable && damageable.Health< damageable.MaxHealth)
         {
             bool wasHealed=damageable.Heal(healthRestore);
             if (wasHealed)
