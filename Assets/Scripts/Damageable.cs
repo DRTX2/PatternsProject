@@ -9,6 +9,8 @@ public class Damageable : MonoBehaviour
 {
 
     public UnityEvent<int, Vector2> damageableHit;
+    public UnityEvent damageableDeath;
+    public UnityEvent<float, float> healthChanged;
 
     // Referencia al componente Animator para controlar animaciones relacionadas con la vida/muerte.
     Animator animator;
@@ -48,6 +50,7 @@ public class Damageable : MonoBehaviour
         set
         {
             _health = value;
+            healthChanged?.Invoke(_health, MaxHealth);
             if (_health <= 0)
             {
                 IsAlive = false;
@@ -80,8 +83,6 @@ public class Damageable : MonoBehaviour
         }
     }
 
-
-
     /// <summary>
     /// Propiedad pública para acceder o modificar el estado de vida.
     /// Si el objeto muere, actualiza el parámetro correspondiente en el Animator.
@@ -92,12 +93,13 @@ public class Damageable : MonoBehaviour
         set
         {
             _isAlive = value;
-            //if (!_isAlive)
-            //{
-            // Cambia el parámetro del Animator para reflejar la muerte.
             animator.SetBool(AnimationStrings.isAlive, value);
             Debug.Log("IsAlive: " + value + " on " + gameObject.name);
-            //}
+
+            if (value == false)
+            {
+                damageableDeath?.Invoke();
+            }
         }
     }
 
@@ -164,7 +166,7 @@ public class Damageable : MonoBehaviour
     /// <param name="healthToRestore"></param>
     public bool Heal(float healthToRestore)
     {
-        if (IsAlive)
+        if (IsAlive && Health!=MaxHealth)
         {
             int maxHeal = (int)Mathf.Max(MaxHealth - Health, 0);
             int actualHeal= (int)Mathf.Min(maxHeal,healthToRestore);

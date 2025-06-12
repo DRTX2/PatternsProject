@@ -4,8 +4,9 @@ public class FadeRemoveBehavior : StateMachineBehaviour
 {
 
     public float fadeTime = 0.5f;
-
+    public float fadeDelay = 0.0f; // Delay before starting the fade effect
     private float timeElapsed = 0f;
+    private float fadeDelayElapsed = 0f;
     SpriteRenderer spriteRenderer;
     GameObject objToRemove;
     Color startColor;
@@ -13,8 +14,8 @@ public class FadeRemoveBehavior : StateMachineBehaviour
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        timeElapsed=0f;
-        spriteRenderer= animator.GetComponent<SpriteRenderer>();
+        timeElapsed = 0f;
+        spriteRenderer = animator.GetComponent<SpriteRenderer>();
         startColor = spriteRenderer.color;
         objToRemove = animator.gameObject;
     }
@@ -22,13 +23,19 @@ public class FadeRemoveBehavior : StateMachineBehaviour
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        timeElapsed+=Time.deltaTime;
+        if (fadeDelayElapsed < fadeDelay)
+        {
+            fadeDelayElapsed += Time.deltaTime;
+            return; // Wait for the delay before starting the fade
+        }
+
+        timeElapsed += Time.deltaTime;
 
         float fadeAlpha = startColor.a * (1 - (timeElapsed / fadeTime));
 
-        spriteRenderer.color=new Color(startColor.r,startColor.g,startColor.b, fadeAlpha);
+        spriteRenderer.color = new Color(startColor.r, startColor.g, startColor.b, fadeAlpha);
 
-        if(timeElapsed >fadeTime)
+        if (timeElapsed > fadeTime)
         {
             Destroy(objToRemove);
         }
