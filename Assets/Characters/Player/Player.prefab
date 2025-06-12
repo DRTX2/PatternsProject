@@ -367,6 +367,7 @@ GameObject:
   - component: {fileID: 6500484348926717599}
   - component: {fileID: 7162789825637647229}
   - component: {fileID: 5785065986601122488}
+  - component: {fileID: 6037241189817770124}
   m_Layer: 7
   m_Name: Player
   m_TagString: Player
@@ -771,6 +772,9 @@ MonoBehaviour:
   damageableDeath:
     m_PersistentCalls:
       m_Calls: []
+  healthChanged:
+    m_PersistentCalls:
+      m_Calls: []
   _maxHealth: 100
   _health: 100
   _isAlive: 1
@@ -790,6 +794,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   launchPoint: {fileID: 548159201235114466}
   projectilePrefab: {fileID: 316223019245298023, guid: 658bbe7dea42b9745841cb9bb434ec7c, type: 3}
+--- !u!114 &6037241189817770124
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5007971800620712363}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1fcae2cd94e14e44ba09e8e0af8a12a2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _restartBtn: {fileID: 0}
+  _goMenuBtn: {fileID: 0}
+  _gameOverCanvas: {fileID: 0}
 --- !u!1 &5507425895951306909
 GameObject:
   m_ObjectHideFlags: 0
