@@ -4,8 +4,8 @@ using UnityEngine.InputSystem;
 
 [RequireComponent(
     typeof(Rigidbody2D),
-    typeof(TouchingDirections),
-    typeof(Damageable) // Ensure the player has a Damageable component to handle health and damage logic
+    typeof(TouchingDirections_Old),
+    typeof(Damageable_old) // Ensure the player has a Damageable component to handle health and damage logic
     )]
 public class PlayerController : MonoBehaviour
 {
@@ -15,8 +15,8 @@ public class PlayerController : MonoBehaviour
     public float jumpImpulse = 10f;
 
     Vector2 moveInput;
-    TouchingDirections touchingDirections;
-    Damageable damageable;
+    TouchingDirections_Old touchingDirections;
+    Damageable_old damageable;
 
     public float CurrentMoveSpeed
     {
@@ -131,8 +131,8 @@ public class PlayerController : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
         animator.SetBool(AnimationStrings.canMove, true);
-        touchingDirections = GetComponent<TouchingDirections>();
-        damageable = GetComponent<Damageable>();
+        touchingDirections = GetComponent<TouchingDirections_Old>();
+        damageable = GetComponent<Damageable_old>();
     }
 
     private void FixedUpdate()
@@ -195,7 +195,7 @@ public class PlayerController : MonoBehaviour
         // todo: check if alive as well
         if (context.started && touchingDirections.IsGrounded && CanMove)
         {
-            animator.SetTrigger(AnimationStrings.jumpTrigger);
+            animator.SetTrigger("jump");
             rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpImpulse); // Set a vertical velocity for the jump, adjust the value as needed
         }
 

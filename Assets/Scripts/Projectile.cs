@@ -22,7 +22,7 @@ public class Projectile : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        Damageable damageable = collision.GetComponent<Damageable>();
+        Damageable_old damageable = collision.GetComponent<Damageable_old>();
         if (damageable == null) return;
 
         Vector2 deliveredKnockback = transform.localScale.x > 0

@@ -8,7 +8,7 @@ public class FlyingEye : MonoBehaviour
 {
     public float flightSpeed = 3f;
     public float waypointReachedDistance=0.1f;
-    public DetectionZone biteDetectionZone;
+    public DetectionZone_old biteDetectionZone;
     public Collider2D deathCollider;
     public List<Transform> waypoints;
     public bool _hasTarget = false;
@@ -16,7 +16,7 @@ public class FlyingEye : MonoBehaviour
     Animator animator;
     Rigidbody2D rb;
 
-    Damageable damageable;
+    Damageable_old damageable;
     Transform nextWaypoint;
     int waypointNum = 0;
 
@@ -24,7 +24,7 @@ public class FlyingEye : MonoBehaviour
     {
         animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
-        damageable = GetComponent<Damageable>();
+        damageable = GetComponent<Damageable_old>();
     }
 
     private void Start()

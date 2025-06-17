@@ -1,0 +1,23 @@
+﻿using UnityEngine;
+
+public class ProjectileSpawner : MonoBehaviour, IProjectileSpawner
+{
+    [SerializeField] public Transform launchPoint;
+    [SerializeField] public GameObject projectilePrefab;
+
+    public void FireProjectile()
+    {
+        GameObject projectile = Instantiate(projectilePrefab, launchPoint.position, Quaternion.identity);
+        Debug.Log("→ Flecha creada: " + projectile.name);
+
+        float direction = transform.localScale.x >= 0 ? 1f : -1f;
+
+        Vector3 scale = projectile.transform.localScale;
+        projectile.transform.localScale = new Vector3(scale.x * direction, scale.y, scale.z);
+
+        if (projectile.TryGetComponent(out IProjectile logic))
+        {
+            logic.Launch(direction);
+        }
+    }
+}
