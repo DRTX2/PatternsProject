@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 5124156807646808965}
   - component: {fileID: 3949100161818830303}
   - component: {fileID: 3563789147027345543}
-  - component: {fileID: 2806957111743922035}
   m_Layer: 10
   m_Name: SwordAttack
   m_TagString: Untagged
@@ -106,26 +105,12 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1281335834607802989}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5c416490b20988249a35cc25b0e42c43, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackDamage: 20
-  knockback: {x: 5, y: 2}
---- !u!114 &2806957111743922035
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1281335834607802989}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e3f074ca8212e904592bd06119a1a43d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  damage: 15
+  attackDamage: 10
   knockback: {x: 5, y: 2}
 --- !u!1 &1917257892287724502
 GameObject:
@@ -469,12 +454,6 @@ MonoBehaviour:
   damageableHit:
     m_PersistentCalls:
       m_Calls: []
-  damageableDeath:
-    m_PersistentCalls:
-      m_Calls: []
-  healthChanged:
-    m_PersistentCalls:
-      m_Calls: []
   _maxHealth: 0
   _health: 100
   _isAlive: 1
@@ -576,7 +555,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: -0.15, y: 0}
+  m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -586,7 +565,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 0.58107185, y: 1}
+  m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
 --- !u!50 &8045938670052667921
 Rigidbody2D:

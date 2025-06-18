@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using UnityEngine;
 
 
-[RequireComponent(typeof(Rigidbody2D), typeof(TouchingDirections_Old))]
+[RequireComponent(typeof(Rigidbody2D), typeof(TouchingDirections))]
     public class PlayerMovement : MonoBehaviour
     {
         public float walkSpeed = 5f;
@@ -16,7 +16,7 @@ using UnityEngine;
 
         private Rigidbody2D rb;
         private Animator animator;
-        private TouchingDirections_Old touching;
+        private TouchingDirections touching;
 
         private bool isMoving;
         private bool isRunning;
@@ -26,7 +26,7 @@ using UnityEngine;
         {
             rb = GetComponent<Rigidbody2D>();
             animator = GetComponent<Animator>();
-            touching = GetComponent<TouchingDirections_Old>();
+            touching = GetComponent<TouchingDirections>();
         }
 
         public void Move(Vector2 input)
