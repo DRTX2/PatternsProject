@@ -6,8 +6,8 @@ using UnityEngine;
 /// </summary>
 [RequireComponent(
     typeof(Rigidbody2D),
-    typeof(TouchingDirections),
-    typeof(Damageable)
+    typeof(TouchingDirections_Old),
+    typeof(Damageable_old)
     )]
 public class Knight : MonoBehaviour
 {
@@ -25,13 +25,13 @@ public class Knight : MonoBehaviour
     /// <summary>
     /// Zona de detección para identificar objetivos cercanos (por ejemplo, el jugador).
     /// </summary>
-    public DetectionZone attackZone;
-    public DetectionZone cliffDetectionZone;
+    public DetectionZone_old attackZone;
+    public DetectionZone_old cliffDetectionZone;
 
     // Referencia al Rigidbody2D para controlar el movimiento físico.
     Rigidbody2D rb;
     // Referencia al componente TouchingDirections para saber si está tocando suelo, pared o techo.
-    TouchingDirections touchingDirections;
+    TouchingDirections_Old touchingDirections;
     // Referencia al Animator para controlar las animaciones.
     Animator animator;
 
@@ -45,7 +45,7 @@ public class Knight : MonoBehaviour
     // Vector que representa la dirección de movimiento en el eje X.
     private Vector2 walkDirectionVector = Vector2.right;
 
-    Damageable damageable;
+    Damageable_old damageable;
 
 
     /// <summary>
@@ -100,11 +100,11 @@ public class Knight : MonoBehaviour
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
-        touchingDirections = GetComponent<TouchingDirections>();
+        touchingDirections = GetComponent<TouchingDirections_Old>();
         animator = GetComponent<Animator>();
         // Inicializa el parámetro de dirección al inicio (opcional, si usas un parámetro de dirección en el Animator)
         animator.SetFloat("moveX", walkDirectionVector.x);
-        damageable = GetComponent<Damageable>();
+        damageable = GetComponent<Damageable_old>();
 
     }
     public float AttackCooldown

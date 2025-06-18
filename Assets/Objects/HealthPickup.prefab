@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 3288663033470013453}
   - component: {fileID: 7249477997119068376}
   - component: {fileID: 2017063823118442626}
+  - component: {fileID: 6403470895788415543}
   m_Layer: 12
   m_Name: HealthPickup
   m_TagString: Untagged
@@ -97,7 +98,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8851418122273575852}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e156bd5aa8b6844448fc68c4928aa52a, type: 3}
   m_Name: 
@@ -237,3 +238,16 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &6403470895788415543
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8851418122273575852}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 63fc6b57bd3a2584ead3056d2d832d60, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  healAmount: 20

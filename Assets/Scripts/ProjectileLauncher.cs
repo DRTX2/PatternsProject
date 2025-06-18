@@ -20,7 +20,5 @@ public class ProjectileLauncher : MonoBehaviour
         );
         Debug.Log("Posición flecha: " + projectile.transform.position);
         Debug.Log("Escala flecha: " + projectile.transform.localScale);
-
-
     }
 }
