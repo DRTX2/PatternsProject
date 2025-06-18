@@ -27,7 +27,7 @@ public class HealthText : MonoBehaviour
         textTransform.position+= moveSpeed * Time.deltaTime;
         timeElapsed += Time.deltaTime;
 
-        if(timeElapsed < timeToFade)
+        if(timeElapsed < timeToFade) 
         {
             float fadeAlpha = startColor.a * (1 - (timeElapsed / timeToFade));
             textMeshPro.color = new Color(startColor.r, startColor.g, startColor.b, fadeAlpha);
