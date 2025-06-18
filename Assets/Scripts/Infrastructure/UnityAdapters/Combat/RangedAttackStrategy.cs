@@ -9,6 +9,6 @@
     public void ExecuteAttack(IAnimatorAdapter animator)
     {
         animator.SetTrigger(AnimationStrings.rangedAttackTrigger);
-        _projectileSpawner.FireProjectile();
+        //_projectileSpawner.FireProjectile();
     }
 }

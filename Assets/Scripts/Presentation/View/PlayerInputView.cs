@@ -15,6 +15,7 @@ public class PlayerInputView : MonoBehaviour
     {
         _inputReciver = inputReciver;
         _inputActions = new PlayerInputActions();
+        _inputActions.Player.Jump.started += OnJump;
         _inputActions.Player.Enable();
     }
 
@@ -27,21 +28,18 @@ public class PlayerInputView : MonoBehaviour
         _inputReciver.OnRunInput(running);
     }
 
-    public void OnMove(InputAction.CallbackContext context)
+    /*public void OnMove(InputAction.CallbackContext context)
     {
         if (context.performed || context.canceled)
         {
             float direction = context.ReadValue<Vector2>().x;
             _inputReciver.OnMoveInput(direction);
         }
-    }
+    }*/
 
     public void OnJump(InputAction.CallbackContext context)
     {
-        if (context.started)
-        {
-            _inputReciver.OnJumpInput();
-        }
+        _inputReciver?.OnJumpInput();
     }
 
     public void OnMeleeAttack(InputAction.CallbackContext context)
