@@ -49,15 +49,6 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
-                },
-                {
-                    "name": "RangeAttack",
-                    "type": "Button",
-                    "id": "bf989aa0-3b09-4ce0-84e9-ce0203a5334d",
-                    "expectedControlType": "",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -256,17 +247,6 @@
                     "processors": "",
                     "groups": ";Keyboard&Mouse",
                     "action": "Jump",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "373c5460-4e16-4c7b-91a4-ea1bae8e97f3",
-                    "path": "<Keyboard>/f",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": ";Keyboard&Mouse",
-                    "action": "RangeAttack",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

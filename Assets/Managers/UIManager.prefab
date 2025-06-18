@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 3255013029261926227}
   - component: {fileID: 1525398001261872977}
-  - component: {fileID: 8030392806737761806}
   m_Layer: 0
   m_Name: UIManager
   m_TagString: Untagged
@@ -40,24 +39,9 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1815179956925579815}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 502543d37e511574d85b0750df871f49, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  damageTextPrefab: {fileID: 3246386216629745714, guid: 1d6b89fbec218a14783115031243065b, type: 3}
-  healthTextPrefab: {fileID: 3246386216629745714, guid: 263490ddf6a4fd247ba468cba25b74e8, type: 3}
-  gameCanvas: {fileID: 0}
---- !u!114 &8030392806737761806
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1815179956925579815}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c38ba4937a80cb94696746f08c5f0022, type: 3}
+  m_Script: {fileID: 11500000, guid: 502543d37e511574d85b0750df871f49, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   damageTextPrefab: {fileID: 3246386216629745714, guid: 1d6b89fbec218a14783115031243065b, type: 3}
