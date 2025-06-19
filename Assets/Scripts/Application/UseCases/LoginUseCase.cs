@@ -9,9 +9,14 @@ using Assets.Scripts.Domain.Interfaces;
 
 namespace Assets.Scripts.Application.UseCases
 {
-    internal class LoginUseCase
+    public class LoginUseCase
     {
         private readonly IUserRepository _repository;
+
+        public LoginUseCase(IUserRepository repository)
+        {
+            _repository = repository;
+        }
 
         public (UserData? data, List<string> errors) Execute(LoginDto loginDto)
         {
@@ -26,9 +31,15 @@ namespace Assets.Scripts.Application.UseCases
                 Password = loginDto.Password
             };
 
-            var result = _repository.Login(entity);
-
-            return (result, new List<string>());
+            try
+            {
+                var result = _repository.Login(entity);
+                return (result, new List<string>());
+            }
+            catch (Exception ex)
+            {
+                return (null, new List<string> { ex.Message });
+            }
         }
     }
 }

@@ -1,25 +1,30 @@
-﻿using Assets.Scripts.Infrastructure.Data.mysql;
-using UnityEngine;
+﻿using UnityEngine;
 using Zenject;
 using System.Data;
-using Assets.Scripts.Infrastructure.Data.sqlite; // Necesario si estás usando IDbConnection
+using Assets.Scripts.Infrastructure.Data.sqlite;
+using Assets.Config;
+using Assets.Scripts.Domain.Interfaces;
+using Assets.Scripts.Infrastructure.Repositories;
+using Assets.Scripts.Application.UseCases;
+using Assets.Scripts.Presentation.Views;
+using Assets.Scripts.Presentation.Controllers;
+using Assets.Scripts.Presentation.Interfaces; 
 
 public class GlobalInstaller : MonoInstaller
 {
     public override void InstallBindings()
     {
-       
-        var dbPath = Application.dataPath + "/Database/unityGame.db";
+        Envs.Load();
+        var dbPath = Envs.SQLITE_PATH;
         var options = new SqliteOptions(dbPath);
-
         try
         {
             SqliteDatabase.GetInstance().Initialize(options);
 
             using (var connection = SqliteDatabase.GetInstance().GetConnection())
             {
-                connection.Open(); // 🔥 ¡esto es importante!
-                Debug.Log("✅ Conexión a SQLite exitosa.");
+                connection.Open();
+                Debug.Log("✅ Conexión a SQLite exitosa: " + dbPath);
                 connection.Close();
             }
         }
@@ -27,5 +32,9 @@ public class GlobalInstaller : MonoInstaller
         {
             Debug.LogError("❌ Error al conectar con SQLite: " + ex.Message);
         }
+        Container.Bind<IUserRepository>().To<UserRepositorySqlite>().AsSingle();
+        Container.Bind<LoginUseCase>().AsTransient();
+        Container.Bind<RegisterUseCase>().AsTransient();
+
     }
 }

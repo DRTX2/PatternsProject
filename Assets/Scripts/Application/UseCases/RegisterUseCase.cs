@@ -9,10 +9,15 @@ using Assets.Scripts.Domain.Interfaces;
 
 namespace Assets.Scripts.Application.UseCases
 {
-    internal class RegisterUseCase
+    public class RegisterUseCase
     {
 
         private readonly IUserRepository _repository;
+
+        public RegisterUseCase(IUserRepository repository)
+        {
+            _repository = repository;
+        }
 
         public (UserData? data, List<string> errors) Execute(RegisterDto registerDto)
         {
@@ -26,10 +31,15 @@ namespace Assets.Scripts.Application.UseCases
                 UserName = registerDto.UserName,
                 Password = registerDto.Password
             };
-
-            var result = _repository.Register(entity);
-
-            return (result, new List<string>());
+            try
+            {
+                var result = _repository.Register(entity);
+                return (result, new List<string>());
+            }
+            catch (Exception ex)
+            {
+                return (null, new List<string> { ex.Message });
+            }
         }
     }
 }

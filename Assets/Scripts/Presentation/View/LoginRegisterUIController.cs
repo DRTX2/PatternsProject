@@ -3,13 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Assets.Scripts.Presentation.Controllers;
+using Assets.Scripts.Presentation.Interfaces;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Assets.Scripts.Presentation.Controllers
+namespace Assets.Scripts.Presentation.Views
 {
-    public class LoginRegisterUIController : MonoBehaviour
+    public class LoginRegisterUIController : MonoBehaviour, IPresenter
     {
         [SerializeField] private GameObject registerPanel;
         [SerializeField] private GameObject loginPanel;
@@ -37,7 +39,7 @@ namespace Assets.Scripts.Presentation.Controllers
         {
             loginPanel.SetActive(false);
             registerPanel.SetActive(true);
-            errorPanel.SetActive(false); 
+            errorPanel.SetActive(false);
         }
 
         public void ShowErrors(List<string> errors)

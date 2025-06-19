@@ -2,10 +2,9 @@
 using System.Data;
 using Assets.Config;
 using Assets.Scripts.Domain.Entities;
-using Assets.Scripts.Infrastructure.Data.sqlite;
 using Mono.Data.Sqlite;
 
-namespace Assets.Scripts.Infrastructure.Data.mysql
+namespace Assets.Scripts.Infrastructure.Data.sqlite
 {
     public class UserModel
     {

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Assets.Scripts.Domain.Dtos
 {
-    internal class LoadGameDto
+    public class LoadGameDto
     {
     }
 }

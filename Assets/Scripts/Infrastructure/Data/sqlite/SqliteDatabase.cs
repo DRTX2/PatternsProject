@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Data;
 using System.IO;
-using Assets.Scripts.Infrastructure.Data.mysql;
 using Mono.Data.Sqlite;
 
 namespace Assets.Scripts.Infrastructure.Data.sqlite

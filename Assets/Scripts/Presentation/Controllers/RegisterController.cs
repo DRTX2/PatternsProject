@@ -3,46 +3,45 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Assets.Scripts.Application.Session;
 using Assets.Scripts.Application.UseCases;
 using Assets.Scripts.Domain.Dtos;
+using Assets.Scripts.Presentation.Interfaces;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace Assets.Scripts.Presentation.Controllers
 {
-    internal class RegisterController : MonoBehaviour
+    public class RegisterController
     {
-        [SerializeField] private TMP_InputField usernameInput;
-        [SerializeField] private TMP_InputField passwordInput;
-        [SerializeField] private TMP_InputField confirmInput;
-        [SerializeField] private LoginRegisterUIController uiController;
+        private readonly RegisterUseCase _useCase;
+        private readonly IPresenter _presenter;
 
-        private RegisterUseCase _useCase;
-
-        public void Init(RegisterUseCase useCase)
+        public RegisterController(RegisterUseCase useCase, IPresenter presenter)
         {
             _useCase = useCase;
+            _presenter = presenter;
         }
 
-        public void OnRegisterClick()
+        public void Register(string username, string password, string confirmPassword)
         {
             var dto = new RegisterDto
             {
-                UserName = usernameInput.text,
-                Password = passwordInput.text,
-                ConfirmPassword = confirmInput.text
+                UserName = username,
+                Password = password,
+                ConfirmPassword = confirmPassword
             };
 
             var (user, errors) = _useCase.Execute(dto);
             if (errors.Count > 0)
             {
-                uiController.ShowErrors(errors);
+                _presenter.ShowErrors(errors);
             }
             else
             {
-                uiController.HideErrors();
-                Debug.Log("Registro exitoso: " + user.UserName);
-              
+                Session.Login(user);
+                SceneManager.LoadScene(SceneNames.Get(SceneName.Initial_MenuScene));
             }
         }
     }

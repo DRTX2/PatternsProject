@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Assets.Scripts.Domain.Dtos
 {
-    internal class RegisterDto
+    public class RegisterDto
     {
 
         public String UserName { get; set; }
@@ -15,17 +15,22 @@ namespace Assets.Scripts.Domain.Dtos
 
         public String ConfirmPassword { get; set; }
 
-        public List<String> Validate() { 
-        
-        var errors = new List<string>();
+        public List<String> Validate() {
+
+            var errors = new List<string>();
+
             if (string.IsNullOrEmpty(UserName))
-                errors.Add("Username is required.");
+                errors.Add("El nombre de usuario es obligatorio.");
+
             if (string.IsNullOrEmpty(Password))
-                errors.Add("Password is required.");
+                errors.Add("La contraseña es obligatoria.");
+
             if (Password != ConfirmPassword)
-                errors.Add("Passwords do not match.");
+                errors.Add("Las contraseñas no coinciden.");
+
             if (Password.Length < 6)
-                errors.Add("Password must be at least 6 characters long.");
+                errors.Add("La contraseña debe tener al menos 6 caracteres.");
+
             return errors;
 
         }

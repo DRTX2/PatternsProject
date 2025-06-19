@@ -3,45 +3,48 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Assets.Scripts.Application.Session;
 using Assets.Scripts.Application.UseCases;
 using Assets.Scripts.Domain.Dtos;
+using Assets.Scripts.Presentation.Interfaces;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace Assets.Scripts.Presentation.Controllers
 {
-    internal class LoginController
+    public class LoginController
     {
-        [SerializeField] private TMP_InputField inputUserName;
-        [SerializeField] private TMP_InputField inputPassword;
-        [SerializeField] private LoginRegisterUIController uiController;
+        private readonly LoginUseCase _useCase;
+        private readonly IPresenter _presenter;
 
-        private LoginUseCase _useCase;
-
-        public void Init(LoginUseCase useCase)
+        public LoginController(LoginUseCase useCase, IPresenter presenter)
         {
             _useCase = useCase;
+            _presenter = presenter;
         }
 
-        public void OnLoginClick()
+        public void Login(string username, string password)
         {
             var dto = new LoginDto
             {
-                UserName = inputUserName.text,
-                Password = inputPassword.text
+                UserName = username,
+                Password = password
             };
 
             var (user, errors) = _useCase.Execute(dto);
+
             if (errors.Count > 0)
-            {
-                uiController.ShowErrors(errors);
-            }
+                _presenter.ShowErrors(errors);
             else
             {
-                uiController.HideErrors();
-                Debug.Log("Login exitoso: " + user.UserName);
-              
+                //_presenter.HideErrors();
+                //UnityEngine.Debug.Log("Login exitoso: " + user.UserName);
+                Session.Login(user);
+                SceneManager.LoadScene(SceneNames.Get(SceneName.Initial_MenuScene));
             }
         }
     }
+
+
 }

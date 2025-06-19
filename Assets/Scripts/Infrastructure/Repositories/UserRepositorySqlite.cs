@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Assets.Scripts.Domain.Entities;
 using Assets.Scripts.Domain.Interfaces;
-using Assets.Scripts.Infrastructure.Data.mysql;
+using Assets.Scripts.Infrastructure.Data.sqlite;
 
 namespace Assets.Scripts.Infrastructure.Repositories
 {
