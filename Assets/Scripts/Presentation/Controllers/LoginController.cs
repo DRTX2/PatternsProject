@@ -40,9 +40,9 @@ namespace Assets.Scripts.Presentation.Controllers
                 _presenter.ShowErrors(errors);
             else
             {
-                //_presenter.HideErrors();
-                //UnityEngine.Debug.Log("Login exitoso: " + user.UserName);
+               
                 _session.Login(user);
+                Debug.Log($"[Login] Session Hash Desde login: {_session.GetHashCode()}");
                 SceneManager.LoadScene(SceneNames.Get(SceneName.Initial_MenuScene));
             }
         }

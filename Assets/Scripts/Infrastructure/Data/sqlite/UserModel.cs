@@ -43,14 +43,23 @@ namespace Assets.Scripts.Infrastructure.Data.sqlite
 
             using var cmd = conn.CreateCommand();
             cmd.CommandText = @"
-                INSERT INTO users (username, password)
-                VALUES (@username, @password);";
+        INSERT INTO users (username, password)
+        VALUES (@username, @password);";
 
             AddParameter(cmd, "@username", entity.UserName);
             AddParameter(cmd, "@password", Bcrypt.Encrypt(entity.Password));
             cmd.ExecuteNonQuery();
 
-            return entity;
+        
+            using var selectCmd = conn.CreateCommand();
+            selectCmd.CommandText = "SELECT * FROM users WHERE username = @username LIMIT 1";
+            AddParameter(selectCmd, "@username", entity.UserName);
+
+            using var reader = selectCmd.ExecuteReader();
+            if (reader.Read())
+                return MapToUserData(reader);
+
+            throw new Exception("No se pudo recuperar el usuario después del registro.");
         }
 
         public UserData Login(UserData entity)
@@ -102,7 +111,7 @@ namespace Assets.Scripts.Infrastructure.Data.sqlite
                     position_y = @y,
                     enemies_eliminated = @enemies,
                     health = @health
-                WHERE username = @username";
+                  WHERE id = @id";
 
             AddParameter(cmd, "@level", entity.CurrentLevel);
             AddParameter(cmd, "@score", entity.Score);
@@ -110,7 +119,7 @@ namespace Assets.Scripts.Infrastructure.Data.sqlite
             AddParameter(cmd, "@y", entity.PositionY);
             AddParameter(cmd, "@enemies", entity.EnemiesEliminated);
             AddParameter(cmd, "@health", entity.Health);
-            AddParameter(cmd, "@username", entity.UserName);
+            AddParameter(cmd, "@id", entity.Id);
 
             return cmd.ExecuteNonQuery() > 0;
         }
@@ -157,7 +166,8 @@ namespace Assets.Scripts.Infrastructure.Data.sqlite
                 PositionX = Convert.ToSingle(reader["position_x"]),
                 PositionY = Convert.ToSingle(reader["position_y"]),
                 EnemiesEliminated = Convert.ToInt32(reader["enemies_eliminated"]),
-                Health = Convert.ToInt32(reader["health"])
+                Health = Convert.ToInt32(reader["health"]),
+                Id = Convert.ToInt32(reader["id"])
             };
         }
 

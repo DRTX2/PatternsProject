@@ -4,8 +4,8 @@
 
     public int Score { get; set; }
 
-    public float PositionX { get; private set; }
-    public float PositionY { get; private set; }
+    public float PositionX { get;  set; }
+    public float PositionY { get; set; }
 
     public int EnemiesEliminated { get; private set; }
     public bool IsAlive => Health.Current > 0;
@@ -17,7 +17,7 @@
     public Player(float maxHealth, float currentHealth, float positionX, float positionY, int enemiesEliminated, int score)
     {
         Health = new Health(maxHealth);
-        Health.ForceSetCurrent(currentHealth); // este método lo agregás si no lo tenés
+        Health.ForceSetCurrent(currentHealth); 
         PositionX = positionX;
         PositionY = positionY;
         EnemiesEliminated = enemiesEliminated;

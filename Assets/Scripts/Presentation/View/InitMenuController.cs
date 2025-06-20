@@ -12,20 +12,6 @@ public class InitMenuController : MonoBehaviour
     private void Start()
     {
         var user = _session.CurrentUser;
-        if (user == null)
-        {
-            Debug.LogWarning("❌ No hay usuario en sesión.");
-            return;
-        }
-
-        // Debug: mostrar todos los datos del usuario en consola
-        Debug.Log($"✅ Usuario logueado:\n" +
-                  $"Username: {user.UserName}\n" +
-                  $"Nivel actual: {user.CurrentLevel}\n" +
-                  $"Score: {user.Score}\n" +
-                  $"Posición: ({user.PositionX}, {user.PositionY})\n" +
-                  $"Enemigos eliminados: {user.EnemiesEliminated}\n" +
-                  $"Vida: {user.Health}");
 
         if (user.CurrentLevel == null)
             playTxt.SetText("Nuevo Juego");
@@ -34,7 +20,7 @@ public class InitMenuController : MonoBehaviour
     }
     public void OnPlay()
     {
-        SceneManager.LoadScene("GameplayScene");
+    SceneManager.LoadScene("GameplayScene");
 
     }
 

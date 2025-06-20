@@ -8,16 +8,16 @@ public class GameInstaller : MonoInstaller
     [Inject] private Session _session;
     public override void InstallBindings()
     {
-        var user = _session.CurrentUser;
+            var user = _session.CurrentUser;
 
-        var player = new Player(
-            maxHealth: 100,
-            currentHealth: user.Health,
-            positionX: user.PositionX,
-            positionY: user.PositionY,
-            enemiesEliminated: user.EnemiesEliminated,
-            score: user.Score
-        );
+            var player = new Player(
+                maxHealth: 100,
+                currentHealth: user.Health,
+                positionX: user.PositionX,
+                positionY: user.PositionY,
+                enemiesEliminated: user.EnemiesEliminated,
+                score: user.Score
+            );
 
         Container.Bind<Player>().FromInstance(player).AsSingle();
 

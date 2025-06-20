@@ -22,7 +22,7 @@ public class PlayerController : MonoBehaviour
     Damageable_old damageable;
     private void Start()
     {
-        transform.position = new Vector3(_player.PositionX, _player.PositionY, 0);
+        transform.position = new Vector3(_player.PositionX,10, 0);
     }
     public float CurrentMoveSpeed
     {

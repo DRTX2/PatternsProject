@@ -14,8 +14,6 @@ namespace Assets.Scripts.Domain.Interfaces
 
         UserData Login(UserData entity);
 
-        UserData LoadGame(int id);
-
        bool SaveGame(UserData entity);
 
         void RestartGame(int id);

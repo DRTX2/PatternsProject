@@ -5,8 +5,10 @@ using System.Text;
 using System.Threading.Tasks;
 using Assets.Scripts.Domain.Entities;
 
+
 namespace Assets.Scripts.Application.Session
 {
+
     public class Session
     {
         public UserData? CurrentUser { get; private set; }
