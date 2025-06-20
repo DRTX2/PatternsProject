@@ -15,6 +15,13 @@ public class PlayerMovementMB : MonoBehaviour, IMovable
 
     private bool _facingRight = true;
 
+
+    private void Start()
+    {
+        Vector2 pos = new Vector2(_player.PositionX, _player.PositionY);
+        transform.position = pos;
+    }
+
     private void Awake()
     {
         _animator = new AnimatorAdapter(GetComponent<Animator>());
@@ -25,7 +32,7 @@ public class PlayerMovementMB : MonoBehaviour, IMovable
     public void Move(float x)
     {
         if (!_player.CanMove) return;
-        Debug.Log($"Moving player with input: {x}");
+      //  Debug.Log($"Moving player with input: {x}");
         float speed = _player.IsRunning && _touching.IsGrounded ? runSpeed : walkSpeed;
         _physics.SetVelocity(new Vector2(x * speed, _physics.GetVelocity().y));
         _animator.SetBool(AnimationStrings.isMoving, Mathf.Abs(x) > 0.01f);
@@ -58,5 +65,12 @@ public class PlayerMovementMB : MonoBehaviour, IMovable
             _facingRight = shouldFaceRight;
             transform.localScale = new Vector3(-transform.localScale.x, transform.localScale.y, transform.localScale.z);
         }
+    }
+
+    private void Update()
+    {
+        Vector2 pos = transform.position;
+        _player.PositionX = pos.x;
+        _player.PositionY = pos.y;
     }
 }
