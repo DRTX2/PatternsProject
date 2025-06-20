@@ -9,6 +9,7 @@ namespace Assets.Scripts.Domain.Entities
 {
     public class UserData
     {
+        public int Health { get; set; }
         public string UserName { get; set; }
         public string Password { get; set; }
         public string CurrentLevel { get; set; }
@@ -17,7 +18,7 @@ namespace Assets.Scripts.Domain.Entities
         public float PositionY { get; set; }
         public int EnemiesEliminated { get; set; }
 
-        public UserData(string userName, string password, string currentLevel, int score, float positionX,float positionY, int enemiesEliminated)
+        public UserData(string userName, string password, string currentLevel, int score, float positionX,float positionY, int enemiesEliminated, int health)
         {
             UserName = userName;
             Password = password;
@@ -26,6 +27,7 @@ namespace Assets.Scripts.Domain.Entities
             PositionX = positionX;
             PositionY= positionY;
             EnemiesEliminated = enemiesEliminated;
+            Health = health;
         }
 
         public UserData() { }

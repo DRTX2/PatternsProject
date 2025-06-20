@@ -8,28 +8,27 @@ namespace Assets.Scripts.Infrastructure.Data.sqlite
 {
     public class UserModel
     {
-        private readonly IDbConnection _conn;
-
         public UserModel()
         {
-            _conn = SqliteDatabase.GetInstance().GetConnection();
-            _conn.Open();
-            CreateTable();
+            using var conn = SqliteDatabase.GetInstance().GetConnection();
+            conn.Open();
+            CreateTable(conn);
         }
 
-        private void CreateTable()
+        private void CreateTable(IDbConnection conn)
         {
-            using var cmd = _conn.CreateCommand();
+            using var cmd = conn.CreateCommand();
             cmd.CommandText = @"
                 CREATE TABLE IF NOT EXISTS users (
                     id INTEGER PRIMARY KEY AUTOINCREMENT,
                     username TEXT NOT NULL,
                     password TEXT NOT NULL,
                     current_level TEXT,
-                    score INTEGER,
-                    position_x REAL,
-                    position_y REAL,
-                    enemies_eliminated INTEGER
+                    score INTEGER DEFAULT 0,
+                    position_x REAL DEFAULT 0,
+                    position_y REAL DEFAULT 0,
+                    enemies_eliminated INTEGER DEFAULT 0,
+                    health INTEGER DEFAULT 100
                 );";
             cmd.ExecuteNonQuery();
         }
@@ -39,7 +38,10 @@ namespace Assets.Scripts.Infrastructure.Data.sqlite
             if (UserExists(entity.UserName))
                 throw new Exception("Ya existe ese usuario.");
 
-            var cmd = _conn.CreateCommand();
+            using var conn = SqliteDatabase.GetInstance().GetConnection();
+            conn.Open();
+
+            using var cmd = conn.CreateCommand();
             cmd.CommandText = @"
                 INSERT INTO users (username, password)
                 VALUES (@username, @password);";
@@ -53,7 +55,10 @@ namespace Assets.Scripts.Infrastructure.Data.sqlite
 
         public UserData Login(UserData entity)
         {
-            var cmd = _conn.CreateCommand();
+            using var conn = SqliteDatabase.GetInstance().GetConnection();
+            conn.Open();
+
+            using var cmd = conn.CreateCommand();
             cmd.CommandText = "SELECT * FROM users WHERE username = @username LIMIT 1";
             AddParameter(cmd, "@username", entity.UserName);
 
@@ -69,7 +74,10 @@ namespace Assets.Scripts.Infrastructure.Data.sqlite
 
         public UserData LoadGame(int id)
         {
-            var cmd = _conn.CreateCommand();
+            using var conn = SqliteDatabase.GetInstance().GetConnection();
+            conn.Open();
+
+            using var cmd = conn.CreateCommand();
             cmd.CommandText = "SELECT * FROM users WHERE id = @id";
             AddParameter(cmd, "@id", id);
 
@@ -82,14 +90,18 @@ namespace Assets.Scripts.Infrastructure.Data.sqlite
 
         public bool SaveGame(UserData entity)
         {
-            var cmd = _conn.CreateCommand();
+            using var conn = SqliteDatabase.GetInstance().GetConnection();
+            conn.Open();
+
+            using var cmd = conn.CreateCommand();
             cmd.CommandText = @"
                 UPDATE users SET
                     current_level = @level,
                     score = @score,
                     position_x = @x,
                     position_y = @y,
-                    enemies_eliminated = @enemies
+                    enemies_eliminated = @enemies,
+                    health = @health
                 WHERE username = @username";
 
             AddParameter(cmd, "@level", entity.CurrentLevel);
@@ -97,6 +109,7 @@ namespace Assets.Scripts.Infrastructure.Data.sqlite
             AddParameter(cmd, "@x", entity.PositionX);
             AddParameter(cmd, "@y", entity.PositionY);
             AddParameter(cmd, "@enemies", entity.EnemiesEliminated);
+            AddParameter(cmd, "@health", entity.Health);
             AddParameter(cmd, "@username", entity.UserName);
 
             return cmd.ExecuteNonQuery() > 0;
@@ -104,27 +117,35 @@ namespace Assets.Scripts.Infrastructure.Data.sqlite
 
         public void RestartGame(int id)
         {
-            var cmd = _conn.CreateCommand();
+            using var conn = SqliteDatabase.GetInstance().GetConnection();
+            conn.Open();
+
+            using var cmd = conn.CreateCommand();
             cmd.CommandText = @"
                 UPDATE users SET
                     current_level = NULL,
                     score = 0,
                     position_x = 0,
                     position_y = 0,
-                    enemies_eliminated = 0
+                    enemies_eliminated = 0,
+                    health = 100
                 WHERE id = @id";
+
             AddParameter(cmd, "@id", id);
             cmd.ExecuteNonQuery();
         }
 
         private bool UserExists(string username)
         {
-            var cmd = _conn.CreateCommand();
+            using var conn = SqliteDatabase.GetInstance().GetConnection();
+            conn.Open();
+
+            using var cmd = conn.CreateCommand();
             cmd.CommandText = "SELECT COUNT(*) FROM users WHERE username = @username";
             AddParameter(cmd, "@username", username);
+
             return Convert.ToInt32(cmd.ExecuteScalar()) > 0;
         }
-
         private UserData MapToUserData(IDataReader reader)
         {
             return new UserData
@@ -135,7 +156,8 @@ namespace Assets.Scripts.Infrastructure.Data.sqlite
                 Score = Convert.ToInt32(reader["score"]),
                 PositionX = Convert.ToSingle(reader["position_x"]),
                 PositionY = Convert.ToSingle(reader["position_y"]),
-                EnemiesEliminated = Convert.ToInt32(reader["enemies_eliminated"])
+                EnemiesEliminated = Convert.ToInt32(reader["enemies_eliminated"]),
+                Health = Convert.ToInt32(reader["health"])
             };
         }
 

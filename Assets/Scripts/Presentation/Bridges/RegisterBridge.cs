@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Assets.Scripts.Application.Session;
 using Assets.Scripts.Application.UseCases;
 using Assets.Scripts.Presentation.Controllers;
 using Assets.Scripts.Presentation.Views;
@@ -14,21 +15,11 @@ namespace Assets.Scripts.Presentation.Bridges
 {
     public class RegisterBridge : MonoBehaviour
     {
-        [Inject] private RegisterUseCase useCase;
+        [Inject] private RegisterController controller;
 
         [SerializeField] private TMP_InputField usernameInput;
         [SerializeField] private TMP_InputField passwordInput;
         [SerializeField] private TMP_InputField confirmInput;
-        [SerializeField] private LoginRegisterUIController uiController;
-
-    
-
-        private RegisterController controller;
-
-        void Start()
-        {
-            controller = new RegisterController(useCase, uiController);
-        }
 
         public void OnRegisterClick()
         {

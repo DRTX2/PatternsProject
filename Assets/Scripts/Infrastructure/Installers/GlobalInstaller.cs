@@ -8,7 +8,8 @@ using Assets.Scripts.Infrastructure.Repositories;
 using Assets.Scripts.Application.UseCases;
 using Assets.Scripts.Presentation.Views;
 using Assets.Scripts.Presentation.Controllers;
-using Assets.Scripts.Presentation.Interfaces; 
+using Assets.Scripts.Presentation.Interfaces;
+using Assets.Scripts.Application.Session;
 
 public class GlobalInstaller : MonoInstaller
 {
@@ -33,8 +34,7 @@ public class GlobalInstaller : MonoInstaller
             Debug.LogError("❌ Error al conectar con SQLite: " + ex.Message);
         }
         Container.Bind<IUserRepository>().To<UserRepositorySqlite>().AsSingle();
-        Container.Bind<LoginUseCase>().AsTransient();
-        Container.Bind<RegisterUseCase>().AsTransient();
+        Container.Bind<Session>().AsSingle().NonLazy();
 
     }
 }

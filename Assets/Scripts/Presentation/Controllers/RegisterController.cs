@@ -10,6 +10,7 @@ using Assets.Scripts.Presentation.Interfaces;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using static System.Collections.Specialized.BitVector32;
 
 namespace Assets.Scripts.Presentation.Controllers
 {
@@ -17,11 +18,12 @@ namespace Assets.Scripts.Presentation.Controllers
     {
         private readonly RegisterUseCase _useCase;
         private readonly IPresenter _presenter;
-
-        public RegisterController(RegisterUseCase useCase, IPresenter presenter)
+        private readonly Session _session;
+        public RegisterController(RegisterUseCase useCase, IPresenter presenter, Session session)
         {
             _useCase = useCase;
             _presenter = presenter;
+            _session = session;
         }
 
         public void Register(string username, string password, string confirmPassword)
@@ -40,7 +42,7 @@ namespace Assets.Scripts.Presentation.Controllers
             }
             else
             {
-                Session.Login(user);
+               _session.Login(user);
                 SceneManager.LoadScene(SceneNames.Get(SceneName.Initial_MenuScene));
             }
         }

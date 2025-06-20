@@ -10,6 +10,7 @@ using Assets.Scripts.Presentation.Interfaces;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using static System.Collections.Specialized.BitVector32;
 
 namespace Assets.Scripts.Presentation.Controllers
 {
@@ -17,11 +18,12 @@ namespace Assets.Scripts.Presentation.Controllers
     {
         private readonly LoginUseCase _useCase;
         private readonly IPresenter _presenter;
-
-        public LoginController(LoginUseCase useCase, IPresenter presenter)
+        private readonly Session _session;
+        public LoginController(LoginUseCase useCase, IPresenter presenter, Session session)
         {
             _useCase = useCase;
             _presenter = presenter;
+            _session = session;
         }
 
         public void Login(string username, string password)
@@ -40,7 +42,7 @@ namespace Assets.Scripts.Presentation.Controllers
             {
                 //_presenter.HideErrors();
                 //UnityEngine.Debug.Log("Login exitoso: " + user.UserName);
-                Session.Login(user);
+                _session.Login(user);
                 SceneManager.LoadScene(SceneNames.Get(SceneName.Initial_MenuScene));
             }
         }

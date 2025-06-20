@@ -7,20 +7,23 @@ using Assets.Scripts.Domain.Entities;
 
 namespace Assets.Scripts.Application.Session
 {
-    public static class Session
+    public class Session
     {
-        public static UserData? CurrentUser { get; private set; }
+        public UserData? CurrentUser { get; private set; }
 
-        public static void Login(UserData user)
+        public void Login(UserData user)
+
         {
+           
             CurrentUser = user;
         }
 
-        public static void Logout()
+        public void Logout()
         {
             CurrentUser = null;
         }
 
-        public static bool IsLoggedIn => CurrentUser != null;
+        public bool IsLoggedIn => CurrentUser != null;
     }
+
 }
