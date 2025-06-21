@@ -11,8 +11,9 @@ GameObject:
   - component: {fileID: 1557888072799449019}
   - component: {fileID: 3125821271686677075}
   - component: {fileID: 5954311882685956340}
+  - component: {fileID: 4896199913153363573}
   m_Layer: 10
-  m_Name: AttachDetectionZone
+  m_Name: AttackDetectionZone
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -40,7 +41,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 434296406388974660}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f7fdeb1981d1957469bedc6123d9ef2d, type: 3}
   m_Name: 
@@ -83,9 +84,28 @@ CapsuleCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0.22904968, y: -0.16851819}
-  m_Size: {x: 1.2215261, y: 1.2215264}
+  m_Offset: {x: 0.3158226, y: -0.16851819}
+  m_Size: {x: 1.6496124, y: 1.6496124}
   m_Direction: 0
+--- !u!114 &4896199913153363573
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 434296406388974660}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 474019ec819f0174fa5db6d83ee63a4f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  OnTargetDetected:
+    m_PersistentCalls:
+      m_Calls: []
+  NoRemainingTargets:
+    m_PersistentCalls:
+      m_Calls: []
+  _detected: []
 --- !u!1 &2916251769781083890
 GameObject:
   m_ObjectHideFlags: 0
@@ -98,9 +118,14 @@ GameObject:
   - component: {fileID: 3350074289239757218}
   - component: {fileID: 2465174565988699408}
   - component: {fileID: 2676726988017932430}
-  - component: {fileID: 6356472405119029669}
   - component: {fileID: 1465402770582942650}
   - component: {fileID: 5571506201000588733}
+  - component: {fileID: 7241341481021872549}
+  - component: {fileID: 5076538241444007993}
+  - component: {fileID: 1470477650062144289}
+  - component: {fileID: 3737555889035245819}
+  - component: {fileID: 2422017317444051232}
+  - component: {fileID: 8493165244643038611}
   m_Layer: 8
   m_Name: FlyingEye
   m_TagString: Untagged
@@ -245,41 +270,6 @@ CapsuleCollider2D:
   m_Offset: {x: 0.3446831, y: -0.13541007}
   m_Size: {x: 1.0744728, y: 1.2890906}
   m_Direction: 0
---- !u!114 &6356472405119029669
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2916251769781083890}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3ad3cf82416e4e146a4bc7d527611f43, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  damageableHit:
-    m_PersistentCalls:
-      m_Calls: []
-  damageableDeath:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 5571506201000588733}
-        m_TargetAssemblyTypeName: FlyingEye, Assembly-CSharp
-        m_MethodName: OnDeath
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  _maxHealth: 50
-  _health: 50
-  _isAlive: 1
-  isInvencible: 0
-  invincibilityTimer: 0.25
 --- !u!95 &1465402770582942650
 Animator:
   serializedVersion: 7
@@ -309,7 +299,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2916251769781083890}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fd9675e09131c0f4a9bc0405308db3c2, type: 3}
   m_Name: 
@@ -317,9 +307,94 @@ MonoBehaviour:
   flightSpeed: 3
   waypointReachedDistance: 0.1
   biteDetectionZone: {fileID: 3125821271686677075}
-  waypoints: []
   deathCollider: {fileID: 1880152831630722327}
+  waypoints: []
   _hasTarget: 0
+--- !u!114 &7241341481021872549
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2916251769781083890}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ac11536216838da49a8c04d9c40a92ce, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  attackView: {fileID: 4896199913153363573}
+--- !u!114 &5076538241444007993
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2916251769781083890}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4b25184bda0ab6c458e0bb01252f69ce, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  invincibilityDuration: 0.25
+  lockVelocityDuration: 0.35
+--- !u!114 &1470477650062144289
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2916251769781083890}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c927677ef8e4de346bac862e1423ca9a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &3737555889035245819
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2916251769781083890}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a752484ea47452342909fe5636cee44b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  waypoints: []
+  flightSpeed: 3
+  waypointReachedDistance: 0.1
+--- !u!114 &2422017317444051232
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2916251769781083890}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 08eca9f7688a0a24685b89133b020c8e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _scriptableObjectInstallers: []
+  _monoInstallers:
+  - {fileID: 8493165244643038611}
+  _installerPrefabs: []
+  _autoRun: 1
+  _kernel: {fileID: 0}
+--- !u!114 &8493165244643038611
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2916251769781083890}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d87f6b6e7e30174d9d5383af6dd04fa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 50
 --- !u!1 &4518262506481502770
 GameObject:
   m_ObjectHideFlags: 0
@@ -409,6 +484,7 @@ GameObject:
   - component: {fileID: 5950069078315300146}
   - component: {fileID: 5439878070242806684}
   - component: {fileID: 6960069749212178461}
+  - component: {fileID: 7835811636397883048}
   m_Layer: 0
   m_Name: BiteAttack
   m_TagString: Untagged
@@ -465,8 +541,8 @@ CapsuleCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: -0.23697853, y: -0.14218712}
-  m_Size: {x: 0.97395706, y: 0.97395706}
+  m_Offset: {x: 0.007282257, y: -0.2058214}
+  m_Size: {x: 1.4624786, y: 1.4624786}
   m_Direction: 0
 --- !u!114 &6960069749212178461
 MonoBehaviour:
@@ -475,10 +551,24 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6461247098102828558}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5c416490b20988249a35cc25b0e42c43, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   attackDamage: 15
+  knockback: {x: 0, y: 0}
+--- !u!114 &7835811636397883048
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6461247098102828558}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e3f074ca8212e904592bd06119a1a43d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage: 0.125
   knockback: {x: 0, y: 0}

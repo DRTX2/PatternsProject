@@ -11,7 +11,7 @@ public class AttackUseCase
         _factory = factory;
     }
 
-    public void HandleAttack(AttackType type)
+    public void HandleAttack(AttackAnimationType type)
     {
         var strategy = _factory.CreateStrategy(type);
         _attacker.Attack(strategy);

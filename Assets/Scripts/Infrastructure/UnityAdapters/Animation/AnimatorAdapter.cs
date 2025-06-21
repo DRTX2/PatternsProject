@@ -23,4 +23,14 @@ public class AnimatorAdapter : IAnimatorAdapter
     {
         _animator.SetTrigger(param);
     }
+
+    public bool GetBool(string param)
+    {
+        return _animator.GetBool(param);
+    }
+
+    public float GetFloat(string param)
+    {
+        return _animator.GetFloat(param);
+    }
 }

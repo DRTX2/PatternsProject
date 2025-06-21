@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 5124156807646808965}
   - component: {fileID: 3949100161818830303}
-  - component: {fileID: 3563789147027345543}
   - component: {fileID: 2806957111743922035}
   m_Layer: 10
   m_Name: SwordAttack
@@ -99,20 +98,6 @@ PolygonCollider2D:
       - {x: 0.86237943, y: -0.02016516}
       - {x: 0.8013623, y: 0.29642785}
   m_UseDelaunayMesh: 0
---- !u!114 &3563789147027345543
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1281335834607802989}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5c416490b20988249a35cc25b0e42c43, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  attackDamage: 20
-  knockback: {x: 5, y: 2}
 --- !u!114 &2806957111743922035
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -137,7 +122,7 @@ GameObject:
   m_Component:
   - component: {fileID: 443596753911919764}
   - component: {fileID: 1607249257036469497}
-  - component: {fileID: 4395434744985407585}
+  - component: {fileID: 4949626797336763900}
   m_Layer: 10
   m_Name: HitBoxDetection
   m_TagString: Untagged
@@ -206,7 +191,7 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 3.9597917, y: 2.1146502}
   m_EdgeRadius: 0
---- !u!114 &4395434744985407585
+--- !u!114 &4949626797336763900
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -215,13 +200,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 1917257892287724502}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f7fdeb1981d1957469bedc6123d9ef2d, type: 3}
+  m_Script: {fileID: 11500000, guid: 474019ec819f0174fa5db6d83ee63a4f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  noCollidersRemain:
+  OnTargetDetected:
     m_PersistentCalls:
       m_Calls: []
-  detectedColliders: []
+  NoRemainingTargets:
+    m_PersistentCalls:
+      m_Calls: []
+  _detected: []
 --- !u!1 &6519500830789914143
 GameObject:
   m_ObjectHideFlags: 0
@@ -234,10 +222,14 @@ GameObject:
   - component: {fileID: 6396111168038098953}
   - component: {fileID: 2746917073998363094}
   - component: {fileID: 2670718989020057848}
-  - component: {fileID: 2778756768824511147}
-  - component: {fileID: 3948573987312654379}
   - component: {fileID: 137187357430202918}
-  - component: {fileID: 5362665986964924926}
+  - component: {fileID: 3104904977608164275}
+  - component: {fileID: 7284247105235565512}
+  - component: {fileID: 5672232153247081162}
+  - component: {fileID: 1622931705469122161}
+  - component: {fileID: 9066010383944487648}
+  - component: {fileID: 3648659623463872856}
+  - component: {fileID: 2848167217216676671}
   m_Layer: 8
   m_Name: knightEnemy
   m_TagString: Untagged
@@ -382,56 +374,6 @@ CapsuleCollider2D:
   m_Offset: {x: -0.047637343, y: 0.042627215}
   m_Size: {x: 0.92224, y: 2.2644222}
   m_Direction: 0
---- !u!114 &2778756768824511147
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6519500830789914143}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a83db566855bd9446b8e0ed8bff8c9bd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  walkAceleration: 30
-  maxSpeed: 3
-  walkStopRate: 0.05
-  attackZone: {fileID: 4395434744985407585}
-  cliffDetectionZone: {fileID: 3106368251230790359}
-  _hasTarget: 0
---- !u!114 &3948573987312654379
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6519500830789914143}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8d55030c23e89e445bb9583bbfb45e77, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  castFilter:
-    useTriggers: 0
-    useLayerMask: 1
-    useDepth: 0
-    useOutsideDepth: 0
-    useNormalAngle: 0
-    useOutsideNormalAngle: 0
-    layerMask:
-      serializedVersion: 2
-      m_Bits: 64
-    minDepth: 0
-    maxDepth: 0
-    minNormalAngle: 0
-    maxNormalAngle: 0
-  groundDistance: 0.05
-  wallDistance: 0.02
-  ceilingDistance: 0.05
-  _isGrounded: 0
-  _isOnWall: 0
-  _isOnCeiling: 0
 --- !u!95 &137187357430202918
 Animator:
   serializedVersion: 7
@@ -454,7 +396,7 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &5362665986964924926
+--- !u!114 &3104904977608164275
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -463,23 +405,109 @@ MonoBehaviour:
   m_GameObject: {fileID: 6519500830789914143}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3ad3cf82416e4e146a4bc7d527611f43, type: 3}
+  m_Script: {fileID: 11500000, guid: 1bc98fd034488034e800fdf9f873df5d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damageableHit:
-    m_PersistentCalls:
-      m_Calls: []
-  damageableDeath:
-    m_PersistentCalls:
-      m_Calls: []
-  healthChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  _maxHealth: 0
-  _health: 100
-  _isAlive: 1
-  isInvencible: 0
-  invincibilityTimer: 0.25
+  attackView: {fileID: 4949626797336763900}
+  cliffView: {fileID: 3044543241701937141}
+--- !u!114 &7284247105235565512
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6519500830789914143}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d33856ac49c20ab4f9714a9dc5a7de9c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  castFilter:
+    useTriggers: 0
+    useLayerMask: 1
+    useDepth: 0
+    useOutsideDepth: 0
+    useNormalAngle: 0
+    useOutsideNormalAngle: 0
+    layerMask:
+      serializedVersion: 2
+      m_Bits: 2048
+    minDepth: 0
+    maxDepth: 0
+    minNormalAngle: 0
+    maxNormalAngle: 0
+  groundDistance: 0.05
+  wallDistance: 0.02
+  ceilingDistance: 0.05
+--- !u!114 &5672232153247081162
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6519500830789914143}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b6ba7d93a1743d4faab1d5fd910b811, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1622931705469122161
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6519500830789914143}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3149ceb3ec1eb2a42921ceab17c608a5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &9066010383944487648
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6519500830789914143}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2c35a9402fbaac943b27d4fcb2cf3b4f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  invincibilityDuration: 0.25
+  lockVelocityDuration: 0.1
+--- !u!114 &3648659623463872856
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6519500830789914143}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 08eca9f7688a0a24685b89133b020c8e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _scriptableObjectInstallers: []
+  _monoInstallers:
+  - {fileID: 2848167217216676671}
+  _installerPrefabs: []
+  _autoRun: 1
+  _kernel: {fileID: 0}
+--- !u!114 &2848167217216676671
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6519500830789914143}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a993d880a2ea4f41a07635ad64911d1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 100
 --- !u!1 &7439956347450341502
 GameObject:
   m_ObjectHideFlags: 0
@@ -489,9 +517,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7712286895381275680}
-  - component: {fileID: 3106368251230790359}
   - component: {fileID: 6032459903512707084}
   - component: {fileID: 8045938670052667921}
+  - component: {fileID: 3044543241701937141}
   m_Layer: 11
   m_Name: CliffDetectionZone
   m_TagString: Untagged
@@ -514,34 +542,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 6385430641658625451}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &3106368251230790359
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7439956347450341502}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f7fdeb1981d1957469bedc6123d9ef2d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  noCollidersRemain:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 2778756768824511147}
-        m_TargetAssemblyTypeName: Knight, Assembly-CSharp
-        m_MethodName: OnCliffDetected
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  detectedColliders: []
 --- !u!61 &6032459903512707084
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -576,7 +576,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: -0.15, y: 0}
+  m_Offset: {x: -0.13305062, y: 0.018843055}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -586,7 +586,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 0.58107185, y: 1}
+  m_Size: {x: 0.61497056, y: 1.0376861}
   m_EdgeRadius: 0
 --- !u!50 &8045938670052667921
 Rigidbody2D:
@@ -615,3 +615,18 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!114 &3044543241701937141
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7439956347450341502}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3dbd7c9f5e8b09b46924adaaf5e70cb3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  OnCliffDetected:
+    m_PersistentCalls:
+      m_Calls: []

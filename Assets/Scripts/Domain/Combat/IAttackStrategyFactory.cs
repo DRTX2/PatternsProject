@@ -1,4 +1,4 @@
 ﻿public interface IAttackStrategyFactory
 {
-    IAttackCommnad CreateStrategy(AttackType type);
+    IAnimationAttackStrategy CreateStrategy(AttackAnimationType type);
 }

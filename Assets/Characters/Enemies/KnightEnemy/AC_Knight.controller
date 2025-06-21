@@ -452,7 +452,7 @@ AnimatorState:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: knight_attack
-  m_Speed: 1
+  m_Speed: 1.25
   m_CycleOffset: 0
   m_Transitions:
   - {fileID: -8475285784210745938}
@@ -526,7 +526,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   boolName: canMove
   updateOnState: 0
-  updateOnStateMachine: 0
+  updateOnStateMachine: 1
   valueOnEnter: 0
   valueOnExit: 1
 --- !u!1107 &4708646579118907375

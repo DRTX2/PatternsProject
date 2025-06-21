@@ -27,16 +27,6 @@ public class PlayerInputView : MonoBehaviour
         _inputReciver.OnMoveInput(x);
         _inputReciver.OnRunInput(running);
     }
-
-    /*public void OnMove(InputAction.CallbackContext context)
-    {
-        if (context.performed || context.canceled)
-        {
-            float direction = context.ReadValue<Vector2>().x;
-            _inputReciver.OnMoveInput(direction);
-        }
-    }*/
-
     public void OnJump(InputAction.CallbackContext context)
     {
         _inputReciver?.OnJumpInput();
@@ -57,4 +47,17 @@ public class PlayerInputView : MonoBehaviour
             _inputReciver.OnRangedAttackInput();
         }
     }
+
+
+
+    /*public void OnMove(InputAction.CallbackContext context)
+    {
+        if (context.performed || context.canceled)
+        {
+            float direction = context.ReadValue<Vector2>().x;
+            _inputReciver.OnMoveInput(direction);
+        }
+    }*/
+
+
 }

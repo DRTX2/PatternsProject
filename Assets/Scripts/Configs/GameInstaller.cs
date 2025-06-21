@@ -13,20 +13,20 @@ public class GameInstaller : MonoInstaller
         Container.Bind<IAnimatorAdapter>().To<AnimatorAdapter>().AsSingle();
         Container.Bind<IPhysicsAdapter>().To<RigidbodyAdapter>().AsSingle();
         Container.Bind<IAttackStrategyFactory>().To<AttackStrategyFactory>().AsSingle();
-        Container.Bind<IInputReceiver>().To<InputReciver>().AsSingle();
+        Container.Bind<IInputReceiver>().To<PlayerInputReciver>().AsSingle();
 
         Container.Bind<IAttacker>().To<PlayerAttackMB>().FromComponentInHierarchy().AsSingle();
-        Container.Bind<IMovable>().To<PlayerMovementMB>().FromComponentInHierarchy().AsSingle();
+        Container.Bind<IInputMovable>().To<PlayerMovementMB>().FromComponentInHierarchy().AsSingle();
         Container.BindInterfacesAndSelfTo<PlayerHealthMB>() // Bind for IDamageable and IHealable interfaces
                  .FromComponentInHierarchy()
                  .AsSingle();
 
         Container.Bind<DamageUseCase>().AsSingle();
         Container.Bind<HealUseCase>().AsSingle();
-        Container.BindInterfacesAndSelfTo<AttackUseCase>().AsSingle();
+        Container.Bind<AttackUseCase>().AsSingle();
         Container.BindInterfacesAndSelfTo<PlayerMovementService>().AsSingle();
         
-        Container.Bind<HealthInteractionController>().AsSingle();
+        Container.Bind<HealthInteractionPresenter>().AsSingle();
         Container.Bind<PlayerInputView>().FromComponentInHierarchy().AsSingle();
     }
 }

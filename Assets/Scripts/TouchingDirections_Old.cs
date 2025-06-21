@@ -1,7 +1,7 @@
 using UnityEngine;
 
 // Uses the collider to check directions to see if the object is currently on the ground,
-// touching the wall, or touching the ceiling
+// _touching the wall, or _touching the ceiling
 public class TouchingDirections_Old : MonoBehaviour
 {
     public ContactFilter2D castFilter;
@@ -19,12 +19,16 @@ public class TouchingDirections_Old : MonoBehaviour
 
     [SerializeField]
     private bool _isGrounded;
-    public bool IsGrounded { get {
-        return _isGrounded;
-        } private set
+    public bool IsGrounded
+    {
+        get
+        {
+            return _isGrounded;
+        }
+        private set
         {
             _isGrounded = value;
-            animator.SetBool(AnimationStrings.isGrounded,value);
+            animator.SetBool(AnimationStrings.isGrounded, value);
         }
     }
 
@@ -77,7 +81,7 @@ public class TouchingDirections_Old : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        
+
     }
 
     private void FixedUpdate()
@@ -96,7 +100,7 @@ public class TouchingDirections_Old : MonoBehaviour
         IsGrounded = numHits > 0;
 
         IsOnWall = touchingCol.Cast(wallCheckDirection, castFilter, wallHits, wallDistance) > 0;
-        IsOnCeiling= touchingCol.Cast(Vector2.up, castFilter, ceilingHits, ceilingDistance) > 0;
+        IsOnCeiling = touchingCol.Cast(Vector2.up, castFilter, ceilingHits, ceilingDistance) > 0;
     }
 
 }

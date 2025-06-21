@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 4096421552067977401}
   - component: {fileID: 7162906329738652893}
   - component: {fileID: 4499155446374416632}
+  - component: {fileID: 3840691608761020724}
   m_Layer: 9
   m_Name: SwordAttack1
   m_TagString: Untagged
@@ -109,12 +110,26 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 531452042701563346}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5c416490b20988249a35cc25b0e42c43, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   attackDamage: 10
+  knockback: {x: 1, y: 0}
+--- !u!114 &3840691608761020724
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 531452042701563346}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e3f074ca8212e904592bd06119a1a43d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage: 10
   knockback: {x: 1, y: 0}
 --- !u!1 &1141300562177695857
 GameObject:
@@ -127,6 +142,7 @@ GameObject:
   - component: {fileID: 1926838547226515224}
   - component: {fileID: 1201621761342251884}
   - component: {fileID: 7597449303559260737}
+  - component: {fileID: 7000431865077285774}
   m_Layer: 9
   m_Name: SwordAttack2
   m_TagString: Untagged
@@ -225,12 +241,26 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1141300562177695857}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5c416490b20988249a35cc25b0e42c43, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   attackDamage: 15
+  knockback: {x: 2, y: 0}
+--- !u!114 &7000431865077285774
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1141300562177695857}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e3f074ca8212e904592bd06119a1a43d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage: 13
   knockback: {x: 2, y: 0}
 --- !u!1 &1543065657807074664
 GameObject:
@@ -243,6 +273,7 @@ GameObject:
   - component: {fileID: 4771922331080102628}
   - component: {fileID: 754127904042683846}
   - component: {fileID: 4876645775506519645}
+  - component: {fileID: 8508656290785919882}
   m_Layer: 9
   m_Name: SwordAttack3
   m_TagString: Untagged
@@ -342,12 +373,26 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1543065657807074664}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5c416490b20988249a35cc25b0e42c43, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   attackDamage: 25
+  knockback: {x: 5, y: 0}
+--- !u!114 &8508656290785919882
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1543065657807074664}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e3f074ca8212e904592bd06119a1a43d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage: 20
   knockback: {x: 5, y: 0}
 --- !u!1 &5007971800620712363
 GameObject:
@@ -366,13 +411,13 @@ GameObject:
   - component: {fileID: 2933041510406370485}
   - component: {fileID: 6500484348926717599}
   - component: {fileID: 7162789825637647229}
-  - component: {fileID: 5785065986601122488}
-  - component: {fileID: 6037241189817770124}
   - component: {fileID: 2878378486979186312}
   - component: {fileID: 850572826746978581}
   - component: {fileID: 6227317244425914977}
   - component: {fileID: 448219909057770899}
   - component: {fileID: 1489631256563986134}
+  - component: {fileID: 5785065986601122488}
+  - component: {fileID: 6037241189817770124}
   m_Layer: 7
   m_Name: Player
   m_TagString: Player
@@ -761,35 +806,6 @@ MonoBehaviour:
   _isAlive: 1
   isInvencible: 0
   invincibilityTimer: 0.8
---- !u!114 &5785065986601122488
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5007971800620712363}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2d29ec4a88a19d6478ccdcf50b78ff07, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  launchPoint: {fileID: 548159201235114466}
-  projectilePrefab: {fileID: 316223019245298023, guid: 658bbe7dea42b9745841cb9bb434ec7c, type: 3}
---- !u!114 &6037241189817770124
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5007971800620712363}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1fcae2cd94e14e44ba09e8e0af8a12a2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _restartBtn: {fileID: 0}
-  _goMenuBtn: {fileID: 0}
-  _gameOverCanvas: {fileID: 0}
 --- !u!114 &2878378486979186312
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -857,14 +873,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   castFilter:
     useTriggers: 0
-    useLayerMask: 0
+    useLayerMask: 1
     useDepth: 0
     useOutsideDepth: 0
     useNormalAngle: 0
     useOutsideNormalAngle: 0
     layerMask:
       serializedVersion: 2
-      m_Bits: 0
+      m_Bits: 64
     minDepth: 0
     maxDepth: 0
     minNormalAngle: 0
@@ -872,6 +888,35 @@ MonoBehaviour:
   groundDistance: 0.05
   wallDistance: 0.02
   ceilingDistance: 0.05
+--- !u!114 &5785065986601122488
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5007971800620712363}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2d29ec4a88a19d6478ccdcf50b78ff07, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  launchPoint: {fileID: 548159201235114466}
+  projectilePrefab: {fileID: 316223019245298023, guid: 658bbe7dea42b9745841cb9bb434ec7c, type: 3}
+--- !u!114 &6037241189817770124
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5007971800620712363}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1fcae2cd94e14e44ba09e8e0af8a12a2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _restartBtn: {fileID: 0}
+  _goMenuBtn: {fileID: 0}
+  _gameOverCanvas: {fileID: 0}
 --- !u!1 &5507425895951306909
 GameObject:
   m_ObjectHideFlags: 0
@@ -914,6 +959,7 @@ GameObject:
   - component: {fileID: 5164195513907544246}
   - component: {fileID: 6261909458133600931}
   - component: {fileID: 5351002165132717089}
+  - component: {fileID: 8269536779761578996}
   m_Layer: 9
   m_Name: SwordAirAttack1
   m_TagString: Untagged
@@ -943,7 +989,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7269667436513030997}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5c416490b20988249a35cc25b0e42c43, type: 3}
   m_Name: 
@@ -1013,6 +1059,20 @@ PolygonCollider2D:
       - {x: 0.33, y: 0.18586993}
       - {x: 0.34, y: 0.53}
   m_UseDelaunayMesh: 0
+--- !u!114 &8269536779761578996
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7269667436513030997}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e3f074ca8212e904592bd06119a1a43d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage: 12
+  knockback: {x: 0, y: 0}
 --- !u!1 &8451837671839785917
 GameObject:
   m_ObjectHideFlags: 0
@@ -1024,6 +1084,7 @@ GameObject:
   - component: {fileID: 7107834143026178072}
   - component: {fileID: 7153709710310245964}
   - component: {fileID: 7387773188118960799}
+  - component: {fileID: 327325891129334242}
   m_Layer: 9
   m_Name: SwordAirAttack2
   m_TagString: Untagged
@@ -1053,7 +1114,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8451837671839785917}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5c416490b20988249a35cc25b0e42c43, type: 3}
   m_Name: 
@@ -1120,3 +1181,17 @@ PolygonCollider2D:
       - {x: 0.42, y: -0.45304203}
       - {x: 0.51, y: 0.33}
   m_UseDelaunayMesh: 0
+--- !u!114 &327325891129334242
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8451837671839785917}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e3f074ca8212e904592bd06119a1a43d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage: 15
+  knockback: {x: 0, y: 0}

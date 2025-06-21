@@ -31,7 +31,6 @@ public class TouchingDirections : MonoBehaviour
         bool previousWall = IsOnWall;
         bool previousCeiling = IsOnCeiling;
 
-        // Check ground
         IsGrounded = _collider.Cast(Vector2.down, castFilter, _hits, groundDistance) > 0;
         IsOnWall = _collider.Cast(WallCheckDirection, castFilter, _hits, wallDistance) > 0;
         IsOnCeiling = _collider.Cast(Vector2.up, castFilter, _hits, ceilingDistance) > 0;

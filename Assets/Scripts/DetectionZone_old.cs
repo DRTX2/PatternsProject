@@ -17,18 +17,18 @@ public class DetectionZone_old : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        Debug.Log("CliffDetectionZone detectó: " + collision.name); 
-        detectedColliders.Add(collision);
+        /*Debug.Log("CliffDetectionZone detectó: " + collision.name); 
+        detectedColliders.Add(collision);*/
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        Debug.Log("CliffDetectionZone perdió contacto con: " + collision.name);
+        /*Debug.Log("CliffDetectionZone perdió contacto con: " + collision.name);
         detectedColliders.Remove(collision);
 
         if(detectedColliders.Count == 0)
         {
             noCollidersRemain?.Invoke();
-        } 
+        } */
     }
 }

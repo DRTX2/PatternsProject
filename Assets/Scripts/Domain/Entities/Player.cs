@@ -1,4 +1,4 @@
-﻿public class Player
+public class Player
 {
     public Health Health { get; private set; }
     public bool IsAlive => Health.Current > 0;
@@ -11,7 +11,7 @@
     {
         Health = new Health(maxHealth);
     }
-    
+
     public bool TakeDamage(float amount)
     {
         if (!IsAlive || IsInvincible) return false;
