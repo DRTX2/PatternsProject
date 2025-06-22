@@ -28,5 +28,7 @@ public class GameInstaller : MonoInstaller
         
         Container.Bind<HealthInteractionPresenter>().AsSingle();
         Container.Bind<PlayerInputView>().FromComponentInHierarchy().AsSingle();
+
+        Container.Bind<CharacterEventBus>().AsSingle();
     }
 }

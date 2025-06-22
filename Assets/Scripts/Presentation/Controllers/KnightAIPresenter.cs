@@ -16,10 +16,7 @@ public class KnightAIPresenter : MonoBehaviour
         attackView.NoRemainingTargets.AddListener(OnNoRemainingTargets);
     }
 
-    private void Update()
-    {
-        _movementService.Tick(Time.deltaTime);
-    }
+    private void Update() => _movementService.Tick(Time.deltaTime);
 
     private void OnCliffDetected()
     {

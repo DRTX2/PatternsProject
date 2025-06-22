@@ -27,7 +27,7 @@ public class KnightMovementMB : MonoBehaviour, IAutonomousMovable
     {
         TryFlipOnWall();
 
-        if (_knight.CanMove && !_animator.GetBool(AnimationStrings.lockVelocity))
+        if (_knight.CanMove )
         {
             float speedX = _knight.HorizontalSpeed;
             ApplyHorizontalMovement(speedX);

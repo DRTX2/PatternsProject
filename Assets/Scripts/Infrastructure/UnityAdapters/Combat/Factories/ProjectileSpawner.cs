@@ -8,8 +8,7 @@ public class ProjectileSpawner : MonoBehaviour, IProjectileSpawner
     public void FireProjectile()
     {
         GameObject projectile = Instantiate(projectilePrefab, launchPoint.position, Quaternion.identity);
-        Debug.Log("→ Flecha creada: " + projectile.name);
-
+        //Debug.Log("[SPAWNER]→ Projectile created: " + projectile.name);
         float direction = transform.localScale.x >= 0 ? 1f : -1f;
 
         Vector3 scale = projectile.transform.localScale;

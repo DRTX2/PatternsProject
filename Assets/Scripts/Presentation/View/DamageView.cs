@@ -10,9 +10,10 @@ public class DamageView : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        Debug.Log($"DamageView detected collision with: {other.name}");
         if (other.TryGetComponent<IDamageable>(out var target))
         {
+            float direction = transform.localScale.x >= 0 ? 1f : -1f;
+            knockback.x *= direction;
             var damageData = new DamageData
             {
                 Target = target,

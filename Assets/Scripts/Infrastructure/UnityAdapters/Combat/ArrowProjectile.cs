@@ -24,7 +24,7 @@ public class ArrowProjectile : MonoBehaviour, IProjectile
             bool damaged = target.ReceiveDamage(damage, knockback);
             if (damaged)
             {
-                Debug.Log($"{other.name} hit for {damage}"); 
+                //Debug.Log($"{other.name} hit for {damage}"); 
                 Destroy(gameObject);
             }
         }

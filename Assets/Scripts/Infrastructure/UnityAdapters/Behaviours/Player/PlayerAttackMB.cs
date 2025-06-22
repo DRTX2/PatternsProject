@@ -18,11 +18,11 @@ public class PlayerAttackMB : MonoBehaviour, IAttacker
 
     public void AttackStart()
     {
-        //IsAttacking = true;
+        //_player.SetCanMove(false);
     }
 
     public void AttackEnd()
     {
-        //IsAttacking = false;
+        //_player.SetCanMove(true);
     }
 }

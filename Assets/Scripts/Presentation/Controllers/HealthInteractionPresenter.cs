@@ -12,7 +12,6 @@ public class HealthInteractionPresenter
 
     public bool ApplyDamage(DamageData data)
     {
-        Debug.Log($"[Heath Controller] Applying damage: {data.Amount} to target: {data.Target}");
         return _damageUseCase.ExecuteDamage(data.Target, data.Amount, data.Knockback);
     }
 

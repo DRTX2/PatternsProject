@@ -1,11 +1,14 @@
 ﻿using UnityEngine;
 using TMPro;
+using Zenject;
 
 public class UIManager : MonoBehaviour
 {
     [SerializeField] private GameObject damageTextPrefab;
     [SerializeField] private GameObject healthTextPrefab;
     [SerializeField] private Canvas gameCanvas;
+
+    [Inject] private CharacterEventBus _eventBus;
 
     private void Awake()
     {
@@ -15,29 +18,27 @@ public class UIManager : MonoBehaviour
 
     private void OnEnable()
     {
-        CharacterEvents.OnDamageReceived.AddListener(ShowDamageText);
-        CharacterEvents.OnHealed.AddListener(ShowHealText);
+        _eventBus.DamageReceived.Subscribe(ShowDamageText);
+        _eventBus.Healed.Subscribe(ShowHealText);
     }
 
     private void OnDisable()
     {
-        CharacterEvents.OnDamageReceived.RemoveListener(ShowDamageText);
-        CharacterEvents.OnHealed.RemoveListener(ShowHealText);
+        _eventBus.DamageReceived.Unsubscribe(ShowDamageText);
+        _eventBus.Healed.Unsubscribe(ShowHealText);
     }
 
-    private void ShowDamageText(GameObject target, float damage)
+    private void ShowDamageText(DamageEvent e)
     {
-        Vector3 pos = Camera.main.WorldToScreenPoint(target.transform.position);
+        Vector3 pos = Camera.main.WorldToScreenPoint(e.Character.transform.position);
         TMP_Text text = Instantiate(damageTextPrefab, pos, Quaternion.identity, gameCanvas.transform).GetComponent<TMP_Text>();
-        text.text = $"-{damage}";
-        Debug.Log($"[UIManager] Character took damage: {damage} at position: {pos}"); // Debug log for damage
+        text.text = $"-{e.Amount}";
     }
 
-    private void ShowHealText(GameObject target, float amount)
+    private void ShowHealText(HealEvent e)
     {
-        Vector3 pos = Camera.main.WorldToScreenPoint(target.transform.position);
+        Vector3 pos = Camera.main.WorldToScreenPoint(e.Character.transform.position);
         TMP_Text text = Instantiate(healthTextPrefab, pos, Quaternion.identity, gameCanvas.transform).GetComponent<TMP_Text>();
-        text.text = $"+{amount}";
-        Debug.Log($"[UIManager] Character healed: {amount} at position: {pos}"); // Debug log for healing
+        text.text = $"+{e.Amount}";
     }
 }

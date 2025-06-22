@@ -25,7 +25,7 @@ public class PlayerMovementMB : MonoBehaviour, IInputMovable
     public void Move(float x)
     {
         if (!_player.CanMove || (_touching.IsOnWall && !_touching.IsGrounded)) return;
-        //Debug.Log($"Moving player with input: {x}");
+        
         float speed = _player.IsRunning && _touching.IsGrounded ? runSpeed : walkSpeed;
         _physics.SetVelocity(new Vector2(x * speed, _physics.GetVelocity().y));
         _animator.SetBool(AnimationStrings.isMoving, Mathf.Abs(x) > 0.01f);

@@ -4,6 +4,7 @@ using Zenject;
 public class FlyingEyeHealthMB : MonoBehaviour, IDamageable
 {
     [Inject] private FlyingEyeEnemy _flyingEye;
+    [Inject] private CharacterEventBus _eventBus;
 
     private IAnimatorAdapter _animator;
     private IPhysicsAdapter _physics;
@@ -53,7 +54,7 @@ public class FlyingEyeHealthMB : MonoBehaviour, IDamageable
             Debug.Log("FlyingEye has died.");
         }
 
-        CharacterEvents.OnDamageReceived?.Invoke(gameObject, amount);
+        _eventBus.DamageReceived.Notify(new DamageEvent { Character = gameObject, Amount = amount });
         return true;
     }
 }

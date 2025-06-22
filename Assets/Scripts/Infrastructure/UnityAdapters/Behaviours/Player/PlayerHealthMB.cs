@@ -4,6 +4,7 @@ using Zenject;
 public class PlayerHealthMB : MonoBehaviour, IDamageable, IHealable
 {
     [Inject] private Player _player;
+    [Inject] private CharacterEventBus _eventBus;
 
     private IAnimatorAdapter _animator;
     private IPhysicsAdapter _physics;
@@ -27,9 +28,6 @@ public class PlayerHealthMB : MonoBehaviour, IDamageable, IHealable
     {
         if (_invincibleTimer > 0 && (_invincibleTimer -= Time.deltaTime) <= 0)
             _player.SetInvincibility(false);
-
-        /*if (_lockVelocityTimer > 0 && (_lockVelocityTimer -= Time.deltaTime) <= 0)
-            _player.SetLockVelocity(false);*/
     }
 
     public bool ReceiveDamage(float amount, Vector2 knockback)
@@ -44,17 +42,21 @@ public class PlayerHealthMB : MonoBehaviour, IDamageable, IHealable
 
         _lockVelocityTimer = lockVelocityDuration;
 
-        //_player.SetLockVelocity(true);
-        //CharacterEvents.OnDamageReceived?.Invoke((target as MonoBehaviour).gameObject, damage);
-        //CharacterEvents.OnHealthChanged?.Invoke((target as MonoBehaviour).gameObject, target.CurrentHealth, target.MaxHealth);
-        CharacterEvents.OnDamageReceived?.Invoke(gameObject, amount);
-        CharacterEvents.OnHealthChanged?.Invoke(gameObject, CurrentHealth, MaxHealth);
+        _eventBus.DamageReceived.Notify(new DamageEvent { Character = gameObject, Amount = amount });
+        _eventBus.HealthChanged.Notify(new HealthChangedEvent { Character = gameObject, Current = CurrentHealth, Max = MaxHealth });
+        
         if (!_player.IsAlive) _animator.SetBool(AnimationStrings.isAlive, false);
         return true;
     }
 
     public bool Heal(float amount)
     {
-        return _player.TryHeal(amount);
+        if (_player.TryHeal(amount))
+        {
+            _eventBus.Healed.Notify(new HealEvent { Character = gameObject, Amount = amount });
+            _eventBus.HealthChanged.Notify(new HealthChangedEvent { Character = gameObject, Current = CurrentHealth, Max = MaxHealth });
+            return true;
+        }
+        return false;
     }
 }

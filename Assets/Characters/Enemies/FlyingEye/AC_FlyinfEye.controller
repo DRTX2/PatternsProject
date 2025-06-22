@@ -517,4 +517,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fadeTime: 0.5
-  fadeDelay: 1
+  fadeDelay: 0.5

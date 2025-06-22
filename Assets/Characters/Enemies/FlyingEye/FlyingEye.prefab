@@ -9,7 +9,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1557888072799449019}
-  - component: {fileID: 3125821271686677075}
   - component: {fileID: 5954311882685956340}
   - component: {fileID: 4896199913153363573}
   m_Layer: 10
@@ -34,22 +33,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 4271840652724387284}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &3125821271686677075
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 434296406388974660}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f7fdeb1981d1957469bedc6123d9ef2d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  noCollidersRemain:
-    m_PersistentCalls:
-      m_Calls: []
-  detectedColliders: []
 --- !u!70 &5954311882685956340
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -84,8 +67,8 @@ CapsuleCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0.3158226, y: -0.16851819}
-  m_Size: {x: 1.6496124, y: 1.6496124}
+  m_Offset: {x: 0.16087914, y: -0.16851819}
+  m_Size: {x: 1.3397255, y: 1.6496124}
   m_Direction: 0
 --- !u!114 &4896199913153363573
 MonoBehaviour:
@@ -119,7 +102,6 @@ GameObject:
   - component: {fileID: 2465174565988699408}
   - component: {fileID: 2676726988017932430}
   - component: {fileID: 1465402770582942650}
-  - component: {fileID: 5571506201000588733}
   - component: {fileID: 7241341481021872549}
   - component: {fileID: 5076538241444007993}
   - component: {fileID: 1470477650062144289}
@@ -292,24 +274,6 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &5571506201000588733
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2916251769781083890}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fd9675e09131c0f4a9bc0405308db3c2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  flightSpeed: 3
-  waypointReachedDistance: 0.1
-  biteDetectionZone: {fileID: 3125821271686677075}
-  deathCollider: {fileID: 1880152831630722327}
-  waypoints: []
-  _hasTarget: 0
 --- !u!114 &7241341481021872549
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -483,7 +447,6 @@ GameObject:
   m_Component:
   - component: {fileID: 5950069078315300146}
   - component: {fileID: 5439878070242806684}
-  - component: {fileID: 6960069749212178461}
   - component: {fileID: 7835811636397883048}
   m_Layer: 0
   m_Name: BiteAttack
@@ -544,20 +507,6 @@ CapsuleCollider2D:
   m_Offset: {x: 0.007282257, y: -0.2058214}
   m_Size: {x: 1.4624786, y: 1.4624786}
   m_Direction: 0
---- !u!114 &6960069749212178461
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6461247098102828558}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5c416490b20988249a35cc25b0e42c43, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  attackDamage: 15
-  knockback: {x: 0, y: 0}
 --- !u!114 &7835811636397883048
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -570,5 +519,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e3f074ca8212e904592bd06119a1a43d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 0.125
+  damage: 20
   knockback: {x: 0, y: 0}

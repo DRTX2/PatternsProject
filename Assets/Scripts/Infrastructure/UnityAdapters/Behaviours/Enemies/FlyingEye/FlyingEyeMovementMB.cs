@@ -25,7 +25,7 @@ public class FlyingEyeMovementMB : MonoBehaviour, IFlyer
 
     public void Fly(float deltaTime)
     {
-        if (!_enemy.IsAlive)
+        if (!_enemy.IsAlive || !_animator.GetBool(AnimationStrings.canMove))
         {
             _rb.linearVelocity = Vector2.zero;
             return;

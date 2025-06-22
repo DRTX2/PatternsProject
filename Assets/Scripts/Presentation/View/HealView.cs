@@ -17,12 +17,7 @@ public class HealView : MonoBehaviour
             };
 
             bool healed = interactionController.ApplyHeal(healData);
-            if (healed)
-            {
-                Destroy(gameObject);
-                CharacterEvents.OnHealed?.Invoke((healable as MonoBehaviour).gameObject, healAmount);
-                CharacterEvents.OnHealthChanged?.Invoke((healable as MonoBehaviour).gameObject, healable.CurrentHealth, healable.MaxHealth);
-            }
+            if (healed) Destroy(gameObject);
         }
     }
 

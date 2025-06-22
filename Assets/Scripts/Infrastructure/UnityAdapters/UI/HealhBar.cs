@@ -7,7 +7,9 @@ public class HealthBar : MonoBehaviour
 {
     [SerializeField] private Slider slider;
     [SerializeField] private TMP_Text healthText;
+
     [Inject] private IDamageable playerDamageable;
+    [Inject] private CharacterEventBus _eventBus;
 
     void Start()
     {
@@ -17,19 +19,19 @@ public class HealthBar : MonoBehaviour
 
     private void OnEnable()
     {
-        CharacterEvents.OnHealthChanged.AddListener(UpdateHealthBar);
+        _eventBus.HealthChanged.Subscribe(UpdateHealthBar);
     }
 
     private void OnDisable()
     {
-        CharacterEvents.OnHealthChanged.RemoveListener(UpdateHealthBar);
+        _eventBus.HealthChanged.Unsubscribe(UpdateHealthBar);
     }
 
-    private void UpdateHealthBar(GameObject target, float current, float max)
+    private void UpdateHealthBar(HealthChangedEvent e)
     {
-        if (!target.CompareTag("Player")) return;
+        if (!e.Character.CompareTag("Player")) return;
 
-        slider.value = current / max;
-        healthText.text = $"HP {current} / {max}";
+        slider.value = e.Current/ e.Max;
+        healthText.text = $"HP {e.Current} / {e.Max}";
     }
 }

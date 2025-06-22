@@ -1,9 +1,11 @@
-﻿using UnityEngine;
+﻿using Unity.VisualScripting;
+using UnityEngine;
 using Zenject;
 
 public class KnightHealthMB : MonoBehaviour, IDamageable
 {
     [Inject] private KnightEnemy _knight;
+    [Inject] private CharacterEventBus _eventBus;
 
     private IAnimatorAdapter _animator;
     private IPhysicsAdapter _physics;
@@ -50,7 +52,7 @@ public class KnightHealthMB : MonoBehaviour, IDamageable
 
         if (!_knight.IsAlive) _animator.SetBool(AnimationStrings.isAlive, false);
 
-        CharacterEvents.OnDamageReceived?.Invoke(gameObject, amount);
+        _eventBus.DamageReceived.Notify(new DamageEvent { Character = gameObject, Amount = amount });
         return true;
     }
 }
