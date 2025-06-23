@@ -25,7 +25,7 @@ public class DamageView : MonoBehaviour
                 Amount = damage,
                 Knockback = knockback
             };
-            Debug.Log($"Applying damage: {data.Amount} with knockback: {data.Knockback} to target: {target}");
+            //Debug.Log($"Applying damage: {data.Amount} with knockback: {data.Knockback} to target: {target}");
             _presenter.ApplyDamage(data);
         }
     }

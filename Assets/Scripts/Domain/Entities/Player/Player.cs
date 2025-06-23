@@ -20,9 +20,21 @@ public class Player : IMovableEntity, IAttackableEntity, IHealableEntity, IDamag
 
     public bool IsJumping { get; private set; } = false;
 
-    public Player(float maxHealth)
+    public int Score { get; set; }
+
+    public float PositionX { get;  set; }
+    public float PositionY { get; set; }
+
+    public int EnemiesEliminated { get; private set; }
+
+    public Player(float maxHealth, float currentHealth, float positionX, float positionY, int enemiesEliminated, int score)
     {
         Health = new Health(maxHealth);
+        Health.ForceSetCurrent(currentHealth);
+        PositionX = positionX;
+        PositionY = positionY;
+        EnemiesEliminated = enemiesEliminated;
+        Score = score;
     }
 
     public bool TakeDamage(float amount)
@@ -42,7 +54,7 @@ public class Player : IMovableEntity, IAttackableEntity, IHealableEntity, IDamag
     {
         if (!IsAlive || LockVelocityActive) return false;
         if (IsAttacking && isGrounded) return false;
-        //if (!isGrounded && isTouchingWall) return false;
+        if (!isGrounded && isTouchingWall) return false;
         return true;
     }
 

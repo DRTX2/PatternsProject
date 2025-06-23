@@ -1,4 +1,6 @@
 ﻿using System;
+using UnityEngine;
+
 /// <summary>
 /// KnightEnemy represents a knight-type enemy in the game.
 /// Allows for movement, attacking, taking damage, and tracking targets.

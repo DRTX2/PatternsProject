@@ -21,12 +21,12 @@ public class PlayerAttackMB : MonoBehaviour, IAttackBehaviour<Player>
     }
     public void AttackStart()
     {
-        //_player.SetCanMove(false);
+        //_player.SetAttacking(true);
     }
 
     public void AttackEnd()
     {
-        //_player.SetCanMove(true);
+        //_player.SetAttacking(false);
     }
 }
 

@@ -36,8 +36,8 @@ public class PlayerMovementMB : MonoBehaviour,
 
     public void Move(float x)
     {
-        if (!_player.CanMove(_touching.IsOnWall, _touching.IsGrounded)) return;
-      //  
+        if (!_player.CanMove(_touching.IsGrounded, _touching.IsOnWall)) return;
+        
         float speed = _player.IsRunning && _touching.IsGrounded ? runSpeed : walkSpeed;
         _physics.SetVelocity(new Vector2(x * speed, _physics.GetVelocity().y));
 
@@ -55,7 +55,7 @@ public class PlayerMovementMB : MonoBehaviour,
 
     public void Jump()
     {
-        if (_touching.IsGrounded && _player.CanMove(_touching.IsOnWall, _touching.IsGrounded))
+        if (_touching.IsGrounded && _player.CanMove(_touching.IsGrounded, _touching.IsOnWall))
         {
             _physics.SetVelocity(new Vector2(_physics.GetVelocity().x, jumpForce));
             _animator.SetTrigger(AnimationStrings.jumpTrigger);

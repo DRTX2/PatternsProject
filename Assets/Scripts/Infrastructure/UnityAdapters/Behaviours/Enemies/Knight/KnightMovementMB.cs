@@ -3,7 +3,7 @@ using UnityEngine.TextCore.Text;
 using Zenject;
 
 /// <summary>
-/// Handles the movement of the Knight enemy.
+/// Component for autonomous movement of Knight enemies.
 /// </summary>
 
 [RequireComponent(typeof(Animator), typeof(Rigidbody2D), typeof(TouchingDirections))]

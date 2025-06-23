@@ -8,28 +8,35 @@ public class GameInstaller : MonoInstaller
     [Inject] private Session _session;
     public override void InstallBindings()
     {
-            var user = _session.CurrentUser;
+        var user = _session.CurrentUser;
+        Player player;
+        if (user != null)
+        {
+            player = new Player(
+            maxHealth: 100,
+            currentHealth: user.Health,
+            positionX: user.PositionX,
+            positionY: user.PositionY,
+            enemiesEliminated: user.EnemiesEliminated,
+            score: user.Score
+        );
+        }
+        else { 
 
-            var player = new Player(
+            player = new Player(
                 maxHealth: 100,
-                currentHealth: user.Health,
-                positionX: user.PositionX,
-                positionY: user.PositionY,
-                enemiesEliminated: user.EnemiesEliminated,
-                score: user.Score
+                currentHealth: 100,
+                positionX: 11.11f,
+                positionY: -2.77f,
+                enemiesEliminated: 0,
+                score: 0
             );
+            Debug.LogError("Player instance is null, creating a default player. [FOR DEVELOP ENVIROMENT]");
+        }
 
-        Container.Bind<Player>().FromInstance(player).AsSingle();
-
-        Container.Bind<IProjectileSpawner>().FromInstance(projectileSpawner).AsSingle();
-
-        Container.Bind<IAnimatorAdapter>().To<AnimatorAdapter>().AsSingle();
-        Container.Bind<IPhysicsAdapter>().To<RigidbodyAdapter>().AsSingle();
-        Container.Bind<IAttackStrategyFactory>().To<AttackStrategyFactory>().AsSingle();
-        Container.Bind<IInputReceiver>().To<InputReciver>().AsSingle();
         // 🧠 ENTIDAD de dominio (jugador)
         Container.Bind<Player>()
-                 .FromInstance(new Player(100))
+                 .FromInstance(player)
                  .AsSingle();
 
         // ⚔️ COMPORTAMIENTOS (adaptadores MB)
