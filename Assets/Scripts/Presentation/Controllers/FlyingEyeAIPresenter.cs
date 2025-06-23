@@ -1,11 +1,15 @@
 ﻿using UnityEngine;
 using Zenject;
 
+/// <summary>
+/// FlyingEyeAIPresenter is responsible for managing the AI behavior of the Flying Eye enemy.
+/// </summary>
 public class FlyingEyeAIPresenter : MonoBehaviour
 {
-    [Inject] private AttackUseCase _attackUseCase;
-    [Inject] private TargetTrackingUseCase _targetTrackingUseCase;
-    [Inject] private FlyingEyeMovementService _movementService;
+    [Inject] private AttackUseCase<FlyingEyeEnemy> _attackUseCase;
+    [Inject] private TargetTrackingUseCase<FlyingEyeEnemy> _targetTrackingUseCase;
+    [Inject] private IMoveBehaviour<FlyingEyeEnemy> _movement;
+
     [SerializeField] private AttackDetectionView attackView;
 
     private void Start()
@@ -13,10 +17,12 @@ public class FlyingEyeAIPresenter : MonoBehaviour
         attackView.OnTargetDetected.AddListener(OnTargetDetected);
         attackView.NoRemainingTargets.AddListener(OnNoRemainingTargets);
     }
+
     private void Update()
     {
-        _movementService.Tick(Time.deltaTime);
+        _movement.Move(1f);
     }
+
     private void OnTargetDetected()
     {
         _attackUseCase.HandleAttack(AttackAnimationType.Target);

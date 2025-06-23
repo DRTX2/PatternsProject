@@ -1,6 +1,9 @@
 using System;
 using UnityEngine;
 
+/// <summary>
+/// ParalaxEffect is a Unity MonoBehaviour that creates a parallax effect by moving the game object based on the camera's movement.
+/// </summary>
 public class ParalaxEffect : MonoBehaviour
 {
     public Camera cam;

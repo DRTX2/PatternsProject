@@ -7,34 +7,39 @@ public class FlyingEyeInstaller : MonoInstaller
 
     public override void InstallBindings()
     {
-        Container.Bind<FlyingEyeEnemy>().AsSingle().WithArguments(maxHealth);
+        // 🧠 ENTIDAD de dominio
+        Container.Bind<FlyingEyeEnemy>()
+                 .AsSingle()
+                 .WithArguments(maxHealth);
 
-        Container.Bind<IFlyer>()
-            .To<FlyingEyeMovementMB>()
-            .FromComponentOnRoot()
-            .AsSingle();
+        // 📦 COMPORTAMIENTOS concretos (MBs)
+        Container.Bind<IDamageBehaviour>()
+                 .To<FlyingEyeDamageMB>()
+                 .FromComponentOnRoot()
+                 .AsSingle();
 
-        Container.Bind<IDamageable>()
-            .To<FlyingEyeHealthMB>()
-            .FromComponentOnRoot()
-            .AsSingle();
+        Container.Bind<IMoveBehaviour<FlyingEyeEnemy>>() // Volador implementa IMoveBehaviour<FlyingEyeEnemy>
+                 .To<FlyingEyeMovementMB>()
+                 .FromComponentOnRoot()
+                 .AsSingle();
 
-        /*Container.Bind<IAttacker>()
-            .To<FlyingEyeAttackMB>()
-            .FromComponentOnRoot()
-            .AsSingle();
-
-        Container.Bind<ITracker>()
-            .To<KnightAttackMB>()
-            .FromComponentOnRoot()
-            .AsSingle();*/
         Container.BindInterfacesAndSelfTo<FlyingEyeAttackMB>() // Bind for ITracker and IAttacker
              .FromComponentOnRoot()
              .AsSingle();
 
-        Container.Bind<DamageUseCase>().AsSingle();
-        Container.Bind<AttackUseCase>().AsSingle();
-        Container.Bind<TargetTrackingUseCase>().AsSingle();
+        // 🧩 CASOS DE USO
+        Container.Bind<DamageUseCase>()
+                 .AsSingle();
+
+        Container.Bind<AttackUseCase<FlyingEyeEnemy>>()
+                 .AsSingle();
+
+        Container.Bind<TargetTrackingUseCase<FlyingEyeEnemy>>()
+                 .AsSingle();
+
+        // ❤️ INTERACCIÓN DE SALUD
+        Container.Bind<DamagePresenter>()
+                 .AsSingle();
 
         Container.Bind<FlyingEyeMovementService>()
             .AsSingle();

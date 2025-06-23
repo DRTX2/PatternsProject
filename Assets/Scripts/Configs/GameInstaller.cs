@@ -7,28 +7,79 @@ public class GameInstaller : MonoInstaller
 
     public override void InstallBindings()
     {
-        Container.Bind<Player>().FromInstance(new Player(100)).AsSingle();
-        Container.Bind<IProjectileSpawner>().FromInstance(projectileSpawner).AsSingle();
+        // 🧠 ENTIDAD de dominio (jugador)
+        Container.Bind<Player>()
+                 .FromInstance(new Player(100))
+                 .AsSingle();
 
-        Container.Bind<IAnimatorAdapter>().To<AnimatorAdapter>().AsSingle();
-        Container.Bind<IPhysicsAdapter>().To<RigidbodyAdapter>().AsSingle();
-        Container.Bind<IAttackStrategyFactory>().To<AttackStrategyFactory>().AsSingle();
-        Container.Bind<IInputReceiver>().To<PlayerInputReciver>().AsSingle();
-
-        Container.Bind<IAttacker>().To<PlayerAttackMB>().FromComponentInHierarchy().AsSingle();
-        Container.Bind<IInputMovable>().To<PlayerMovementMB>().FromComponentInHierarchy().AsSingle();
-        Container.BindInterfacesAndSelfTo<PlayerHealthMB>() // Bind for IDamageable and IHealable interfaces
+        // ⚔️ COMPORTAMIENTOS (adaptadores MB)
+        Container.BindInterfacesAndSelfTo<PlayerAttackMB>() // IAttackBehaviour<Player>
                  .FromComponentInHierarchy()
                  .AsSingle();
 
-        Container.Bind<DamageUseCase>().AsSingle();
-        Container.Bind<HealUseCase>().AsSingle();
-        Container.Bind<AttackUseCase>().AsSingle();
-        Container.BindInterfacesAndSelfTo<PlayerMovementService>().AsSingle();
-        
-        Container.Bind<HealthInteractionPresenter>().AsSingle();
-        Container.Bind<PlayerInputView>().FromComponentInHierarchy().AsSingle();
+        Container.BindInterfacesAndSelfTo<PlayerDamageMB>() // IDamageBehaviour<Player>, IHealBehaviour<Player>
+                 .FromComponentInHierarchy()
+                 .AsSingle();
 
-        Container.Bind<CharacterEventBus>().AsSingle();
+        Container.BindInterfacesAndSelfTo<PlayerMovementMB>() // IMoveBehaviour<Player>, IJumpBehaviour<Player>, IRunBehaviour<Player>
+                 .FromComponentInHierarchy()
+                 .AsSingle();
+
+
+        Container.BindInterfacesAndSelfTo<PlayerHealMB>() // IMoveBehaviour<Player>, IJumpBehaviour<Player>, IRunBehaviour<Player>
+                 .FromComponentInHierarchy()
+                 .AsSingle();
+
+        // 🎮 Entrada del jugador
+        Container.Bind<IInputReceiver>()
+                 .To<PlayerInputReceiver>()
+                 .AsSingle();
+
+        Container.Bind<PlayerInputView>()
+                 .FromComponentInHierarchy()
+                 .AsSingle();
+
+        // 🧩 CASOS DE USO GENÉRICOS
+        Container.Bind<AttackUseCase<Player>>()
+                 .AsSingle();
+
+        Container.Bind<DamageUseCase>()
+                 .AsSingle();
+
+        Container.Bind<HealUseCase>()
+                 .AsSingle();
+
+        // ❤️ INTERACCIÓN DE SALUD
+        Container.Bind<HealthPresenter>()
+                 .AsSingle();
+
+        Container.Bind<DamagePresenter>()
+                 .AsSingle();
+
+        // 🚀 SERVICIO DE MOVIMIENTO DEL JUGADOR
+        Container.Bind<PlayerMovementService>()
+                 .AsSingle();
+
+        // 💥 PROYECTILES
+        Container.Bind<IProjectileSpawner>()
+                 .FromInstance(projectileSpawner)
+                 .AsSingle();
+
+        // 🛠 FACTORÍAS Y ADAPTADORES BASE
+        Container.Bind<IAnimatorAdapter>()
+                 .To<AnimatorAdapter>()
+                 .AsSingle();
+
+        Container.Bind<IPhysicsAdapter>()
+                 .To<RigidbodyAdapter>()
+                 .AsSingle();
+
+        Container.Bind<IAttackStrategyFactory>()
+                 .To<AttackStrategyFactory>()
+                 .AsSingle();
+
+        // 🔊 EVENTOS GLOBALES
+        Container.Bind<CharacterEventBus>()
+                 .AsSingle();
     }
 }

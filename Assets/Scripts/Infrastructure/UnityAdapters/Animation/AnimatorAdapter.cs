@@ -1,5 +1,8 @@
 ﻿using UnityEngine;
-
+/// <summary>
+/// AnimatorAdapter is a wrapper around Unity's Animator component.
+/// Adapter pattern is used to provide a simplified interface for setting and getting animation parameters.
+/// </summary>
 public class AnimatorAdapter : IAnimatorAdapter
 {
     private readonly Animator _animator;

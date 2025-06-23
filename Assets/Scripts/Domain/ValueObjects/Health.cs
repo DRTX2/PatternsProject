@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-
+/// <summary>
+/// Value Object representing the health of an entity.
+/// </summary>
 public class Health
 {
     public float Current { get; private set; }

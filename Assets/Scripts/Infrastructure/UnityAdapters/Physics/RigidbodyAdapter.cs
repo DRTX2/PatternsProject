@@ -1,5 +1,8 @@
 ﻿using UnityEngine;
-
+/// <summary>
+/// RigidbodyAdapter is an adapter class that wraps a Unity Rigidbody2D component.
+/// Implements the IPhysicsAdapter interface to provide a consistent API for manipulating physics properties.
+/// </summary>
 public class RigidbodyAdapter : IPhysicsAdapter
 {
     private readonly Rigidbody2D _rb;

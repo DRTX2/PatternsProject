@@ -1,23 +1,32 @@
 ﻿using UnityEngine;
 using Zenject;
 
-public class HealView : MonoBehaviour
+/// <summary>
+/// HealView is responsible for handling the healing interaction in the game.
+/// Abstracts the healing logic from the game objects and uses a presenter to apply healing.
+/// Provides a visual representation of the healing item that rotates over time.
+/// </summary>
+/// 
+public class HealView : MonoBehaviour 
 {
-    [Inject] private HealthInteractionPresenter interactionController;
-    [SerializeField] public float healAmount = 20f;
+    [SerializeField] private float healAmount = 20f;
+
+    [Inject] private HealthPresenter _presenter;
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.TryGetComponent<IHealable>(out var healable))
+        if (other.TryGetComponent<IHealBehaviour>(out var target))
         {
-            var healData = new HealData
+            var data = new HealData
             {
-                Target = healable,
+                Target = target,
                 Amount = healAmount
             };
 
-            bool healed = interactionController.ApplyHeal(healData);
-            if (healed) Destroy(gameObject);
+            if (_presenter.ApplyHeal(data))
+            {
+                Destroy(gameObject);
+            }
         }
     }
 

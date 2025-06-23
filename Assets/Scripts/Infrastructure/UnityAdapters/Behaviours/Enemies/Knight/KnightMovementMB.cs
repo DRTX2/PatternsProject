@@ -1,11 +1,13 @@
 ﻿using UnityEngine;
+using UnityEngine.TextCore.Text;
 using Zenject;
 
 /// <summary>
-/// Componente de movimiento autónomo para enemigos tipo Knight.
+/// Handles the movement of the Knight enemy.
 /// </summary>
+
 [RequireComponent(typeof(Animator), typeof(Rigidbody2D), typeof(TouchingDirections))]
-public class KnightMovementMB : MonoBehaviour, IAutonomousMovable
+public class KnightMovementMB : MonoBehaviour, IMoveBehaviour<KnightEnemy>
 {
     [Inject] private KnightEnemy _knight;
 
@@ -23,14 +25,16 @@ public class KnightMovementMB : MonoBehaviour, IAutonomousMovable
         _touching = GetComponent<TouchingDirections>();
     }
 
-    public void Move()
+    public void Move(float directionMultiplier)
     {
         TryFlipOnWall();
 
-        if (_knight.CanMove )
+        if (_knight.CanMove(_touching.IsGrounded, _touching.IsOnWall))
         {
-            float speedX = _knight.HorizontalSpeed;
-            ApplyHorizontalMovement(speedX);
+            float speedX = _knight.HorizontalSpeed * directionMultiplier;
+            _physics.SetVelocity(new Vector2(speedX, _physics.GetVelocity().y));
+            _animator.SetFloat(AnimationStrings.xMove, speedX);
+            FaceDirection(speedX);
         }
         else
         {
@@ -38,26 +42,27 @@ public class KnightMovementMB : MonoBehaviour, IAutonomousMovable
         }
     }
 
-    public void FlipDirection()
+    public void FaceDirection(float x)
     {
-        _knight.FlipDirection();
+        if (x == 0) return;
+
+        float scaleX = transform.localScale.x;
+        bool shouldFlip = (x < 0 && scaleX > 0) || (x > 0 && scaleX < 0);
+
+        if (shouldFlip)
+        {
+            transform.localScale = new Vector3(-scaleX, transform.localScale.y, transform.localScale.z);
+        }
+        //_knight.FlipDirection();
     }
 
     private void TryFlipOnWall()
     {
         if (_touching.IsGrounded && _touching.IsOnWall && Time.time > _lastFlipTime + FlipCooldown)
         {
-            FlipDirection();
+            _knight.FlipDirection();
             _lastFlipTime = Time.time;
-            Debug.Log("Knight flipped direction due to wall collision.");
         }
-    }
-
-    private void ApplyHorizontalMovement(float speedX)
-    {
-        _physics.SetVelocity(new Vector2(speedX, _physics.GetVelocity().y));
-        _animator.SetFloat(AnimationStrings.xMove, speedX);
-        FlipVisual(speedX);
     }
 
     private void Decelerate()
@@ -67,26 +72,15 @@ public class KnightMovementMB : MonoBehaviour, IAutonomousMovable
         _animator.SetFloat(AnimationStrings.xMove, decelX);
     }
 
-    private void FlipVisual(float xDir)
-    {
-        float scaleX = transform.localScale.x;
-        bool shouldFlip = (xDir < 0 && scaleX > 0) || (xDir > 0 && scaleX < 0);
-
-        if (shouldFlip)
-        {
-            transform.localScale = new Vector3(-scaleX, transform.localScale.y, transform.localScale.z);
-        }
-    }
-
     public void DisableMovement()
     {
-        _knight.SetCanMove(false);
+        _knight.SetLockVelocity(true);
         _animator.SetBool(AnimationStrings.canMove, false);
     }
 
     public void EnableMovement()
     {
-        _knight.SetCanMove(true);
+        _knight.SetLockVelocity(false);
         _animator.SetBool(AnimationStrings.canMove, true);
     }
 }

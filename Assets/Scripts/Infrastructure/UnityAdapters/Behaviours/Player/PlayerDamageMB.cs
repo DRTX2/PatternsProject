@@ -1,10 +1,12 @@
-﻿using Unity.VisualScripting;
-using UnityEngine;
+﻿using UnityEngine;
 using Zenject;
 
-public class KnightHealthMB : MonoBehaviour, IDamageable
+/// <summary>
+/// Handles player damage behavior, including taking damage, applying knockback,
+/// </summary>
+public class PlayerDamageMB : MonoBehaviour, IDamageBehaviour
 {
-    [Inject] private KnightEnemy _knight;
+    [Inject] private Player _player;
     [Inject] private CharacterEventBus _eventBus;
 
     private IAnimatorAdapter _animator;
@@ -16,6 +18,10 @@ public class KnightHealthMB : MonoBehaviour, IDamageable
     private float _invincibleTimer = 0f;
     private float _lockVelocityTimer = 0f;
 
+    public bool _isAlive => _player.IsAlive;
+    public float CurrentHealth => _player.Health.Current;
+    public float MaxHealth => _player.Health.Max;
+
     private void Awake()
     {
         _animator = new AnimatorAdapter(GetComponent<Animator>());
@@ -24,35 +30,27 @@ public class KnightHealthMB : MonoBehaviour, IDamageable
 
     private void Update()
     {
-        if (_invincibleTimer > 0f)
-        {
-            _invincibleTimer -= Time.deltaTime;
-            if (_invincibleTimer <= 0f)
-            {
-                _knight.SetInvincibility(false);
-            }
-        }
+        if (_invincibleTimer > 0 && (_invincibleTimer -= Time.deltaTime) <= 0)
+            _player.SetInvincibility(false);
     }
-
-    public bool IsAlive => _knight.IsAlive;
-    public float CurrentHealth => _knight.Health.Current;
-    public float MaxHealth => _knight.Health.Max;
-
-    public bool _isAlive => throw new System.NotImplementedException();
 
     public bool ReceiveDamage(float amount, Vector2 knockback)
     {
-        if (!_knight.TakeDamage(amount)) return false;
+        if (!_player.TakeDamage(amount)) return false;
 
         _animator.SetTrigger(AnimationStrings.hitTrigger);
         _physics.ApplyKnockback(knockback);
 
         _invincibleTimer = invincibilityDuration;
-        _knight.SetInvincibility(true);
-
-        if (!_knight.IsAlive) _animator.SetBool(AnimationStrings.isAlive, false);
+        _player.SetInvincibility(true);
+        _lockVelocityTimer = lockVelocityDuration;
 
         _eventBus.DamageReceived.Notify(new DamageEvent { Character = gameObject, Amount = amount });
+        _eventBus.HealthChanged.Notify(new HealthChangedEvent { Character = gameObject, Current = CurrentHealth, Max = MaxHealth });
+
+        if (!_player.IsAlive)
+            _animator.SetBool(AnimationStrings.isAlive, false);
+
         return true;
     }
 }

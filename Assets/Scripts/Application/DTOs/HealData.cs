@@ -1,5 +1,8 @@
-﻿public class HealData
+﻿/// <summary>
+/// Data Transfer Object for heal information.
+/// </summary>
+public class HealData
 {
-    public IHealable Target;
+    public IHealBehaviour Target;
     public float Amount;
 }

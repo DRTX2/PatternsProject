@@ -1,5 +1,9 @@
 ﻿using UnityEngine;
 
+/// <summary>
+/// ArrowProjectile is a simple projectile class that represents an arrow in the game.
+/// </summary>
+
 public class ArrowProjectile : MonoBehaviour, IProjectile
 {
     [SerializeField] private float speed = 10f;
@@ -19,7 +23,7 @@ public class ArrowProjectile : MonoBehaviour, IProjectile
     
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.TryGetComponent<IDamageable>(out var target))
+        if (other.TryGetComponent<IDamageBehaviour>(out var target))
         {
             bool damaged = target.ReceiveDamage(damage, knockback);
             if (damaged)

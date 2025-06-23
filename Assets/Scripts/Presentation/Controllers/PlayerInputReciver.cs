@@ -1,22 +1,17 @@
-﻿public class PlayerInputReciver : IInputReceiver
+﻿using Zenject;
+
+/// <summary>
+/// PlayerInputReceiver is responsible for handling player input and forwarding it to the appropriate use cases and services.
+/// </summary>
+public class PlayerInputReceiver : IInputReceiver
 {
-    private readonly PlayerMovementService _movementService;
-    private readonly AttackUseCase _attackUserCase;
+    [Inject] private readonly AttackUseCase<Player> _attackUseCase;
+    [Inject] private PlayerMovementService _movement;
 
-    public PlayerInputReciver(PlayerMovementService movementService, AttackUseCase attackService)
-    {
-        _movementService = movementService;
-        _attackUserCase = attackService;
-    }
+    public void OnMoveInput(float x) => _movement.Move(x);
+    public void OnJumpInput() => _movement.Jump();
+    public void OnRunInput(bool isRunning) => _movement.SetRunning(isRunning);
 
-    public void OnMoveInput(float x) => _movementService.HandleMoveInput(x);
-
-    public void OnRunInput(bool isRunning) => _movementService.HandleRunInput(isRunning);
-
-    public void OnJumpInput() => _movementService.HandleJumpRequest();
-
-    public void OnMeleeAttackInput() => _attackUserCase.HandleAttack(AttackAnimationType.Melee);
-
-    public void OnRangedAttackInput() => _attackUserCase.HandleAttack(AttackAnimationType.Ranged);
-
+    public void OnMeleeAttackInput() => _attackUseCase.HandleAttack(AttackAnimationType.Melee);
+    public void OnRangedAttackInput() => _attackUseCase.HandleAttack(AttackAnimationType.Ranged);
 }

@@ -1,8 +1,10 @@
 ﻿using UnityEngine;
-using System.Collections.Generic;
 using Zenject;
-
-public class FlyingEyeMovementMB : MonoBehaviour, IFlyer
+using System.Collections.Generic;
+/// <summary>
+/// Movement behaviour for the Flying Eye enemy.
+/// </summary>
+public class FlyingEyeMovementMB : MonoBehaviour, IMoveBehaviour<FlyingEyeEnemy>
 {
     [Inject] private FlyingEyeEnemy _enemy;
 
@@ -23,7 +25,7 @@ public class FlyingEyeMovementMB : MonoBehaviour, IFlyer
         _currentWaypoint = waypoints[_waypointIndex];
     }
 
-    public void Fly(float deltaTime)
+    public void Move(float _)
     {
         if (!_enemy.IsAlive || !_animator.GetBool(AnimationStrings.canMove))
         {
@@ -33,7 +35,7 @@ public class FlyingEyeMovementMB : MonoBehaviour, IFlyer
 
         Vector2 direction = (_currentWaypoint.position - transform.position).normalized;
         _rb.linearVelocity = direction * flightSpeed;
-        FlipIfNeeded(direction.x);
+        FaceDirection(direction.x);
 
         if (Vector2.Distance(transform.position, _currentWaypoint.position) <= waypointReachedDistance)
         {
@@ -42,7 +44,7 @@ public class FlyingEyeMovementMB : MonoBehaviour, IFlyer
         }
     }
 
-    private void FlipIfNeeded(float x)
+    public void FaceDirection(float x)
     {
         if ((x < 0 && transform.localScale.x > 0) || (x > 0 && transform.localScale.x < 0))
         {

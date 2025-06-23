@@ -367,6 +367,7 @@ GameObject:
   - component: {fileID: 850572826746978581}
   - component: {fileID: 6227317244425914977}
   - component: {fileID: 448219909057770899}
+  - component: {fileID: 8799887712458128275}
   - component: {fileID: 1489631256563986134}
   - component: {fileID: 5355681849893308118}
   - component: {fileID: 6037241189817770124}
@@ -722,6 +723,18 @@ MonoBehaviour:
   walkSpeed: 5
   runSpeed: 8
   jumpForce: 10
+--- !u!114 &8799887712458128275
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5007971800620712363}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f914f6d3355838641913e50e699cb5e0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &1489631256563986134
 MonoBehaviour:
   m_ObjectHideFlags: 0

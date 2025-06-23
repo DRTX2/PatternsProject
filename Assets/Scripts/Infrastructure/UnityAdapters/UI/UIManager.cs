@@ -2,6 +2,9 @@
 using TMPro;
 using Zenject;
 
+/// <summary>
+/// UIManager is responsible for displaying UI elements such as damage and health text.
+/// </summary>
 public class UIManager : MonoBehaviour
 {
     [SerializeField] private GameObject damageTextPrefab;

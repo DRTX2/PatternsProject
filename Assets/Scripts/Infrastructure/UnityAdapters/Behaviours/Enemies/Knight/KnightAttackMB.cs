@@ -1,8 +1,11 @@
 ﻿using UnityEngine;
 using Zenject;
-using static UnityEngine.Rendering.DebugUI;
 
-public class KnightAttackMB : MonoBehaviour, IAttacker, ITracker
+/// <summary>
+/// Handles the attack behavior for the Knight enemy.
+/// </summary>
+
+public class KnightAttackMB : MonoBehaviour, IAttackBehaviour<KnightEnemy>, ITrackBehaviour<KnightEnemy>
 {
     private IAnimatorAdapter _animator;
     private IPhysicsAdapter _physics;
@@ -22,8 +25,7 @@ public class KnightAttackMB : MonoBehaviour, IAttacker, ITracker
 
     public void Attack(IAnimationAttackStrategy strategy)
     {
-        if (!_knight.IsAlive || _knight.AttackCooldown > 0f)
-            return;
+        if (!_knight.IsAlive || _knight.AttackCooldown > 0f) return;
 
         strategy.ExecuteAttack(_animator);
         _knight.SetAttackCooldown(_animator.GetFloat(AnimationStrings.attackCooldown));
@@ -43,11 +45,13 @@ public class KnightAttackMB : MonoBehaviour, IAttacker, ITracker
 
     public void RegisterTarget()
     {
+        _knight.SetTracker(true);
         _animator.SetBool(AnimationStrings.hasTarget, true);
     }
 
     public void ClearTargets()
     {
+        _knight.SetTracker(false);
         _animator.SetBool(AnimationStrings.hasTarget, false);
     }
 }

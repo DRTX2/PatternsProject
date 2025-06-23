@@ -7,34 +7,38 @@ public class KnightInstaller : MonoInstaller
 
     public override void InstallBindings()
     {
-        Container.Bind<KnightEnemy>().AsSingle().WithArguments(maxHealth);
+        Container.Bind<KnightEnemy>()
+                 .AsSingle()
+                 .WithArguments(maxHealth);
 
-        Container.Bind<IAutonomousMovable>()
-            .To<KnightMovementMB>()
-            .FromComponentOnRoot()
-            .AsSingle();
+        // 📦 COMPORTAMIENTOS concretos (MBs)
+        Container.Bind<IDamageBehaviour>()
+                 .To<KnightDamageMB>()
+                 .FromComponentOnRoot()
+                 .AsSingle();
 
-        Container.Bind<IDamageable>()
-            .To<KnightHealthMB>()
-            .FromComponentOnRoot()
-            .AsSingle();
+        Container.Bind<IMoveBehaviour<KnightEnemy>>()
+                 .To<KnightMovementMB>()
+                 .FromComponentOnRoot()
+                 .AsSingle();
 
-        /*Container.Bind<IAttacker>()
-            .To<KnightAttackMB>()
-            .FromComponentOnRoot()
-            .AsSingle();
-
-        Container.Bind<ITracker>()
-            .To<KnightAttackMB>()
-            .FromComponentOnRoot()
-            .AsSingle();*/
         Container.BindInterfacesAndSelfTo<KnightAttackMB>() // Bind for ITracker and IAttacker
-             .FromComponentOnRoot()
-             .AsSingle();
+                .FromComponentOnRoot()
+                .AsSingle();
 
+        // 🧩 CASOS DE USO
+        Container.Bind<AttackUseCase<KnightEnemy>>()
+                 .AsSingle();
 
-        Container.Bind<AttackUseCase>().AsSingle();
-        Container.Bind<TargetTrackingUseCase>().AsSingle();
+        Container.Bind<DamageUseCase>()
+                 .AsSingle();
+
+        Container.Bind<TargetTrackingUseCase<KnightEnemy>>()
+                 .AsSingle();
+
+        // 🎯 PRESENTER de interacción (daño/curación)
+        Container.Bind<DamagePresenter>()
+                 .AsSingle();
 
         Container.Bind<KnightMovementService>()
             .AsSingle();

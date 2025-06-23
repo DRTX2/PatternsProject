@@ -3,12 +3,15 @@ using TMPro;
 using UnityEngine.UI;
 using Zenject;
 
+/// <summary>
+/// HealthBar is a UI component that displays the player's health.
+/// </summary>
 public class HealthBar : MonoBehaviour
 {
     [SerializeField] private Slider slider;
     [SerializeField] private TMP_Text healthText;
 
-    [Inject] private IDamageable playerDamageable;
+    [Inject] private IDamageBehaviour playerDamageable;
     [Inject] private CharacterEventBus _eventBus;
 
     void Start()

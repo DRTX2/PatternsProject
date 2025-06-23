@@ -2,6 +2,13 @@
 using UnityEngine.InputSystem;
 using Zenject;
 
+/// <summary>
+/// PlayerInputView is responsible for handling player input in the game.
+/// Abstracts the input logic from the game objects and uses a receiver to process the input.
+/// Used to capture player actions such as movement, jumping, and attacks.
+/// Uses Unity's new Input System for input handling.
+/// </summary>
+
 [RequireComponent(
     typeof(Rigidbody2D)
     )]
@@ -47,17 +54,4 @@ public class PlayerInputView : MonoBehaviour
             _inputReciver.OnRangedAttackInput();
         }
     }
-
-
-
-    /*public void OnMove(InputAction.CallbackContext context)
-    {
-        if (context.performed || context.canceled)
-        {
-            float direction = context.ReadValue<Vector2>().x;
-            _inputReciver.OnMoveInput(direction);
-        }
-    }*/
-
-
 }

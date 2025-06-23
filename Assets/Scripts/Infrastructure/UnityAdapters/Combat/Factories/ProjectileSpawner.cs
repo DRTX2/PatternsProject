@@ -1,5 +1,9 @@
 ﻿using UnityEngine;
 
+/// <summary>
+/// ProjectileSpawner is responsible for instantiating and launching projectiles from a specified launch point.
+/// </summary>
+
 public class ProjectileSpawner : MonoBehaviour, IProjectileSpawner
 {
     [SerializeField] public Transform launchPoint;

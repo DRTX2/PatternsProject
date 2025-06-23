@@ -2,6 +2,11 @@
 using UnityEngine.Events;
 using System.Collections.Generic;
 
+/// <summary>
+/// CliffDetectionView is responsible for detecting cliffs in the game environment.
+/// Represents a view that triggers an event when a cliff is detected or no cliffs remain.
+/// </summary>
+
 [RequireComponent(typeof(Collider2D))]
 public class CliffDetectionView : MonoBehaviour
 {

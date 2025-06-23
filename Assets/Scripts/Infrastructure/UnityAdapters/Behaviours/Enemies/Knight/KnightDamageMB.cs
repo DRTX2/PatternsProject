@@ -1,18 +1,26 @@
 ﻿using UnityEngine;
 using Zenject;
 
-public class FlyingEyeHealthMB : MonoBehaviour, IDamageable
+/// <summary>
+/// Damage behaviour for the Knight enemy.
+/// </summary>
+
+public class KnightDamageMB : MonoBehaviour, IDamageBehaviour
 {
-    [Inject] private FlyingEyeEnemy _flyingEye;
+    [Inject] private KnightEnemy _knight;
     [Inject] private CharacterEventBus _eventBus;
 
     private IAnimatorAdapter _animator;
     private IPhysicsAdapter _physics;
 
-    [SerializeField] private float invincibilityDuration = 2f;
-    [SerializeField] private float lockVelocityDuration = 0.35f;
+    [SerializeField] private float invincibilityDuration = 0.25f;
+    [SerializeField] private float lockVelocityDuration = 0.1f;
 
     private float _invincibleTimer = 0f;
+
+    public bool _isAlive => _knight.IsAlive;
+    public float CurrentHealth => _knight.Health.Current;
+    public float MaxHealth => _knight.Health.Max;
 
     private void Awake()
     {
@@ -24,35 +32,26 @@ public class FlyingEyeHealthMB : MonoBehaviour, IDamageable
     {
         if (_invincibleTimer > 0f)
         {
-            _invincibleTimer = Mathf.Max(_invincibleTimer - Time.deltaTime, 0f);
+            _invincibleTimer -= Time.deltaTime;
             if (_invincibleTimer <= 0f)
             {
-                _flyingEye.SetInvincibility(false);
+                _knight.SetInvincibility(false);
             }
         }
     }
 
-    public float CurrentHealth => _flyingEye.Health.Current;
-    public float MaxHealth => _flyingEye.Health.Max;
-    public bool _isAlive => _flyingEye.IsAlive;
-
     public bool ReceiveDamage(float amount, Vector2 knockback)
     {
-        if (!_flyingEye.TakeDamage(amount)) return false;
+        if (!_knight.TakeDamage(amount)) return false;
 
         _animator.SetTrigger(AnimationStrings.hitTrigger);
         _physics.ApplyKnockback(knockback);
 
         _invincibleTimer = invincibilityDuration;
-        _flyingEye.SetInvincibility(true);
+        _knight.SetInvincibility(true);
 
-        if (!_flyingEye.IsAlive)
-        {
+        if (!_knight.IsAlive)
             _animator.SetBool(AnimationStrings.isAlive, false);
-            // Lógica especial de muerte, como caída
-            _physics.SetGravityScale(2f);
-            Debug.Log("FlyingEye has died.");
-        }
 
         _eventBus.DamageReceived.Notify(new DamageEvent { Character = gameObject, Amount = amount });
         return true;

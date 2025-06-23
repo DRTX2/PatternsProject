@@ -1,5 +1,9 @@
 ﻿using System;
 
+/// <summary>
+/// Factory for creating attack strategies based on the specified attack animation type.
+/// </summary>
+
 public class AttackStrategyFactory : IAttackStrategyFactory
 {
     private readonly IProjectileSpawner _projectileSpawner;

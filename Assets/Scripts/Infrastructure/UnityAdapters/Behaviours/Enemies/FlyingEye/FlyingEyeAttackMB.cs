@@ -1,12 +1,14 @@
 ﻿using UnityEngine;
 using Zenject;
-
-public class FlyingEyeAttackMB : MonoBehaviour, IAttacker, ITracker
+/// <summary>
+/// Handling the attack behavior for the Flying Eye enemy.
+/// </summary>
+public class FlyingEyeAttackMB : MonoBehaviour, IAttackBehaviour<FlyingEyeEnemy>, ITrackBehaviour<FlyingEyeEnemy>
 {
+    [Inject] private FlyingEyeEnemy _eye;
+
     private IAnimatorAdapter _animator;
     private IPhysicsAdapter _physics;
-
-    [Inject] private FlyingEyeEnemy _eye;
 
     private void Awake()
     {
@@ -21,8 +23,7 @@ public class FlyingEyeAttackMB : MonoBehaviour, IAttacker, ITracker
 
     public void Attack(IAnimationAttackStrategy strategy)
     {
-        if (!_eye.IsAlive || _eye.AttackCooldown > 0f)
-            return;
+        if (!_eye.IsAlive || _eye.AttackCooldown > 0f) return;
 
         strategy.ExecuteAttack(_animator);
         _eye.SetAttackCooldown(_animator.GetFloat(AnimationStrings.attackCooldown));
@@ -31,6 +32,7 @@ public class FlyingEyeAttackMB : MonoBehaviour, IAttacker, ITracker
     private void HandleCooldown()
     {
         float currentCooldown = _animator.GetFloat(AnimationStrings.attackCooldown);
+
         if (currentCooldown > 0f)
         {
             currentCooldown -= Time.deltaTime;
@@ -41,11 +43,13 @@ public class FlyingEyeAttackMB : MonoBehaviour, IAttacker, ITracker
 
     public void RegisterTarget()
     {
+        _eye.SetTracker(true);
         _animator.SetBool(AnimationStrings.hasTarget, true);
     }
 
     public void ClearTargets()
     {
+        _eye.SetTracker(false);
         _animator.SetBool(AnimationStrings.hasTarget, false);
     }
 }

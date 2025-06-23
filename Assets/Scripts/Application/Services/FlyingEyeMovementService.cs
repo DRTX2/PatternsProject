@@ -1,14 +1,22 @@
-﻿public class FlyingEyeMovementService
+﻿/// <summary>
+/// Service for handling the movement of FlyingEye enemies.
+/// </summary>
+public class FlyingEyeMovementService : IMoveBehaviour<FlyingEyeEnemy>
 {
-    private readonly IFlyer _flyer;
+    private readonly IMoveBehaviour<FlyingEyeEnemy> _mover;
 
-    public FlyingEyeMovementService(IFlyer flyer)
+    public FlyingEyeMovementService(IMoveBehaviour<FlyingEyeEnemy> mover)
     {
-        _flyer = flyer;
+        _mover = mover;
     }
 
-    public void Tick(float deltaTime)
+    public void Move(float directionX)
     {
-        _flyer.Fly(deltaTime);
+        _mover.Move(directionX);
+    }
+
+    public void FaceDirection(float x)
+    {
+        _mover.FaceDirection(x);
     }
 }
