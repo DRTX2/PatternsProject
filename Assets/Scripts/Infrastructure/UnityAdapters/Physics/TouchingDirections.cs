@@ -1,5 +1,7 @@
 ﻿using UnityEngine;
-
+/// <summary>
+/// TouchingDirections is a MonoBehaviour that checks the entity's contact with the ground, walls, and ceiling using raycasts.
+/// </summary>
 [RequireComponent(typeof(CapsuleCollider2D), typeof(Animator))]
 public class TouchingDirections : MonoBehaviour
 {
@@ -31,7 +33,6 @@ public class TouchingDirections : MonoBehaviour
         bool previousWall = IsOnWall;
         bool previousCeiling = IsOnCeiling;
 
-        // Check ground
         IsGrounded = _collider.Cast(Vector2.down, castFilter, _hits, groundDistance) > 0;
         IsOnWall = _collider.Cast(WallCheckDirection, castFilter, _hits, wallDistance) > 0;
         IsOnCeiling = _collider.Cast(Vector2.up, castFilter, _hits, ceilingDistance) > 0;

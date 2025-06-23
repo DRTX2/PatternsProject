@@ -1,5 +1,8 @@
 ﻿using UnityEngine;
-
+/// <summary>
+/// RigidbodyAdapter is an adapter class that wraps a Unity Rigidbody2D component.
+/// Implements the IPhysicsAdapter interface to provide a consistent API for manipulating physics properties.
+/// </summary>
 public class RigidbodyAdapter : IPhysicsAdapter
 {
     private readonly Rigidbody2D _rb;
@@ -21,8 +24,11 @@ public class RigidbodyAdapter : IPhysicsAdapter
 
     public void ApplyKnockback(Vector2 knockback)
     {
-        Debug.Log($"RigidbodyAdapter: Applying knockback with x: {knockback.x}, y: {knockback.y} to Rigidbody2D: {_rb.gameObject.name}. Current Velocity: {_rb.linearVelocity}");
         _rb.linearVelocity = new Vector2(knockback.x, _rb.linearVelocity.y + knockback.y);
-        Debug.Log($"RigidbodyAdapter: Applied knockback with x: {knockback.x}, y: {knockback.y}. New velocity: {_rb.linearVelocity}");
+    }
+
+    public void SetGravityScale(float scale)
+    {
+        _rb.gravityScale = scale;
     }
 }

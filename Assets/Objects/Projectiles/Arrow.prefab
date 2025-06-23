@@ -10,10 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 6300549083632018937}
   - component: {fileID: 2065310075882590137}
-  - component: {fileID: 559371761972860875}
-  - component: {fileID: 3935075722377808488}
   - component: {fileID: 896330464208416967}
   - component: {fileID: 2164858904504412832}
+  - component: {fileID: 8311516456314194973}
   m_Layer: 9
   m_Name: Arrow
   m_TagString: Untagged
@@ -91,35 +90,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &559371761972860875
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 316223019245298023}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2d29ec4a88a19d6478ccdcf50b78ff07, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  launchPoint: {fileID: 0}
-  projectilePrefab: {fileID: 316223019245298023}
---- !u!114 &3935075722377808488
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 316223019245298023}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 327ac0e970b80204886e73cf3438f8e0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  damage: 10
-  moveSpeed: {x: 14, y: 0}
-  knockback: {x: 4, y: 0}
 --- !u!50 &896330464208416967
 Rigidbody2D:
   serializedVersion: 5
@@ -183,3 +153,18 @@ CircleCollider2D:
   m_CompositeOrder: 0
   m_Offset: {x: 0.67, y: 0}
   m_Radius: 0.36491132
+--- !u!114 &8311516456314194973
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 316223019245298023}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3566eef791377894baa5d377b695acd5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 18
+  damage: 10
+  knockback: {x: 4, y: 0}

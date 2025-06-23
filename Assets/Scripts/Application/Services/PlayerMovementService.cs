@@ -1,30 +1,30 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Text;
+﻿using Zenject;
 
-public class PlayerMovementService
+/// <summary>
+/// Service for handling player movement, including moving, jumping, and running.
+/// </summary>
+public class PlayerMovementService : IMoveBehaviour<Player>, IJumpBehaviour<Player>, IRunBehaviour<Player>
 {
-    private readonly IMovable _movable;
+    private readonly IMoveBehaviour<Player> _mover;
+    private readonly IJumpBehaviour<Player> _jumper;
+    private readonly IRunBehaviour<Player> _runner;
 
-    public PlayerMovementService(IMovable movable)
+    [Inject]
+    public PlayerMovementService(
+        IMoveBehaviour<Player> mover,
+        IJumpBehaviour<Player> jumper,
+        IRunBehaviour<Player> runner)
     {
-        _movable = movable;
+        _mover = mover;
+        _jumper = jumper;
+        _runner = runner;
     }
 
-    public void HandleMoveInput(float directionX)
+    public void Move(float directionX)
     {
-        
-        _movable.Move(directionX);
+        _mover.Move(directionX);
     }
-
-    public void HandleJumpRequest()
-    {
-        _movable.Jump();
-    }
-
-    public void HandleRunInput(bool isRunning)
-    {
-        _movable.SetRunning(isRunning);
-    }
+    public void FaceDirection(float directionX) => _mover.FaceDirection(directionX);
+    public void Jump() => _jumper.Jump();
+    public void SetRunning(bool isRunning) => _runner.SetRunning(isRunning);
 }

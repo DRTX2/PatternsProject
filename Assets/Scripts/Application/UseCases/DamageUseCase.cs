@@ -1,10 +1,14 @@
 ﻿using UnityEngine;
 
+/// <summary>
+/// Use case for applying damage to a target.
+/// This class encapsulates the logic for dealing damage,
+/// </summary>
+
 public class DamageUseCase
 {
-    public bool ExecuteDamage(IDamageable target, float damage, Vector2 knockback)
+    public bool ExecuteDamage(IDamageBehaviour target, float amount, Vector2 knockback)
     {
-        Debug.Log($"DamageUseCase: Executing damage on target with CurrentHealth: {target.CurrentHealth}, MaxHealth: {target.MaxHealth}, Damage: {damage}, Knockback: {knockback}");
-        return target.ReceiveDamage(damage, knockback);
+        return target.ReceiveDamage(amount, knockback);
     }
 }

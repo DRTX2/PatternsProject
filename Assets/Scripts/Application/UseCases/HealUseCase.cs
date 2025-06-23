@@ -1,7 +1,12 @@
-﻿public class HealUseCase
+﻿/// <summary>
+/// Use case for executing healing actions.
+/// This class encapsulates the logic for healing an entity.
+/// </summary>
+
+public class HealUseCase
 {
-    public bool ExecuteHeal(IHealable target, float amount)
+    public bool ExecuteHeal(IHealBehaviour healer, float amount)
     {
-        return target.Heal(amount);
+        return healer.Heal(amount);
     }
 }

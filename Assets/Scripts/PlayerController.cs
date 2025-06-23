@@ -145,7 +145,8 @@ public class PlayerController : MonoBehaviour
     {
         if (!damageable.LockVelocity)
         {
-            rb.linearVelocity = new Vector2(moveInput.x * CurrentMoveSpeed, rb.linearVelocity.y);
+            rb.linearVelocity = new Vector2(moveInput.x * 1//Se daño y no me acuerdo que iba xd            
+                , rb.linearVelocity.y);
         }
         animator.SetFloat(AnimationStrings.yVelocity, rb.linearVelocity.y);
     }
