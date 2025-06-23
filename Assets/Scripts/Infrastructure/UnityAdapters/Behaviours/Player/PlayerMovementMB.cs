@@ -20,6 +20,13 @@ public class PlayerMovementMB : MonoBehaviour,
 
     private bool _facingRight = true;
 
+
+    private void Start()
+    {
+        Vector2 pos = new Vector2(_player.PositionX, _player.PositionY);
+        transform.position = pos;
+    }
+
     private void Awake()
     {
         _animator = new AnimatorAdapter(GetComponent<Animator>());
@@ -30,7 +37,7 @@ public class PlayerMovementMB : MonoBehaviour,
     public void Move(float x)
     {
         if (!_player.CanMove(_touching.IsOnWall, _touching.IsGrounded)) return;
-        
+      //  
         float speed = _player.IsRunning && _touching.IsGrounded ? runSpeed : walkSpeed;
         _physics.SetVelocity(new Vector2(x * speed, _physics.GetVelocity().y));
 
@@ -65,5 +72,12 @@ public class PlayerMovementMB : MonoBehaviour,
             _facingRight = shouldFaceRight;
             transform.localScale = new Vector3(-transform.localScale.x, transform.localScale.y, transform.localScale.z);
         }
+    }
+
+    private void Update()
+    {
+        Vector2 pos = transform.position;
+        _player.PositionX = pos.x;
+        _player.PositionY = pos.y;
     }
 }

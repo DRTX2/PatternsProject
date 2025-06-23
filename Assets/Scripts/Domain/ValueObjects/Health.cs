@@ -16,7 +16,10 @@ public class Health
         Max = max;
         Current = max;
     }
-
+    public void ForceSetCurrent(float value)
+    {
+        Current = Math.Clamp(value, 0, Max);
+    }
     public void Reduce(float amount)
     {
         Current = System.Math.Max(Current - amount, 0);

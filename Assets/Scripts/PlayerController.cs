@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using Zenject;
 
 [RequireComponent(
     typeof(Rigidbody2D),
@@ -9,6 +10,8 @@ using UnityEngine.InputSystem;
     )]
 public class PlayerController : MonoBehaviour
 {
+    [Inject] private Player _player;
+
     public float walkSpeed = 5f;
     public float runSpeed = 8f;
     public float airWalkSpeed = 3f; // Speed when in the air, can be used for air control
@@ -17,7 +20,10 @@ public class PlayerController : MonoBehaviour
     Vector2 moveInput;
     TouchingDirections_Old touchingDirections;
     Damageable_old damageable;
-
+    private void Start()
+    {
+        transform.position = new Vector3(_player.PositionX,10, 0);
+    }
     public float CurrentMoveSpeed
     {
         get
@@ -225,6 +231,7 @@ public class PlayerController : MonoBehaviour
 
 
     public bool IsAttacking { get; private set; }
+
 
     public void AttackStart()
     {
