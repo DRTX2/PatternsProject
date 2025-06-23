@@ -12,7 +12,7 @@ public class PlayerMovementMB : MonoBehaviour,
 
     private IAnimatorAdapter _animator;
     private IPhysicsAdapter _physics;
-    private TouchingDirections _touching;
+    private SurfaceContactSensor _touching;
 
     [SerializeField] private float walkSpeed = 5f;
     [SerializeField] private float runSpeed = 8f;
@@ -31,7 +31,7 @@ public class PlayerMovementMB : MonoBehaviour,
     {
         _animator = new AnimatorAdapter(GetComponent<Animator>());
         _physics = new RigidbodyAdapter(GetComponent<Rigidbody2D>());
-        _touching = GetComponent<TouchingDirections>();
+        _touching = GetComponent<SurfaceContactSensor>();
     }
 
     public void Move(float x)
@@ -39,10 +39,10 @@ public class PlayerMovementMB : MonoBehaviour,
         if (!_player.CanMove(_touching.IsGrounded, _touching.IsOnWall)) return;
         
         float speed = _player.IsRunning && _touching.IsGrounded ? runSpeed : walkSpeed;
-        _physics.SetVelocity(new Vector2(x * speed, _physics.GetVelocity().y));
+        _physics.SetVelocity(new Vector2D(x * speed, _physics.GetVelocity().Y));
 
         _animator.SetBool(AnimationStrings.isMoving, Mathf.Abs(x) > 0.01f);
-        _animator.SetFloat(AnimationStrings.yVelocity, _physics.GetVelocity().y);
+        _animator.SetFloat(AnimationStrings.yVelocity, _physics.GetVelocity().Y);
 
         FaceDirection(x);
     }
@@ -57,7 +57,7 @@ public class PlayerMovementMB : MonoBehaviour,
     {
         if (_touching.IsGrounded && _player.CanMove(_touching.IsGrounded, _touching.IsOnWall))
         {
-            _physics.SetVelocity(new Vector2(_physics.GetVelocity().x, jumpForce));
+            _physics.SetVelocity(new Vector2D(_physics.GetVelocity().X, jumpForce));
             _animator.SetTrigger(AnimationStrings.jumpTrigger);
         }
     }

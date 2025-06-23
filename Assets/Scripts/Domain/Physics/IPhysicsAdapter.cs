@@ -6,8 +6,8 @@
 /// </summary>
 public interface IPhysicsAdapter
 {
-    void SetVelocity(Vector2 velocity);
-    Vector2 GetVelocity();
-    void ApplyKnockback(Vector2 knockback);
+    void SetVelocity(Vector2D velocity);
+    Vector2D GetVelocity();
+    void ApplyKnockback(Vector2D knockback);
     void SetGravityScale(float scale);
 }

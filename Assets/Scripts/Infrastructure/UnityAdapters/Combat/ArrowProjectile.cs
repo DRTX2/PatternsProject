@@ -8,7 +8,7 @@ public class ArrowProjectile : MonoBehaviour, IProjectile
 {
     [SerializeField] private float speed = 10f;
     [SerializeField]  public int damage = 10;
-    [SerializeField]  public Vector2 knockback = new Vector2(0, 0);
+    [SerializeField]  public Vector2D knockback = new Vector2D(0, 0);
     private float _direction;
 
     public void Launch(float direction)

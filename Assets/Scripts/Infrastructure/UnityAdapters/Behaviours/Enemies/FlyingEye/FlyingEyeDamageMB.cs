@@ -34,7 +34,7 @@ public class FlyingEyeDamageMB : MonoBehaviour, IDamageBehaviour
         }
     }
 
-    public bool ReceiveDamage(float amount, Vector2 knockback)
+    public bool ReceiveDamage(float amount, Vector2D knockback)
     {
         if (!_eye.TakeDamage(amount)) return false;
 

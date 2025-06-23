@@ -35,19 +35,24 @@ public class FlyingEyeMovementMB : MonoBehaviour, IMoveBehaviour<FlyingEyeEnemy>
     {
         if (!_enemy.IsAlive || !_animator.GetBool(AnimationStrings.canMove) || waypoints == null || waypoints.Count == 0)
         {
-            _physics.SetVelocity(Vector2.zero);
+            _physics.SetVelocity(Vector2D.Zero);
             return;
         }
 
         if (_currentWaypoint == null)
         {
-            _physics.SetVelocity(Vector2.zero);
+            _physics.SetVelocity(Vector2D.Zero);
             return;
         }
 
-        Vector2 direction = (_currentWaypoint.position - transform.position).normalized;
+        // Convert Unity positions to domain-safe vectors
+        Vector2D currentPos = transform.position.ToDomain();
+        Vector2D waypointPos = _currentWaypoint.position.ToDomain();
+
+        Vector2D direction = (waypointPos - currentPos).Normalized;
+
         _physics.SetVelocity(direction * flightSpeed);
-        FaceDirection(direction.x);
+        FaceDirection(direction.X);
 
         if (Vector2.Distance(transform.position, _currentWaypoint.position) <= waypointReachedDistance)
         {

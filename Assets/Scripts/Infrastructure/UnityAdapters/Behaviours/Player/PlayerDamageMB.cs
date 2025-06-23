@@ -34,7 +34,7 @@ public class PlayerDamageMB : MonoBehaviour, IDamageBehaviour
             _player.SetInvincibility(false);
     }
 
-    public bool ReceiveDamage(float amount, Vector2 knockback)
+    public bool ReceiveDamage(float amount, Vector2D knockback)
     {
         if (!_player.TakeDamage(amount)) return false;
 

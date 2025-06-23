@@ -6,14 +6,14 @@ using Zenject;
 /// Component for autonomous movement of Knight enemies.
 /// </summary>
 
-[RequireComponent(typeof(Animator), typeof(Rigidbody2D), typeof(TouchingDirections))]
+[RequireComponent(typeof(Animator), typeof(Rigidbody2D), typeof(SurfaceContactSensor))]
 public class KnightMovementMB : MonoBehaviour, IMoveBehaviour<KnightEnemy>
 {
     [Inject] private KnightEnemy _knight;
 
     private IAnimatorAdapter _animator;
     private IPhysicsAdapter _physics;
-    private TouchingDirections _touching;
+    private SurfaceContactSensor _touching;
 
     private float _lastFlipTime = -999f;
     private const float FlipCooldown = 0.5f;
@@ -22,7 +22,7 @@ public class KnightMovementMB : MonoBehaviour, IMoveBehaviour<KnightEnemy>
     {
         _animator = new AnimatorAdapter(GetComponent<Animator>());
         _physics = new RigidbodyAdapter(GetComponent<Rigidbody2D>());
-        _touching = GetComponent<TouchingDirections>();
+        _touching = GetComponent<SurfaceContactSensor>();
     }
 
     public void Move(float directionMultiplier)
@@ -32,7 +32,7 @@ public class KnightMovementMB : MonoBehaviour, IMoveBehaviour<KnightEnemy>
         if (_knight.CanMove(_touching.IsGrounded, _touching.IsOnWall))
         {
             float speedX = _knight.HorizontalSpeed * directionMultiplier;
-            _physics.SetVelocity(new Vector2(speedX, _physics.GetVelocity().y));
+            _physics.SetVelocity(new Vector2D(speedX, _physics.GetVelocity().Y));
             _animator.SetFloat(AnimationStrings.xMove, speedX);
             FaceDirection(speedX);
         }
@@ -67,8 +67,8 @@ public class KnightMovementMB : MonoBehaviour, IMoveBehaviour<KnightEnemy>
 
     private void Decelerate()
     {
-        float decelX = Mathf.Lerp(_physics.GetVelocity().x, 0, _knight.WalkStopRate);
-        _physics.SetVelocity(new Vector2(decelX, _physics.GetVelocity().y));
+        float decelX = Mathf.Lerp(_physics.GetVelocity().X, 0, _knight.WalkStopRate);
+        _physics.SetVelocity(new Vector2D(decelX, _physics.GetVelocity().Y));
         _animator.SetFloat(AnimationStrings.xMove, decelX);
     }
 

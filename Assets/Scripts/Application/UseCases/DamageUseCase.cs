@@ -7,7 +7,7 @@
 
 public class DamageUseCase
 {
-    public bool ExecuteDamage(IDamageBehaviour target, float amount, Vector2 knockback)
+    public bool ExecuteDamage(IDamageBehaviour target, float amount, Vector2D knockback)
     {
         return target.ReceiveDamage(amount, knockback);
     }

@@ -40,7 +40,7 @@ public class KnightDamageMB : MonoBehaviour, IDamageBehaviour
         }
     }
 
-    public bool ReceiveDamage(float amount, Vector2 knockback)
+    public bool ReceiveDamage(float amount, Vector2D knockback)
     {
         if (!_knight.TakeDamage(amount)) return false;
 
