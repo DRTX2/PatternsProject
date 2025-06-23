@@ -12,19 +12,19 @@ public class RigidbodyAdapter : IPhysicsAdapter
         _rb = rb;
     }
 
-    public void SetVelocity(Vector2 velocity)
+    public void SetVelocity(Vector2D velocity)
     {
-        _rb.linearVelocity = velocity;
+        _rb.linearVelocity = new Vector2(velocity.X, velocity.Y);
     }
 
-    public Vector2 GetVelocity()
+    public Vector2D GetVelocity()
     {
-        return _rb.linearVelocity;
+        return new Vector2D(_rb.linearVelocity.x, _rb.linearVelocity.y);
     }
 
-    public void ApplyKnockback(Vector2 knockback)
+    public void ApplyKnockback(Vector2D knockback)
     {
-        _rb.linearVelocity = new Vector2(knockback.x, _rb.linearVelocity.y + knockback.y);
+        _rb.linearVelocity = new Vector2(knockback.X, _rb.linearVelocity.y + knockback.Y);
     }
 
     public void SetGravityScale(float scale)

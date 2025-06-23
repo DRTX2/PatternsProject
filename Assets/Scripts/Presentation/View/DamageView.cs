@@ -8,7 +8,7 @@ using Zenject;
 public class DamageView : MonoBehaviour
 {
     [SerializeField] private float damage = 10f;
-    [SerializeField] private Vector2 knockback = new Vector2(5f, 0);
+    [SerializeField] private Vector2D knockback = new Vector2D(5f, 0);
 
     [Inject] private DamagePresenter _presenter;
     
@@ -17,7 +17,7 @@ public class DamageView : MonoBehaviour
         if (other.TryGetComponent<IDamageBehaviour>(out var target))
         {
             float direction = transform.localScale.x >= 0 ? 1f : -1f;
-            knockback.x *= direction;
+            knockback.X *= direction;
 
             var data = new DamageData
             {

@@ -9,6 +9,6 @@ public interface IDamageBehaviour
 {
     float CurrentHealth { get; }
     float MaxHealth { get; }
-    bool ReceiveDamage(float amount, UnityEngine.Vector2 knockback);
+    bool ReceiveDamage(float amount, Vector2D knockback);
     bool _isAlive { get; }
 }
