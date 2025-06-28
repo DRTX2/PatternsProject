@@ -69,4 +69,10 @@ public class Player : IMovableEntity, IAttackableEntity, IHealableEntity, IDamag
         Health.Restore(amount);
         return true;
     }
+
+    public void IncrementScore(int quantity)
+    {
+        if (quantity <= 0) return;
+        Score += quantity;
+    }
 }

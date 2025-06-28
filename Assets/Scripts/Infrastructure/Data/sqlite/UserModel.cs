@@ -6,7 +6,7 @@ using Mono.Data.Sqlite;
 
 namespace Assets.Scripts.Infrastructure.Data.sqlite
 {
-    public class UserModel
+    public class UserModel // UserRepository
     {
         public UserModel()
         {

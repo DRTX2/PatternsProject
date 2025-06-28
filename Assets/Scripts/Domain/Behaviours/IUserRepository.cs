@@ -14,23 +14,9 @@ namespace Assets.Scripts.Domain.Interfaces
 
         UserData Login(UserData entity);
 
-       bool SaveGame(UserData entity);
+        bool SaveGame(UserData entity);
 
         void RestartGame(int id);
-    
 
-
-        /*
-        register
-
-login
-
-save
-
-load
-
-reset
-
-        */
     }
 }

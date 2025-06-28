@@ -36,8 +36,10 @@ public class PlayerDamageMB : MonoBehaviour, IDamageBehaviour
 
     public bool ReceiveDamage(float amount, Vector2D knockback)
     {
-        if (!_player.TakeDamage(amount)) return false;
+        Debug.Log($"[DMG] Intentando aplicar {amount} → Vida antes: {_player.Health.Current}");
 
+        if (!_player.TakeDamage(amount)) return false;
+        
         _animator.SetTrigger(AnimationStrings.hitTrigger);
         _physics.ApplyKnockback(knockback);
 
@@ -50,7 +52,7 @@ public class PlayerDamageMB : MonoBehaviour, IDamageBehaviour
 
         if (!_player.IsAlive)
             _animator.SetBool(AnimationStrings.isAlive, false);
-
+        Debug.Log($"[DMG] Vida después {_player.Health.Current}");
         return true;
     }
 }
