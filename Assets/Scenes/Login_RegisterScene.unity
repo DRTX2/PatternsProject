@@ -3438,13 +3438,14 @@ GameObject:
   - component: {fileID: 986247953}
   - component: {fileID: 986247952}
   - component: {fileID: 986247954}
+  - component: {fileID: 986247955}
   m_Layer: 0
   m_Name: SceneContext
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &986247952
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3505,6 +3506,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   projectileSpawner: {fileID: 0}
+--- !u!114 &986247955
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 986247951}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 65d203d93976d2d4d8b80e1fe968962f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  diamondPickupPrefab: {fileID: 0}
 --- !u!1 &1028867998
 GameObject:
   m_ObjectHideFlags: 0
@@ -4524,7 +4538,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1280050314
 Transform:
   m_ObjectHideFlags: 0

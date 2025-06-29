@@ -57,6 +57,10 @@ public class GameInstaller : MonoInstaller
                  .FromComponentInHierarchy()
                  .AsSingle();
 
+        Container.BindInterfacesAndSelfTo<PlayerScoreMB>() // IMoveBehaviour<Player>, IJumpBehaviour<Player>, IRunBehaviour<Player>
+                 .FromComponentInHierarchy()
+                 .AsSingle();
+
         // 🎮 Entrada del jugador
         Container.Bind<IInputReceiver>()
                  .To<PlayerInputReceiver>()
@@ -76,12 +80,18 @@ public class GameInstaller : MonoInstaller
         Container.Bind<HealUseCase>()
                  .AsSingle();
 
+        //Container.Bind<CollectScoreUseCase>()
+                 //.AsSingle();
+
         // ❤️ INTERACCIÓN DE SALUD
         Container.Bind<HealthPresenter>()
                  .AsSingle();
 
         Container.Bind<DamagePresenter>()
                  .AsSingle();
+
+        //Container.Bind<ScorePresenter>()
+                 //.AsSingle();
 
         // 🚀 SERVICIO DE MOVIMIENTO DEL JUGADOR
         Container.Bind<PlayerMovementService>()

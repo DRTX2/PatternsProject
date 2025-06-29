@@ -7,14 +7,25 @@ using Zenject;
 public class GameplayInstaller : MonoInstaller
 {
     [Inject] private Session _session;
-    [Inject] private LoadGameController _loader; // ✅ Zenject lo resuelve al final del binding
+    [Inject] private LoadGameController _loader;
+
+    //[SerializeField] private GameObject diamondPickupPrefab;
 
     public override void InstallBindings()
     {
-        // No repitas los bindings ya definidos en GlobalInstaller
         Container.Bind<DamageUseCase>().AsTransient();
         Container.Bind<DamagePresenter>().AsTransient();
+
         Container.Bind<SaveGameUseCase>().AsTransient();
+
+        // Score UseCase y Presenter
+        Container.Bind<CollectScoreUseCase>().AsTransient();
+        Container.Bind<ScorePresenter>()
+        .AsSingle()
+        .WithArguments(Container.Resolve<CollectScoreUseCase>());
+
+        //Container.BindFactory<Vector3, DiamondPickup, DiamondPickupFactory>()
+            //.FromComponentInNewPrefab(diamondPickupPrefab);
     }
 
     public override void Start()
@@ -25,29 +36,22 @@ public class GameplayInstaller : MonoInstaller
             return;
         }
 
-        // 1. Cargar datos del jugador desde sesión
         _loader.Load();
         var player = _loader.LoadedPlayer;
 
-        // 2. Bindear el Player como instancia única compartida
-        Container.Bind<Player>()
-                 .FromInstance(player)
-                 .AsSingle();
+        Container.Bind<Player>().FromInstance(player).AsSingle();
 
-        // 3. Instanciar SaveGameController manualmente ahora que Player existe
         var saveGameUseCase = Container.Resolve<SaveGameUseCase>();
         var saveGameController = new SaveGameController(saveGameUseCase, _session, player);
         Container.Bind<SaveGameController>().FromInstance(saveGameController).AsSingle();
 
-        // 4. Instanciar el prefab visual y asegurarse que recibe la instancia inyectada
         var prefab = Resources.Load<GameObject>("Player");
         var instance = Container.InstantiatePrefab(prefab);
-        Container.Inject(instance); // Esto asegura que los MB dependientes reciban el modelo correcto
+        Container.Inject(instance);
 
         Debug.Log($"[GameplayInstaller] Player instanciado. Hash: {player.GetHashCode()}");
 
-        // 5. Inyectar también el resto de la escena (NextLevelHandler, pickups, etc.)
-        InjectAllMonoBehavioursInScene();
+        //InjectAllMonoBehavioursInScene();
     }
 
     private void InjectAllMonoBehavioursInScene()

@@ -4,14 +4,6 @@
 /// </summary>
 public interface IScoreCollectibleBehaviour
 {
-    /// <summary>
-    /// Increases the score of the entity.
-    /// </summary>
-    /// <param name="amount">The amount of score to be added.</param>
-    void CollectScore(int amount);
-
-    /// <summary>
-    /// Current total score of the entity.
-    /// </summary>
     int Score { get; }
+    void CollectScore(int amount);
 }

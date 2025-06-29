@@ -3,7 +3,7 @@ using System;
 /// Player class representing the player entity in the game.
 /// Concrete implementation of a player that can move, attack, heal, take damage, jump, and run.
 /// </summary>
-public class Player : IMovableEntity, IAttackableEntity, IHealableEntity, IDamageableEntity, IJumpableEntity, IRunnableEntity
+public class Player : IMovableEntity, IAttackableEntity, IHealableEntity, IDamageableEntity, IJumpableEntity, IRunnableEntity, IScoreCollectibleBehaviour
 {
     public Health Health { get; }
     public float AttackCooldown { get; private set; }
@@ -70,9 +70,10 @@ public class Player : IMovableEntity, IAttackableEntity, IHealableEntity, IDamag
         return true;
     }
 
-    public void IncrementScore(int quantity)
+    public void CollectScore(int amount)
     {
-        if (quantity <= 0) return;
-        Score += quantity;
+        if (amount <= 0) return;
+        Score += amount;
     }
+     
 }
