@@ -36,16 +36,13 @@ public class GlobalInstaller : MonoInstaller
         }
         Container.Bind<IUserRepository>().To<UserRepositorySqlite>().AsSingle();
         Container.Bind<Session>().AsSingle().NonLazy();
-        Container.Bind<PlayerFactory>()
-                 .AsSingle()
-                 .WithArguments(100);
 
         Container.Bind<SaveGameUseCase>().AsTransient();
         Container.Bind<RestartGameUseCase>().AsTransient();
 
         //Container.Bind<SaveGameController>().AsTransient();       
         //Container.Bind<RestartGameController>().AsTransient();    // Idem
-        Container.Bind<LoadGameController>().AsSingle();
+        //Container.Bind<LoadGameController>().AsSingle(); en la version original esto no estaba
 
     }
 }

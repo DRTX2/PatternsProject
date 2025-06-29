@@ -8,6 +8,7 @@ using Zenject;
 
 public class GameOverController : MonoBehaviour
 {
+    [Header("UI References")]
     [SerializeField] private GameObject _restartBtn;
     [SerializeField] private GameObject _goMenuBtn;
     [SerializeField] private GameObject _gameOverCanvas;
@@ -21,37 +22,37 @@ public class GameOverController : MonoBehaviour
     [Inject] private Player _player;
 
     private RestartGameController _restartController;
-    private float _startTime;
 
     private void Start()
     {
-        _restartController = new RestartGameController(_useCase, _session);
-        _startTime = Time.time;
+        // Validar dependencias
+        if (_useCase == null || _session == null || _player == null)
+        {
+            Debug.LogError("Dependencias no inyectadas correctamente en GameOverController.");
+            return;
+        }
 
+        _restartController = new RestartGameController(_useCase, _session);
+
+        // Validar referencias de UI
+        if (_gameOverCanvas == null)
+        {
+            _gameOverCanvas = GameObject.Find("Canvas_Game_Over");
+            if (_gameOverCanvas == null)
+            {
+                Debug.LogError("Canvas_Game_Over no encontrado en la escena.");
+            }
+        }
     }
 
     public void ShowGameOver()
     {
-        if (_gameOverCanvas == null)
-        {
-            _gameOverCanvas = GameObject.Find("Canvas_Game_Over");
-        }
+        if (_gameOverCanvas == null) return;
 
         _gameOverCanvas.SetActive(true);
         Time.timeScale = 0f;
 
-        // ✅ Actualizar textos con los datos del jugador
-        enemiesDefeatedText.text = _player.EnemiesEliminated.ToString();
-        scoreText.text = _player.Score.ToString();
-
-        int finalScore = _player.Score + (_player.EnemiesEliminated * 10); // Ejemplo de fórmula
-        finalScoreText.text = finalScore.ToString();
-    }
-
-    public void GoMenu()
-    {
-        Time.timeScale = 1f;
-        SceneManager.LoadScene("Initial_MenuScene");
+        UpdateGameOverUI();
     }
 
     public void Restart()
@@ -60,9 +61,29 @@ public class GameOverController : MonoBehaviour
         Time.timeScale = 1f;
         SceneManager.LoadScene("GameplayScene");
     }
-    //public void ShowGameOver()
-    //{
-    //    float elapsed = Time.time - _startTime;
-    //    timeText.text = elapsed.ToString("F2") + "s";
-    //}
+
+    public void GoMenu()
+    {
+        Time.timeScale = 1f;
+        SceneManager.LoadScene("Initial_MenuScene");
+    }
+
+    private void UpdateGameOverUI()
+    {
+        Debug.Log($"[GameOver] Score: {_player.Score}, Enemies: {_player.EnemiesEliminated}");
+
+        if (enemiesDefeatedText != null)
+            enemiesDefeatedText.text = _player.EnemiesEliminated.ToString();
+
+        if (scoreText != null)
+            scoreText.text = _player.Score.ToString();
+
+        if (finalScoreText != null)
+        {
+            int finalScore = _player.Score + (_player.EnemiesEliminated * 10);
+            finalScoreText.text = finalScore.ToString();
+            Debug.Log(finalScore);
+
+        }
+    }
 }
