@@ -10,7 +10,7 @@ public class DiamondPickup : MonoBehaviour
 {
     [SerializeField] private int scoreValue = 10;
 
-    [Inject] public ScorePresenter _presenter;
+    [Inject] private ScorePresenter _presenter;
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -21,7 +21,7 @@ public class DiamondPickup : MonoBehaviour
                 Target = target,
                 Amount = scoreValue
             };
-            ScorePresenter sp = new ScorePresenter(new CollectScoreUseCase());
+            ScorePresenter sp = new ScorePresenter(new CollectScoreUseCase(), new CharacterEventBus());
             sp.ApplyScore(data);
             //_presenter.ApplyScore(data);
             Destroy(gameObject);

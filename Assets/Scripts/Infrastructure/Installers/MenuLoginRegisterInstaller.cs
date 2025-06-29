@@ -1,12 +1,13 @@
-﻿using System;
+﻿using Assets.Scripts.Application.UseCases;
+using Assets.Scripts.Presentation.Bridges;
+using Assets.Scripts.Presentation.Controllers;
+using Assets.Scripts.Presentation.Interfaces;
+using Assets.Scripts.Presentation.Views;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Assets.Scripts.Application.UseCases;
-using Assets.Scripts.Presentation.Controllers;
-using Assets.Scripts.Presentation.Interfaces;
-using Assets.Scripts.Presentation.Views;
 using Zenject;
 
 namespace Assets.Scripts.Infrastructure.Installers
@@ -27,7 +28,9 @@ namespace Assets.Scripts.Infrastructure.Installers
             Container.Bind<LoginController>().AsTransient();
             Container.Bind<RegisterController>().AsTransient();
 
-
+            Container.Bind<LoginBridge>()
+                .FromComponentInHierarchy()
+                .AsSingle();
         }
     }
 }

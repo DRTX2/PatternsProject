@@ -21,11 +21,14 @@ public class GameplayInstaller : MonoInstaller
         // Score UseCase y Presenter
         Container.Bind<CollectScoreUseCase>().AsTransient();
         Container.Bind<ScorePresenter>()
-        .AsSingle()
-        .WithArguments(Container.Resolve<CollectScoreUseCase>());
+    .AsSingle()
+    .WithArguments(
+        Container.Resolve<CollectScoreUseCase>(),
+        Container.Resolve<CharacterEventBus>()
+    );
 
         //Container.BindFactory<Vector3, DiamondPickup, DiamondPickupFactory>()
-            //.FromComponentInNewPrefab(diamondPickupPrefab);
+        //.FromComponentInNewPrefab(diamondPickupPrefab);
     }
 
     public override void Start()
