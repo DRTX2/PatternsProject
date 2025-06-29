@@ -51,7 +51,7 @@ public class GameplayInstaller : MonoInstaller
 
         Debug.Log($"[GameplayInstaller] Player instanciado. Hash: {player.GetHashCode()}");
 
-        //InjectAllMonoBehavioursInScene();
+        InjectAllMonoBehavioursInScene();
     }
 
     private void InjectAllMonoBehavioursInScene()
