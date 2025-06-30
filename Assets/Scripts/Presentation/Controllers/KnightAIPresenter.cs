@@ -16,6 +16,8 @@ public class KnightAIPresenter : MonoBehaviour
 
     private void Start()
     {
+        Debug.Log($"[KnightAI] _movement = {_movement}");
+
         cliffView.OnCliffDetected.AddListener(OnCliffDetected);
         attackView.OnTargetDetected.AddListener(OnTargetDetected);
         attackView.NoRemainingTargets.AddListener(OnNoRemainingTargets);

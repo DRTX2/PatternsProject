@@ -44,5 +44,9 @@ public class GlobalInstaller : MonoInstaller
         Container.Bind<RestartGameController>().AsTransient();
         Container.Bind<LoadGameController>().AsSingle();
 
+        if (FindObjectsOfType<ProjectContext>().Length > 1)
+        {
+            Destroy(gameObject);   // evita duplicados
+        }
     }
 }
