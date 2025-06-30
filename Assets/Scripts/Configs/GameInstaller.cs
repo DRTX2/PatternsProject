@@ -26,10 +26,10 @@ public class GameInstaller : MonoInstaller
             player = new Player(
                 maxHealth: 100,
                 currentHealth: 100,
-                //positionX: 11.11f,
-                //positionY: -2.77f, 
-                positionX: 665.0f,
-                positionY: -30.0f,
+                positionX: 11.11f,
+                positionY: -2.77f,
+                //positionX: 665.0f,
+                //positionY: -30.0f,
                 enemiesEliminated: 0,
                 score: 0
             );

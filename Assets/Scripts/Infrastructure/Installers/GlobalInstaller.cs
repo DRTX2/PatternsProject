@@ -40,9 +40,9 @@ public class GlobalInstaller : MonoInstaller
         Container.Bind<SaveGameUseCase>().AsTransient();
         Container.Bind<RestartGameUseCase>().AsTransient();
 
-        //Container.Bind<SaveGameController>().AsTransient();       
-        //Container.Bind<RestartGameController>().AsTransient();    // Idem
-        //Container.Bind<LoadGameController>().AsSingle(); en la version original esto no estaba
+        Container.Bind<SaveGameController>().AsTransient();
+        Container.Bind<RestartGameController>().AsTransient();
+        Container.Bind<LoadGameController>().AsSingle();
 
     }
 }

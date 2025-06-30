@@ -1,6 +1,7 @@
 ﻿using Assets.Scripts.Application.Session;
 using Assets.Scripts.Application.UseCases;
 using Assets.Scripts.Presentation.Controllers;
+using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -9,55 +10,48 @@ using Zenject;
 public class GameOverController : MonoBehaviour
 {
     [Header("UI References")]
-    [SerializeField] private GameObject _restartBtn;
-    [SerializeField] private GameObject _goMenuBtn;
-    [SerializeField] private GameObject _gameOverCanvas;
+    [SerializeField] private GameObject restartBtn;
+    [SerializeField] private GameObject goMenuBtn;
 
-    [SerializeField] private TMP_Text enemiesDefeatedText;
-    [SerializeField] private TMP_Text scoreText;
-    [SerializeField] private TMP_Text finalScoreText;
+    [SerializeField] private TMP_Text playerNameLbl;
+    [SerializeField] private TMP_Text pointsEarnedLbl;
+    [SerializeField] private TMP_Text healthRemainingLbl;
 
-    [Inject] private RestartGameUseCase _useCase;
-    [Inject] private Session _session;
-    [Inject] private Player _player;
+    [SerializeField] private CanvasGroup canvasGroup;
 
-    private RestartGameController _restartController;
+    [Inject] private RestartGameUseCase useCase;
+    [Inject] private Session session;
+    [Inject] private Player player;
+
+    private RestartGameController restartController;
 
     private void Start()
     {
-        // Validar dependencias
-        if (_useCase == null || _session == null || _player == null)
-        {
-            Debug.LogError("Dependencias no inyectadas correctamente en GameOverController.");
-            return;
-        }
+        restartController = new RestartGameController(useCase, session);
 
-        _restartController = new RestartGameController(_useCase, _session);
-
-        // Validar referencias de UI
-        if (_gameOverCanvas == null)
+        if (canvasGroup != null)
         {
-            _gameOverCanvas = GameObject.Find("Canvas_Game_Over");
-            if (_gameOverCanvas == null)
-            {
-                Debug.LogError("Canvas_Game_Over no encontrado en la escena.");
-            }
+            canvasGroup.alpha = 0f;
+            canvasGroup.gameObject.SetActive(false);
         }
     }
 
     public void ShowGameOver()
     {
-        if (_gameOverCanvas == null) return;
-
-        _gameOverCanvas.SetActive(true);
-        Time.timeScale = 0f;
+        if (canvasGroup == null)
+        {
+            Debug.LogWarning("CanvasGroup no asignado.");
+            return;
+        }
 
         UpdateGameOverUI();
+        Time.timeScale = 0f;
+        StartCoroutine(FadeInCanvas());
     }
 
     public void Restart()
     {
-        _restartController.Restart();
+        restartController.Restart();
         Time.timeScale = 1f;
         SceneManager.LoadScene("GameplayScene");
     }
@@ -70,20 +64,30 @@ public class GameOverController : MonoBehaviour
 
     private void UpdateGameOverUI()
     {
-        Debug.Log($"[GameOver] Score: {_player.Score}, Enemies: {_player.EnemiesEliminated}");
+        string username = session.CurrentUser?.UserName ?? "Jugador";
+        int health = (int)player.Health.Current;
 
-        if (enemiesDefeatedText != null)
-            enemiesDefeatedText.text = _player.EnemiesEliminated.ToString();
+        if (playerNameLbl != null)
+            playerNameLbl.text = $"Jugador: {username}";
 
-        if (scoreText != null)
-            scoreText.text = _player.Score.ToString();
+        if (pointsEarnedLbl != null)
+            pointsEarnedLbl.text = $"Puntos Obtenidos: {player.Score}";
 
-        if (finalScoreText != null)
+        if (healthRemainingLbl != null)
+            healthRemainingLbl.text = $"Salud Restante: {health}";
+    }
+
+    private IEnumerator FadeInCanvas()
+    {
+        canvasGroup.gameObject.SetActive(true);
+        canvasGroup.alpha = 0f;
+
+        while (canvasGroup.alpha < 1f)
         {
-            int finalScore = _player.Score + (_player.EnemiesEliminated * 10);
-            finalScoreText.text = finalScore.ToString();
-            Debug.Log(finalScore);
-
+            canvasGroup.alpha += Time.unscaledDeltaTime * 2f;
+            yield return null;
         }
+
+        canvasGroup.alpha = 1f;
     }
 }

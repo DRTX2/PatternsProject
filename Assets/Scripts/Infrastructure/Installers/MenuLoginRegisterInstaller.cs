@@ -28,9 +28,14 @@ namespace Assets.Scripts.Infrastructure.Installers
             Container.Bind<LoginController>().AsTransient();
             Container.Bind<RegisterController>().AsTransient();
 
-            //Container.Bind<LoginBridge>() no estaba originalmente
-            //    .FromComponentInHierarchy()
-            //    .AsSingle();
+
+            Container.Bind<LoadGameController>().AsSingle();
+            Container.Bind<LoginBridge>()
+                .FromComponentInHierarchy()
+                .AsSingle();
+
+
+            Container.Bind<PlayerFactory>().AsSingle();
         }
     }
 }
