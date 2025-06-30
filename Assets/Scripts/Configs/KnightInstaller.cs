@@ -9,7 +9,6 @@ public class KnightInstaller : MonoInstaller
 
     public override void InstallBindings()
     {
-        Debug.Log("[KnightInstaller] InstallBindings ejecutado");
 
         Container.Bind<KnightEnemy>()
                  .AsSingle()

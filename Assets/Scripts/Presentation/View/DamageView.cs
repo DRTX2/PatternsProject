@@ -14,9 +14,13 @@ public class DamageView : MonoBehaviour
 
     private void Awake()
     {
+    }
+
+    private void Start()
+    {
         if (_presenter == null)
         {
-            Debug.LogWarning("⚠️ Presenter no fue inyectado, creándolo manualmente (solo para test)");
+            Debug.LogWarning("⚠ DamagePresenter no fue inyectado, creando uno para pruebas.");
             _presenter = new DamagePresenter(new DamageUseCase());
         }
     }

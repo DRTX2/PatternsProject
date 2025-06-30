@@ -1,16 +1,14 @@
 ﻿using Assets.Scripts.Application.Session;
 using Assets.Scripts.Application.UseCases;
 using Assets.Scripts.Presentation.Controllers;
-using UnityEngine;
 using Zenject;
+using UnityEngine;
 
 public class GameplayInstaller : MonoInstaller
 {
-    [SerializeField]
-    private GameObject playerPrefab;  // Arrastra aquí tu prefab Player desde el Inspector
+    [SerializeField] private GameObject playerPrefab;
 
-    [Inject]
-    private Session _session;         // Inyectado por GlobalInstaller
+    [Inject] private Session _session;
 
     public override void InstallBindings()
     {
@@ -32,36 +30,25 @@ public class GameplayInstaller : MonoInstaller
                      Container.Resolve<CharacterEventBus>()
                  );
 
-        // 3) Session y LoadGameController
+        // 3) Session y LoadGameController (desde GlobalInstaller)
         Container.Bind<Session>()
                  .FromInstance(_session)
                  .AsSingle();
         Container.Bind<LoadGameController>()
                  .AsSingle();
 
-        // 4) Carga de datos y bind de Player
-        var loader = Container.Resolve<LoadGameController>();
-        loader.Load();
-        var loadedPlayer = loader.LoadedPlayer
-                           ?? new Player(
-                                maxHealth: 100,
-                                currentHealth: 100,
-                                positionX: 0f,
-                                positionY: 0f,
-                                enemiesEliminated: 0,
-                                score: 0
-                              );
-        Container.Bind<Player>()
-                 .FromInstance(loadedPlayer)
-                 .AsSingle();
+        // 4) Carga de datos y bind de Player (GlobalInstaller ya lo ligó)
+        var player = Container.Resolve<Player>();
+        Container.BindInstance(player)
+                 .WhenInjectedInto<GameplayInstaller>();
 
-        // 5) SaveGameController con Player inyectado
+        // 5) SaveGameController inyectado
         Container.Bind<SaveGameController>()
                  .AsSingle()
                  .WithArguments(
                      Container.Resolve<SaveGameUseCase>(),
-                     Container.Resolve<Session>(),
-                     loadedPlayer
+                     _session,
+                     player
                  );
     }
 
@@ -73,15 +60,11 @@ public class GameplayInstaller : MonoInstaller
             return;
         }
 
-        // Instancia el jugador y realiza la inyección
-        var playerInstance = Container.InstantiatePrefab(playerPrefab);
-        Container.Inject(playerInstance);
+        var instance = Container.InstantiatePrefab(playerPrefab);
+        Container.Inject(instance);
 
-        // Inyecta el resto de los MonoBehaviours de la escena
         foreach (var mb in GameObject.FindObjectsOfType<MonoBehaviour>(true))
-        {
             Container.Inject(mb);
-        }
 
         Debug.Log("[GameplayInstaller] Scene injected and player instantiated.");
     }
