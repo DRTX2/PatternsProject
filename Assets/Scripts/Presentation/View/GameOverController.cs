@@ -1,93 +1,53 @@
 ﻿using Assets.Scripts.Application.Session;
 using Assets.Scripts.Application.UseCases;
 using Assets.Scripts.Presentation.Controllers;
-using System.Collections;
-using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using Zenject;
 
 public class GameOverController : MonoBehaviour
 {
-    [Header("UI References")]
-    [SerializeField] private GameObject restartBtn;
-    [SerializeField] private GameObject goMenuBtn;
 
-    [SerializeField] private TMP_Text playerNameLbl;
-    [SerializeField] private TMP_Text pointsEarnedLbl;
-    [SerializeField] private TMP_Text healthRemainingLbl;
 
-    [SerializeField] private CanvasGroup canvasGroup;
+    [SerializeField] private GameObject _restartBtn;
+    [SerializeField] private GameObject _goMenuBtn;
+    [SerializeField] private GameObject _gameOverCanvas;
 
-    [Inject] private RestartGameUseCase useCase;
-    [Inject] private Session session;
-    [Inject] private Player player;
 
-    private RestartGameController restartController;
+    [Inject] private RestartGameUseCase _useCase;
+    [Inject] private Session _session;
+
+    private RestartGameController _restartController;
 
     private void Start()
     {
-        restartController = new RestartGameController(useCase, session);
-
-        if (canvasGroup != null)
-        {
-            canvasGroup.alpha = 0f;
-            canvasGroup.gameObject.SetActive(false);
-        }
+        _restartController = new RestartGameController(_useCase, _session);
     }
 
     public void ShowGameOver()
     {
-        if (canvasGroup == null)
+        if (_gameOverCanvas == null)
         {
-            Debug.LogWarning("CanvasGroup no asignado.");
-            return;
+            _gameOverCanvas = GameObject.Find("Canvas_Game_Over");
         }
 
-        UpdateGameOverUI();
+        _gameOverCanvas.SetActive(true);
         Time.timeScale = 0f;
-        StartCoroutine(FadeInCanvas());
-    }
-
-    public void Restart()
-    {
-        restartController.Restart();
-        Time.timeScale = 1f;
-        SceneManager.LoadScene("GameplayScene");
     }
 
     public void GoMenu()
     {
+        //_gameOverCanvas.SetActive(false);
         Time.timeScale = 1f;
         SceneManager.LoadScene("Initial_MenuScene");
     }
 
-    private void UpdateGameOverUI()
+    public void Restart()
     {
-        string username = session.CurrentUser?.UserName ?? "Jugador";
-        int health = (int)player.Health.Current;
-
-        if (playerNameLbl != null)
-            playerNameLbl.text = $"Jugador: {username}";
-
-        if (pointsEarnedLbl != null)
-            pointsEarnedLbl.text = $"Puntos Obtenidos: {player.Score}";
-
-        if (healthRemainingLbl != null)
-            healthRemainingLbl.text = $"Salud Restante: {health}";
+        _restartController.Restart();
+        Time.timeScale = 1f;
+        SceneManager.LoadScene("GameplayScene");
     }
 
-    private IEnumerator FadeInCanvas()
-    {
-        canvasGroup.gameObject.SetActive(true);
-        canvasGroup.alpha = 0f;
 
-        while (canvasGroup.alpha < 1f)
-        {
-            canvasGroup.alpha += Time.unscaledDeltaTime * 2f;
-            yield return null;
-        }
-
-        canvasGroup.alpha = 1f;
-    }
 }

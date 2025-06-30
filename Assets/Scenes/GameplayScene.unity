@@ -5555,8 +5555,8 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 371801660}
-  - {fileID: 2025014449}
   - {fileID: 1961098431}
+  - {fileID: 2025014449}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &668648937 stripped
@@ -7491,6 +7491,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6037241189817770124, guid: e69608f0926c3624ea7b365386624d18, type: 3}
+      propertyPath: goMenuBtn
+      value: 
+      objectReference: {fileID: 1362928111}
+    - target: {fileID: 6037241189817770124, guid: e69608f0926c3624ea7b365386624d18, type: 3}
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
@@ -7498,6 +7502,10 @@ PrefabInstance:
       propertyPath: _goMenuBtn
       value: 
       objectReference: {fileID: 1362928111}
+    - target: {fileID: 6037241189817770124, guid: e69608f0926c3624ea7b365386624d18, type: 3}
+      propertyPath: restartBtn
+      value: 
+      objectReference: {fileID: 296355207}
     - target: {fileID: 6037241189817770124, guid: e69608f0926c3624ea7b365386624d18, type: 3}
       propertyPath: _restartBtn
       value: 
@@ -7646,7 +7654,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1034713246}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 89715ad69b973a14899afa2c6730b30b, type: 3}
   m_Name: 
@@ -171729,7 +171737,7 @@ GameObject:
   - component: {fileID: 1961098430}
   - component: {fileID: 1961098429}
   - component: {fileID: 1961098428}
-  - component: {fileID: 1961098432}
+  - component: {fileID: 1961098433}
   m_Layer: 5
   m_Name: Canvas_Final_Score
   m_TagString: Untagged
@@ -171823,7 +171831,7 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
---- !u!114 &1961098432
+--- !u!114 &1961098433
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -171832,7 +171840,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1961098426}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1fcae2cd94e14e44ba09e8e0af8a12a2, type: 3}
+  m_Script: {fileID: 11500000, guid: 7c589566bfa1665419c7b4102c2c7a3d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   restartBtn: {fileID: 174897085}
@@ -172393,12 +172401,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1fcae2cd94e14e44ba09e8e0af8a12a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  restartBtn: {fileID: 0}
-  goMenuBtn: {fileID: 0}
-  playerNameLbl: {fileID: 0}
-  pointsEarnedLbl: {fileID: 0}
-  healthRemainingLbl: {fileID: 0}
-  canvasGroup: {fileID: 0}
+  _restartBtn: {fileID: 0}
+  _goMenuBtn: {fileID: 0}
+  _gameOverCanvas: {fileID: 0}
 --- !u!1 &2036229181 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1281335834607802989, guid: 6ff374c1d2efc654ca6eef1950f340a8, type: 3}
