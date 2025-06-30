@@ -8,8 +8,7 @@ using Zenject;
 public class PlayerMovementMB : MonoBehaviour,
     IMoveBehaviour<Player>, IJumpBehaviour<Player>, IRunBehaviour<Player>
 {
-    [Inject] private Player _player;
-
+    private Player _player;
     private IAnimatorAdapter _animator;
     private IPhysicsAdapter _physics;
     private SurfaceContactSensor _touching;
@@ -20,18 +19,30 @@ public class PlayerMovementMB : MonoBehaviour,
 
     private bool _facingRight = true;
 
-
-    private void Start()
+    [Inject]
+    public void Construct(Player player)
     {
+        _player = player;
         Vector2 pos = new Vector2(_player.PositionX, _player.PositionY);
         transform.position = pos;
     }
 
     private void Awake()
     {
-        _animator = new AnimatorAdapter(GetComponent<Animator>());
-        _physics = new RigidbodyAdapter(GetComponent<Rigidbody2D>());
-        _touching = GetComponent<SurfaceContactSensor>();
+        var anim = GetComponent<Animator>();
+        var rb = GetComponent<Rigidbody2D>();
+        var sensor = GetComponent<SurfaceContactSensor>();
+
+        if (anim == null || rb == null || sensor == null)
+        {
+            Debug.LogError("❌ Faltan componentes requeridos en el jugador.");
+            enabled = false;
+            return;
+        }
+
+        _animator = new AnimatorAdapter(anim);
+        _physics = new RigidbodyAdapter(rb);
+        _touching = sensor;
     }
 
     public void Move(float x)

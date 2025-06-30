@@ -21,13 +21,15 @@ public class GameInstaller : MonoInstaller
             score: user.Score
         );
         }
-        else { 
+        else {
 
             player = new Player(
                 maxHealth: 100,
                 currentHealth: 100,
                 positionX: 11.11f,
                 positionY: -2.77f,
+                //positionX: 665.0f,
+                //positionY: -30.0f,
                 enemiesEliminated: 0,
                 score: 0
             );
@@ -57,6 +59,10 @@ public class GameInstaller : MonoInstaller
                  .FromComponentInHierarchy()
                  .AsSingle();
 
+        Container.BindInterfacesAndSelfTo<PlayerScoreMB>() // IMoveBehaviour<Player>, IJumpBehaviour<Player>, IRunBehaviour<Player>
+                 .FromComponentInHierarchy()
+                 .AsSingle();
+
         // 🎮 Entrada del jugador
         Container.Bind<IInputReceiver>()
                  .To<PlayerInputReceiver>()
@@ -76,12 +82,18 @@ public class GameInstaller : MonoInstaller
         Container.Bind<HealUseCase>()
                  .AsSingle();
 
+        //Container.Bind<CollectScoreUseCase>()
+                 //.AsSingle();
+
         // ❤️ INTERACCIÓN DE SALUD
         Container.Bind<HealthPresenter>()
                  .AsSingle();
 
         Container.Bind<DamagePresenter>()
                  .AsSingle();
+
+        //Container.Bind<ScorePresenter>()
+                 //.AsSingle();
 
         // 🚀 SERVICIO DE MOVIMIENTO DEL JUGADOR
         Container.Bind<PlayerMovementService>()

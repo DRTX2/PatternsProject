@@ -1,4 +1,4 @@
-using Assets.Scripts.Application.Session;
+﻿using Assets.Scripts.Application.Session;
 using Assets.Scripts.Application.UseCases;
 using Assets.Scripts.Presentation.Controllers;
 using UnityEngine;

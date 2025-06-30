@@ -5,8 +5,12 @@ public class KnightInstaller : MonoInstaller
 {
     [SerializeField] private float maxHealth = 100f;
 
+    
+
     public override void InstallBindings()
     {
+        Debug.Log("[KnightInstaller] InstallBindings ejecutado");
+
         Container.Bind<KnightEnemy>()
                  .AsSingle()
                  .WithArguments(maxHealth);

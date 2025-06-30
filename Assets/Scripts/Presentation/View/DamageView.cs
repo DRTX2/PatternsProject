@@ -11,7 +11,16 @@ public class DamageView : MonoBehaviour
     [SerializeField] private Vector2D knockback = new Vector2D(5f, 0);
 
     [Inject] private DamagePresenter _presenter;
-    
+
+    private void Awake()
+    {
+        if (_presenter == null)
+        {
+            Debug.LogWarning("⚠️ Presenter no fue inyectado, creándolo manualmente (solo para test)");
+            _presenter = new DamagePresenter(new DamageUseCase());
+        }
+    }
+
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.TryGetComponent<IDamageBehaviour>(out var target))

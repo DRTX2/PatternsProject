@@ -1,11 +1,12 @@
-﻿using System;
+﻿using Assets.Scripts.Application.Session;
+using Assets.Scripts.Application.UseCases;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Assets.Scripts.Application.Session;
-using Assets.Scripts.Application.UseCases;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 namespace Assets.Scripts.Presentation.Controllers
 {
     public class RestartGameController
@@ -26,6 +27,8 @@ namespace Assets.Scripts.Presentation.Controllers
             {
                 Debug.Log($"🔁 Reiniciando datos para el usuario ID: {user.Id}");
                 _restartGameUseCase.Execute(user.Id);
+                // ⚠️ Esto reinicia la escena actual
+                SceneManager.LoadScene(SceneManager.GetActiveScene().name);
             }
             else
             {

@@ -37,11 +37,16 @@ public class GlobalInstaller : MonoInstaller
         Container.Bind<IUserRepository>().To<UserRepositorySqlite>().AsSingle();
         Container.Bind<Session>().AsSingle().NonLazy();
 
-
         Container.Bind<SaveGameUseCase>().AsTransient();
         Container.Bind<RestartGameUseCase>().AsTransient();
 
-        //Container.Bind<SaveGameController>().AsTransient();       
-        //Container.Bind<RestartGameController>().AsTransient();    // Idem
+        Container.Bind<SaveGameController>().AsTransient();
+        Container.Bind<RestartGameController>().AsTransient();
+        Container.Bind<LoadGameController>().AsSingle();
+
+        if (FindObjectsOfType<ProjectContext>().Length > 1)
+        {
+            Destroy(gameObject);   // evita duplicados
+        }
     }
 }

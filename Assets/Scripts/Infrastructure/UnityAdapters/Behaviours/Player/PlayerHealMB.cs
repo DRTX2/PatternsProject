@@ -13,6 +13,11 @@ public class PlayerHealMB : MonoBehaviour, IHealBehaviour
     public float CurrentHealth => _player.Health.Current;
     public float MaxHealth => _player.Health.Max;
 
+    void Start()
+    {
+        Debug.Log($"[HealMB] Player recibido. Hash: {_player.GetHashCode()} | Vida actual: {_player.Health.Current}");
+    }
+
     public bool Heal(float amount)
     {
         if (_player.TryHeal(amount))
