@@ -4,11 +4,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Zenject;
 
 public class ScorePresenter
 {
-    private readonly CollectScoreUseCase _useCase;
-    private readonly CharacterEventBus _eventBus;
+    [Inject] private readonly CollectScoreUseCase _useCase;
+    [Inject] private readonly CharacterEventBus _eventBus;
+
     public ScorePresenter(CollectScoreUseCase useCase, CharacterEventBus eventBus)
     {
         _useCase = useCase;

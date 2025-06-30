@@ -35,13 +35,6 @@ public class DiamondPickup : MonoBehaviour
 
     private void Awake()
     {
-        if (_presenter == null)
-        {
-            Debug.LogError("❌ ScorePresenter no fue inyectado en DiamondPickup.");
-        }
-        else
-        {
-            Debug.Log("✅ ScorePresenter inyectado correctamente en DiamondPickup.");
-        }
+       
     }
 }
