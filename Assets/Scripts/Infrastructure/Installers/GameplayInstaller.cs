@@ -6,63 +6,83 @@ using Zenject;
 
 public class GameplayInstaller : MonoInstaller
 {
-    [Inject] private Session _session;
-    [Inject] private LoadGameController _loader;
+    [SerializeField]
+    private GameObject playerPrefab;  // Arrastra aquí tu prefab Player desde el Inspector
 
-    //[SerializeField] private GameObject diamondPickupPrefab;
+    [Inject]
+    private Session _session;         // Inyectado por GlobalInstaller
 
     public override void InstallBindings()
     {
+        // 1) Use Cases y Presenters
         Container.Bind<DamageUseCase>().AsTransient();
         Container.Bind<DamagePresenter>().AsTransient();
 
         Container.Bind<SaveGameUseCase>().AsTransient();
-
-        // Score UseCase y Presenter
         Container.Bind<CollectScoreUseCase>().AsTransient();
-        Container.Bind<ScorePresenter>()
-    .AsSingle()
-    .WithArguments(
-        Container.Resolve<CollectScoreUseCase>(),
-        Container.Resolve<CharacterEventBus>()
-    );
 
-        //Container.BindFactory<Vector3, DiamondPickup, DiamondPickupFactory>()
-        //.FromComponentInNewPrefab(diamondPickupPrefab);
+        // 2) Event bus y ScorePresenter
+        Container.Bind<CharacterEventBus>()
+                 .AsSingle()
+                 .NonLazy();
+        Container.Bind<ScorePresenter>()
+                 .AsSingle()
+                 .WithArguments(
+                     Container.Resolve<CollectScoreUseCase>(),
+                     Container.Resolve<CharacterEventBus>()
+                 );
+
+        // 3) Session y LoadGameController
+        Container.Bind<Session>()
+                 .FromInstance(_session)
+                 .AsSingle();
+        Container.Bind<LoadGameController>()
+                 .AsSingle();
+
+        // 4) Carga de datos y bind de Player
+        var loader = Container.Resolve<LoadGameController>();
+        loader.Load();
+        var loadedPlayer = loader.LoadedPlayer
+                           ?? new Player(
+                                maxHealth: 100,
+                                currentHealth: 100,
+                                positionX: 0f,
+                                positionY: 0f,
+                                enemiesEliminated: 0,
+                                score: 0
+                              );
+        Container.Bind<Player>()
+                 .FromInstance(loadedPlayer)
+                 .AsSingle();
+
+        // 5) SaveGameController con Player inyectado
+        Container.Bind<SaveGameController>()
+                 .AsSingle()
+                 .WithArguments(
+                     Container.Resolve<SaveGameUseCase>(),
+                     Container.Resolve<Session>(),
+                     loadedPlayer
+                 );
     }
 
     public override void Start()
     {
-        if (_session.CurrentUser == null)
+        if (playerPrefab == null)
         {
-            Debug.LogError("🚫 No hay usuario en sesión.");
+            Debug.LogError("[GameplayInstaller] playerPrefab NO está asignado en el Inspector.");
             return;
         }
 
-        _loader.Load();
-        var player = _loader.LoadedPlayer;
+        // Instancia el jugador y realiza la inyección
+        var playerInstance = Container.InstantiatePrefab(playerPrefab);
+        Container.Inject(playerInstance);
 
-        Container.Bind<Player>().FromInstance(player).AsSingle();
-
-        var saveGameUseCase = Container.Resolve<SaveGameUseCase>();
-        var saveGameController = new SaveGameController(saveGameUseCase, _session, player);
-        Container.Bind<SaveGameController>().FromInstance(saveGameController).AsSingle();
-
-        var prefab = Resources.Load<GameObject>("Player");
-        var instance = Container.InstantiatePrefab(prefab);
-        Container.Inject(instance);
-
-        Debug.Log($"[GameplayInstaller] Player instanciado. Hash: {player.GetHashCode()}");
-
-        InjectAllMonoBehavioursInScene();
-    }
-
-    private void InjectAllMonoBehavioursInScene()
-    {
-        var allBehaviours = GameObject.FindObjectsOfType<MonoBehaviour>(true);
-        foreach (var mb in allBehaviours)
+        // Inyecta el resto de los MonoBehaviours de la escena
+        foreach (var mb in GameObject.FindObjectsOfType<MonoBehaviour>(true))
         {
             Container.Inject(mb);
         }
+
+        Debug.Log("[GameplayInstaller] Scene injected and player instantiated.");
     }
 }

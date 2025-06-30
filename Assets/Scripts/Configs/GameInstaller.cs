@@ -117,8 +117,17 @@ public class GameInstaller : MonoInstaller
                  .To<AttackStrategyFactory>()
                  .AsSingle();
 
+
+        // 1) Binding del caso de uso y del presenter
+        Container.Bind<CollectScoreUseCase>()
+                 .AsSingle();
+
+        Container.Bind<ScorePresenter>()
+                 .AsSingle();
+
         // 🔊 EVENTOS GLOBALES
         Container.Bind<CharacterEventBus>()
-                 .AsSingle();
+         .AsSingle()
+         .NonLazy();
     }
 }
