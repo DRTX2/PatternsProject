@@ -35,9 +35,7 @@ public class PauseMenuController : MonoBehaviour
     public void Save()
     {
         _controller.Save();
-       // Time.timeScale = 1f;
-        //_pauseBtn.SetActive(true);
-        //_pauseMenu.SetActive(false);
+        Resume();
     }
     public void Resume() {
         Time.timeScale = 1f;
