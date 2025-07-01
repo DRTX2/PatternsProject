@@ -38,6 +38,7 @@ public class GameOverController : MonoBehaviour
     public void GoMenu()
     {
         //_gameOverCanvas.SetActive(false);
+        _restartController.Restart();
         Time.timeScale = 1f;
         SceneManager.LoadScene("Initial_MenuScene");
     }

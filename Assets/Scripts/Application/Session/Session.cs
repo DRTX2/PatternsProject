@@ -27,6 +27,8 @@ namespace Assets.Scripts.Application.Session
 
         public bool IsLoggedIn => CurrentUser != null;
 
+
+
         public void RestartGamePlayer()
         {
             if (CurrentUser == null)
