@@ -320,7 +320,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 48276484}
         m_TargetAssemblyTypeName: InitMenuController, Assembly-CSharp
-        m_MethodName: OnExit
+        m_MethodName: OnGoLogin
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

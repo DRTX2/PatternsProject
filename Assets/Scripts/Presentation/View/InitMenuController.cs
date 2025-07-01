@@ -28,6 +28,7 @@ public class InitMenuController : MonoBehaviour
 
     public void OnGoLogin()
     {
-//TODO
+        _session.Logout();
+        SceneManager.LoadScene("Login_RegisterScene");
     }
 }
