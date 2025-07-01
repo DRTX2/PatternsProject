@@ -1,16 +1,12 @@
 ﻿using Assets.Scripts.Application.Dtos;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Zenject;
 
 public class ScorePresenter
 {
-    [Inject] private readonly CollectScoreUseCase _useCase;
-    [Inject] private readonly CharacterEventBus _eventBus;
+    private readonly CollectScoreUseCase _useCase;
+    private readonly CharacterEventBus _eventBus;
 
+    // Zenject inyecta aquí las dependencias
     public ScorePresenter(CollectScoreUseCase useCase, CharacterEventBus eventBus)
     {
         _useCase = useCase;

@@ -1,16 +1,16 @@
-﻿using Assets.Scripts.Application.Dtos;
-using UnityEngine;
+﻿using UnityEngine;
 using Zenject;
+using Assets.Scripts.Application.Dtos;
 
 /// <summary>
-/// DiamondPickup representa un objeto recolectable que otorga score al jugador.
-/// Utiliza inyección de dependencias con Zenject para acceder al ScorePresenter.
+/// DiamondPickupView se encarga de la interacción de recogida de diamantes.
+/// Abstracta la lógica a través de un Presenter inyectado.
 /// </summary>
-public class DiamondPickup : MonoBehaviour
+public class DiamondPickupView : MonoBehaviour
 {
     [SerializeField] private int scoreValue = 10;
 
-    [Inject] private ScorePresenter _presenter;
+    [Inject] private ScorePresenter _presenter;  // Inyectamos el presenter
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -21,20 +21,18 @@ public class DiamondPickup : MonoBehaviour
                 Target = target,
                 Amount = scoreValue
             };
-            ScorePresenter sp = new ScorePresenter(new CollectScoreUseCase(), new CharacterEventBus());
-            sp.ApplyScore(data);
-            //_presenter.ApplyScore(data);
+
+            // Aplica la puntuación; el presenter disparará el evento
+            _presenter.ApplyScore(data);
+
+            // Destruye el objeto sólo si el presenter lo permitió
             Destroy(gameObject);
         }
     }
 
     private void Update()
     {
+        // Rotación visual
         transform.eulerAngles += new Vector3(0, 180, 0) * Time.deltaTime;
-    }
-
-    private void Awake()
-    {
-       
     }
 }

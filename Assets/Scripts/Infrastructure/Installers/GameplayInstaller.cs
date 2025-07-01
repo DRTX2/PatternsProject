@@ -12,44 +12,49 @@ public class GameplayInstaller : MonoInstaller
 
     public override void InstallBindings()
     {
-     
+        // —— CASOS DE USO ————————————————
         Container.Bind<DamageUseCase>().AsTransient();
-        Container.Bind<DamagePresenter>().AsTransient();
-
         Container.Bind<SaveGameUseCase>().AsTransient();
-        Container.Bind<CollectScoreUseCase>().AsTransient();
 
-      
+        // Ahora CollectScoreUseCase es singleton
+        Container.Bind<CollectScoreUseCase>().AsSingle();
+
+        // —— EVENT BUS GLOBAL ————————————
         Container.Bind<CharacterEventBus>()
                  .AsSingle()
                  .NonLazy();
-        Container.Bind<ScorePresenter>()
-                 .AsSingle()
-                 .WithArguments(
-                     Container.Resolve<CollectScoreUseCase>(),
-                     Container.Resolve<CharacterEventBus>()
-                 );
 
-       
+        // —— PRESENTERS ———————————————
+        Container.Bind<DamagePresenter>().AsTransient();
+        // Inyección automática de CollectScoreUseCase y CharacterEventBus
+        Container.Bind<ScorePresenter>().AsSingle();
+
+        // —— SESSION y CONTROLADORES —————————
         Container.Bind<Session>()
                  .FromInstance(_session)
                  .AsSingle();
-        Container.Bind<LoadGameController>()
-                 .AsSingle();
+        Container.Bind<LoadGameController>().AsSingle();
+        Container.Bind<SaveGameController>().AsSingle();
 
-        
+        // —— INSTANCIAR JUGADOR ————————————
+        // Resuelve el Player que viene desde GameInstaller
         var player = Container.Resolve<Player>();
         Container.BindInstance(player)
                  .WhenInjectedInto<GameplayInstaller>();
 
-     
-        Container.Bind<SaveGameController>()
-                 .AsSingle()
-                 .WithArguments(
-                     Container.Resolve<SaveGameUseCase>(),
-                     _session,
-                     player
-                 );
+        // —— VISTAS EN ESCENA ————————————
+        // Vincula los MonoBehaviours de la UI para Score y Heal
+        //Container.BindInterfacesAndSelfTo<ScoreViewMB>()
+        //         .FromComponentInHierarchy()
+        //         .AsSingle();
+
+        Container.BindInterfacesAndSelfTo<DiamondPickupView>()
+                 .FromComponentInHierarchy()
+                 .AsSingle();
+
+        Container.BindInterfacesAndSelfTo<HealView>()
+                 .FromComponentInHierarchy()
+                 .AsSingle();
     }
 
     public override void Start()
@@ -60,6 +65,7 @@ public class GameplayInstaller : MonoInstaller
             return;
         }
 
+        // Instancia y DI para todos los MonoBehaviours
         var instance = Container.InstantiatePrefab(playerPrefab);
         Container.Inject(instance);
 

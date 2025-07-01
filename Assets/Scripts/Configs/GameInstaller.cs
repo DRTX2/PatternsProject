@@ -82,8 +82,9 @@ public class GameInstaller : MonoInstaller
         Container.Bind<HealUseCase>()
                  .AsSingle();
 
-        //Container.Bind<CollectScoreUseCase>()
-                 //.AsSingle();
+        Container.Bind<CollectScoreUseCase>()
+                 .AsSingle();
+
 
         // ❤️ INTERACCIÓN DE SALUD
         Container.Bind<HealthPresenter>()
@@ -92,8 +93,8 @@ public class GameInstaller : MonoInstaller
         Container.Bind<DamagePresenter>()
                  .AsSingle();
 
-        //Container.Bind<ScorePresenter>()
-                 //.AsSingle();
+        Container.Bind<ScorePresenter>()
+                 .AsSingle();
 
         // 🚀 SERVICIO DE MOVIMIENTO DEL JUGADOR
         Container.Bind<PlayerMovementService>()
@@ -118,12 +119,7 @@ public class GameInstaller : MonoInstaller
                  .AsSingle();
 
 
-        // 1) Binding del caso de uso y del presenter
-        Container.Bind<CollectScoreUseCase>()
-                 .AsSingle();
-
-        Container.Bind<ScorePresenter>()
-                 .AsSingle();
+      
 
         // 🔊 EVENTOS GLOBALES
         Container.Bind<CharacterEventBus>()
