@@ -7,12 +7,9 @@ using Zenject;
 
 public class GameOverController : MonoBehaviour
 {
-
-
     [SerializeField] private GameObject _restartBtn;
     [SerializeField] private GameObject _goMenuBtn;
     [SerializeField] private GameObject _gameOverCanvas;
-
 
     [Inject] private RestartGameUseCase _useCase;
     [Inject] private Session _session;
@@ -38,6 +35,7 @@ public class GameOverController : MonoBehaviour
     public void GoMenu()
     {
         //_gameOverCanvas.SetActive(false);
+        _restartController.Restart();
         Time.timeScale = 1f;
         SceneManager.LoadScene("Initial_MenuScene");
     }
