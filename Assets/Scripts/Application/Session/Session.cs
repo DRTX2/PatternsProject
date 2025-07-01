@@ -26,6 +26,19 @@ namespace Assets.Scripts.Application.Session
         }
 
         public bool IsLoggedIn => CurrentUser != null;
+
+        public void RestartGamePlayer()
+        {
+            if (CurrentUser == null)
+                throw new InvalidOperationException("No hay usuario activo en la sesión.");
+
+            CurrentUser.Health = 100;
+            CurrentUser.PositionX = 0f;
+            CurrentUser.PositionY = 0f;
+            CurrentUser.EnemiesEliminated = 0;
+            CurrentUser.Score = 0;
+        }
+
     }
 
 }

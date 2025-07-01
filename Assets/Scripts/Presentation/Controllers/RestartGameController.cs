@@ -25,10 +25,8 @@ namespace Assets.Scripts.Presentation.Controllers
             var user = _session.CurrentUser;
             if (user != null)
             {
-                Debug.Log($"🔁 Reiniciando datos para el usuario ID: {user.Id}");
+                _session.RestartGamePlayer();
                 _restartGameUseCase.Execute(user.Id);
-                // ⚠️ Esto reinicia la escena actual
-                SceneManager.LoadScene(SceneManager.GetActiveScene().name);
             }
             else
             {
