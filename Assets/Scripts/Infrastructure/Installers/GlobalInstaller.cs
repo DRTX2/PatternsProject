@@ -16,24 +16,14 @@ public class GlobalInstaller : MonoInstaller
     {
         DontDestroyOnLoad(gameObject);
 
-        // 1) Configuración de SQLite (igual que antes)…
         Envs.Load();
         var dbPath = Envs.SQLITE_PATH;
         var options = new SqliteOptions(dbPath);
-        try
-        {
-            var db = SqliteDatabase.GetInstance();
-            db.Initialize(options);
-            using var conn = db.GetConnection();
-            conn.Open();
-            Debug.Log($"✅ Conexión SQLite exitosa: {dbPath}");
-        }
-        catch (System.Exception ex)
-        {
-            Debug.LogError($"❌ Error conectando con SQLite: {ex.Message}");
-        }
+     
+        var db = SqliteDatabase.GetInstance();
+        db.Initialize(options);
+         
 
-        // 2) Repositorios y sesión
         Container.Bind<IUserRepository>()
                  .To<UserRepositorySqlite>()
                  .AsSingle();
@@ -41,11 +31,11 @@ public class GlobalInstaller : MonoInstaller
                  .AsSingle()
                  .NonLazy();
 
-        // 3) PlayerFactory y LoadGameController
+ 
         Container.Bind<PlayerFactory>().AsSingle();
         Container.Bind<LoadGameController>().AsSingle();
 
-        // 4) **IMPORTANTE: bindea aquí tu Player** antes de cualquier SaveGameController
+   
         {
             var session = Container.Resolve<Session>();
             var loader = Container.Resolve<LoadGameController>();
@@ -59,7 +49,7 @@ public class GlobalInstaller : MonoInstaller
                      .AsSingle();
         }
 
-        // 5) Casos de uso y controladores de guardado/reinicio
+  
         Container.Bind<SaveGameUseCase>().AsTransient();
         Container.Bind<RestartGameUseCase>().AsTransient();
 
@@ -78,7 +68,7 @@ public class GlobalInstaller : MonoInstaller
                      Container.Resolve<Player>()
                  );
 
-        // 6) Servicios y adaptadores
+
         Container.Bind<IProjectileSpawner>()
                  .FromInstance(projectileSpawner)
                  .AsSingle();
