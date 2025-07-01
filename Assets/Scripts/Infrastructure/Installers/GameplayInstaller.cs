@@ -12,14 +12,14 @@ public class GameplayInstaller : MonoInstaller
 
     public override void InstallBindings()
     {
-        // 1) Use Cases y Presenters
+     
         Container.Bind<DamageUseCase>().AsTransient();
         Container.Bind<DamagePresenter>().AsTransient();
 
         Container.Bind<SaveGameUseCase>().AsTransient();
         Container.Bind<CollectScoreUseCase>().AsTransient();
 
-        // 2) Event bus y ScorePresenter
+      
         Container.Bind<CharacterEventBus>()
                  .AsSingle()
                  .NonLazy();
@@ -30,19 +30,19 @@ public class GameplayInstaller : MonoInstaller
                      Container.Resolve<CharacterEventBus>()
                  );
 
-        // 3) Session y LoadGameController (desde GlobalInstaller)
+       
         Container.Bind<Session>()
                  .FromInstance(_session)
                  .AsSingle();
         Container.Bind<LoadGameController>()
                  .AsSingle();
 
-        // 4) Carga de datos y bind de Player (GlobalInstaller ya lo ligó)
+        
         var player = Container.Resolve<Player>();
         Container.BindInstance(player)
                  .WhenInjectedInto<GameplayInstaller>();
 
-        // 5) SaveGameController inyectado
+     
         Container.Bind<SaveGameController>()
                  .AsSingle()
                  .WithArguments(
