@@ -16,22 +16,22 @@ public class GlobalInstaller : MonoInstaller
     {
         DontDestroyOnLoad(gameObject);
 
-        Envs.Load();
-        var dbPath = Envs.SQLITE_PATH;
-        var options = new SqliteOptions(dbPath);
+        //Envs.Load();
+        //var dbPath = Envs.SQLITE_PATH;
+        //var options = new SqliteOptions(dbPath);
 
-        var db = SqliteDatabase.GetInstance();
-        db.Initialize(options);
-
-
-        Container.Bind<IUserRepository>()
-                 .To<UserRepositorySqlite>()
-                 .AsSingle();
+        //var db = SqliteDatabase.GetInstance();
+        //db.Initialize(options);
 
 
         //Container.Bind<IUserRepository>()
-        // .FromInstance(UserRepositoryJson.GetInstance())
-        // .AsSingle();
+        //         .To<UserRepositorySqlite>()
+        //         .AsSingle();
+
+
+        Container.Bind<IUserRepository>()
+         .FromInstance(UserRepositoryJson.GetInstance())
+         .AsSingle();
 
 
         Container.Bind<Session>()

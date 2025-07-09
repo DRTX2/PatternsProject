@@ -42,6 +42,8 @@ namespace Assets.Scripts.Presentation.Views
             errorPanel.SetActive(false);
         }
 
+
+
         public void ShowErrors(List<string> errors)
         {
             errorPanel.SetActive(true);

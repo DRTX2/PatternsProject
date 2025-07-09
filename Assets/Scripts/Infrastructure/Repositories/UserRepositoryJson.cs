@@ -23,7 +23,6 @@ namespace Assets.Scripts.Infrastructure.Repositories
                 File.WriteAllText(filePath, JsonUtilityWrapper.ToJsonList(new List<UserData>()));
             }
         }
-
         public static UserRepositoryJson GetInstance()
         {
             if (_instance == null)
@@ -121,5 +120,27 @@ namespace Assets.Scripts.Infrastructure.Repositories
         {
             return users.Count == 0 ? 1 : users.Max(u => u.Id) + 1;
         }
+
+        public void ChangePassword(string username, string newPassword)
+        {
+            var users = LoadAllUsers();
+            var user = users.FirstOrDefault(u => u.UserName == username);
+
+            
+            if (Bcrypt.Compare(newPassword, user.Password) ||
+                user.OldPasswords.Any(old => Bcrypt.Compare(newPassword, old)))
+            {
+                throw new Exception("Contraseña ya Usada.");
+            }
+
+       
+            user.OldPasswords ??= new List<string>();
+            user.OldPasswords.Add(user.Password);
+
+            user.Password = Bcrypt.Encrypt(newPassword);
+
+            SaveAllUsers(users);
+        }
+
     }
 }
