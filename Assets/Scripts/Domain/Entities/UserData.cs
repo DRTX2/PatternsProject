@@ -1,39 +1,75 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using UnityEngine.UIElements;
+﻿    //using System;
+    //using System.Collections.Generic;
+    //using System.Linq;
+    //using System.Text;
+    //using System.Threading.Tasks;
+    //using UnityEngine.UIElements;
 
-namespace Assets.Scripts.Domain.Entities
-{
-    public class UserData
+    //namespace Assets.Scripts.Domain.Entities
+    //{
+    //    public class UserData
+    //    {
+
+    //        public int Id { get; set; }
+    //        public int Health { get; set; }
+    //        public string UserName { get; set; }
+    //        public string Password { get; set; }
+    //        public string CurrentLevel { get; set; }
+    //        public int Score { get; set; }
+    //        public float PositionX { get; set; }
+    //        public float PositionY { get; set; }
+    //        public int EnemiesEliminated { get; set; }
+
+    //        public UserData(string userName, string password, string currentLevel, int score, float positionX,float positionY, int enemiesEliminated, int health,int id)
+    //        {
+    //            UserName = userName;
+    //            Password = password;
+    //            CurrentLevel = currentLevel;
+    //            Score = score;
+    //            PositionX = positionX;
+    //            PositionY= positionY;
+    //            EnemiesEliminated = enemiesEliminated;
+    //            Health = health;
+    //            Id = id;
+    //        }
+
+    //        public UserData() { }
+    //    }
+
+    //}
+
+    using System;
+
+    namespace Assets.Scripts.Domain.Entities
     {
+        [Serializable]
 
-        public int Id { get; set; }
-        public int Health { get; set; }
-        public string UserName { get; set; }
-        public string Password { get; set; }
-        public string CurrentLevel { get; set; }
-        public int Score { get; set; }
-        public float PositionX { get; set; }
-        public float PositionY { get; set; }
-        public int EnemiesEliminated { get; set; }
-
-        public UserData(string userName, string password, string currentLevel, int score, float positionX,float positionY, int enemiesEliminated, int health,int id)
+        public class UserData
         {
-            UserName = userName;
-            Password = password;
-            CurrentLevel = currentLevel;
-            Score = score;
-            PositionX = positionX;
-            PositionY= positionY;
-            EnemiesEliminated = enemiesEliminated;
-            Health = health;
-            Id = id;
+            public int Id;
+            public int Health;
+            public string UserName;
+            public string Password;
+            public string CurrentLevel;
+            public int Score;
+            public float PositionX;
+            public float PositionY;
+            public int EnemiesEliminated;
+
+            public UserData() { }
+
+            public UserData(string userName, string password, string currentLevel, int score,
+                            float positionX, float positionY, int enemiesEliminated, int health, int id)
+            {
+                UserName = userName;
+                Password = password;
+                CurrentLevel = currentLevel;
+                Score = score;
+                PositionX = positionX;
+                PositionY = positionY;
+                EnemiesEliminated = enemiesEliminated;
+                Health = health;
+                Id = id;
+            }
         }
-
-        public UserData() { }
     }
-
-}

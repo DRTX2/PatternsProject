@@ -28,7 +28,7 @@ namespace Assets.Scripts.Presentation.Controllers
             LoginUseCase useCase,
             IPresenter presenter,
             Session session,
-            LoadGameController loader,   // ← inyectar el loader
+            LoadGameController loader, 
             DiContainer container)
         {
             _useCase = useCase;
@@ -49,19 +49,19 @@ namespace Assets.Scripts.Presentation.Controllers
                 return;
             }
 
-            // 1) guardar usuario real en sesión
+           
             _session.Login(user);
 
-            // 2) crear Player (GameObject + entidad) a través del loader
-            _loader.Load();                             // genera LoadedPlayer y lo añade a la escena
+          
+            _loader.Load();                           
             var player = _loader.LoadedPlayer;
 
-            // 3) vincular instancia al contenedor
+
             _container.Rebind<Player>()
                       .FromInstance(player)
                       .AsSingle();
 
-            // 4) continuar normalmente
+   
             SceneManager.LoadScene(SceneNames.Get(SceneName.Initial_MenuScene));
         }
     }

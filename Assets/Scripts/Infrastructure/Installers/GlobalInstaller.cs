@@ -19,17 +19,29 @@ public class GlobalInstaller : MonoInstaller
         Envs.Load();
         var dbPath = Envs.SQLITE_PATH;
         var options = new SqliteOptions(dbPath);
-     
+
         var db = SqliteDatabase.GetInstance();
         db.Initialize(options);
-         
+
 
         Container.Bind<IUserRepository>()
                  .To<UserRepositorySqlite>()
                  .AsSingle();
+
+
+        //Container.Bind<IUserRepository>()
+        // .FromInstance(UserRepositoryJson.GetInstance())
+        // .AsSingle();
+
+
         Container.Bind<Session>()
                  .AsSingle()
                  .NonLazy();
+
+
+
+
+
 
  
         Container.Bind<PlayerFactory>().AsSingle();

@@ -10,6 +10,7 @@ public class GameInstaller : MonoInstaller
     {
         var user = _session.CurrentUser;
         Player player;
+
         if (user != null)
         {
             player = new Player(
@@ -28,20 +29,18 @@ public class GameInstaller : MonoInstaller
                 currentHealth: 100,
                 positionX: 11.11f,
                 positionY: -2.77f,
-                //positionX: 665.0f,
-                //positionY: -30.0f,
                 enemiesEliminated: 0,
                 score: 0
             );
             Debug.LogError("Player instance is null, creating a default player. [FOR DEVELOP ENVIROMENT]");
         }
 
-        // 🧠 ENTIDAD de dominio (jugador)
+
         Container.Bind<Player>()
                  .FromInstance(player)
                  .AsSingle();
 
-        // ⚔️ COMPORTAMIENTOS (adaptadores MB)
+
         Container.BindInterfacesAndSelfTo<PlayerAttackMB>() // IAttackBehaviour<Player>
                  .FromComponentInHierarchy()
                  .AsSingle();
@@ -63,7 +62,6 @@ public class GameInstaller : MonoInstaller
                  .FromComponentInHierarchy()
                  .AsSingle();
 
-        // 🎮 Entrada del jugador
         Container.Bind<IInputReceiver>()
                  .To<PlayerInputReceiver>()
                  .AsSingle();
@@ -72,7 +70,7 @@ public class GameInstaller : MonoInstaller
                  .FromComponentInHierarchy()
                  .AsSingle();
 
-        // 🧩 CASOS DE USO GENÉRICOS
+
         Container.Bind<AttackUseCase<Player>>()
                  .AsSingle();
 
@@ -86,7 +84,7 @@ public class GameInstaller : MonoInstaller
                  .AsSingle();
 
 
-        // ❤️ INTERACCIÓN DE SALUD
+      
         Container.Bind<HealthPresenter>()
                  .AsSingle();
 
@@ -96,16 +94,16 @@ public class GameInstaller : MonoInstaller
         Container.Bind<ScorePresenter>()
                  .AsSingle();
 
-        // 🚀 SERVICIO DE MOVIMIENTO DEL JUGADOR
+    
         Container.Bind<PlayerMovementService>()
                  .AsSingle();
 
-        // 💥 PROYECTILES
+       
         Container.Bind<IProjectileSpawner>()
                  .FromInstance(projectileSpawner)
                  .AsSingle();
 
-        // 🛠 FACTORÍAS Y ADAPTADORES BASE
+       
         Container.Bind<IAnimatorAdapter>()
                  .To<AnimatorAdapter>()
                  .AsSingle();
@@ -121,7 +119,7 @@ public class GameInstaller : MonoInstaller
 
       
 
-        // 🔊 EVENTOS GLOBALES
+      
         Container.Bind<CharacterEventBus>()
          .AsSingle()
          .NonLazy();
